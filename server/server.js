@@ -26,6 +26,10 @@ const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on Port :${PORT}`);
 });
+
+app.get('/', (req, res) => {
+  res.send('Server is up and running!');
+});
 app.use("/auth",authRouter);
 app.use("/customer",customerRouter);
 app.use("/invoice",invoiceRouter);

@@ -90,55 +90,55 @@ export default function InvoiceTable() {
 
   return (
     <div className="invoice-container">
-      <section className="invoice-section">
-        <div className="invoice-fix-header">
-          <div className="invoice-title">
-            <h2>Invoices</h2>
-          </div>
-
-          <div className="invoice-controls">
-            <div className="invoice-search-bar">
-              <input
-                type="text"
-                placeholder="Search Invoice"
-                value={search}
-                onChange={handleSearchChange}
-              />
-              <span className="invoice-search-icon">
-                <FaSearch className="search-icon" />
-              </span>
-            </div>
-
-            <select
-              className="filter-dropdown"
-              value={selectedStatus}
-              onChange={(e) => handleFilter(e.target.value)}
-            >
-              <option value="" hidden>
-                Filter by Status
-              </option>
-              <option value="">All</option>
-              <option value="Pending">Pending</option>
-              <option value="Overdue">Overdue</option>
-              <option value="Paid">Paid</option>
-            </select>
-
-            <button
-              className="create-btn"
-              onClick={() => navigate("/dashboard/createinvoice")}
-            >
-              Create New
-            </button>
-          </div>
+      <div className="invoice-fix-header">
+        <div className="invoice-title">
+          <h2>Invoices</h2>
         </div>
 
-        {loading ? (
-          <div className="loading-spinner-container">
-            <div className="loading-spinner"></div>
+        <div className="invoice-controls">
+          <div className="invoice-search-bar">
+            <input
+              type="text"
+              placeholder="Search Invoice"
+              value={search}
+              onChange={handleSearchChange}
+            />
+            <span className="invoice-search-icon">
+              <FaSearch className="search-icon" />
+            </span>
           </div>
-        ) : error ? (
-          <p className="error-message">❌ Error: {error}</p>
-        ) : (
+
+          <select
+            className="filter-dropdown"
+            value={selectedStatus}
+            onChange={(e) => handleFilter(e.target.value)}
+          >
+            <option value="" hidden>
+              Filter by Status
+            </option>
+            <option value="">All</option>
+            <option value="Pending">Pending</option>
+            <option value="Overdue">Overdue</option>
+            <option value="Paid">Paid</option>
+          </select>
+
+          <button
+            className="create-btn"
+            onClick={() => navigate("/dashboard/createinvoice")}
+          >
+            Create New
+          </button>
+        </div>
+      </div>
+
+      {loading ? (
+        <div className="loading-spinner-container">
+          <div className="loading-spinner"></div>
+        </div>
+      ) : error ? (
+        <p className="error-message">❌ Error: {error}</p>
+      ) : (
+        <div className="invoice-section">
           <div className="invoice-table-container">
             <div className="table-scroll-wrapper">
               <table className="invoice-table">
@@ -185,7 +185,6 @@ export default function InvoiceTable() {
                             {invoice.status?.trim() || "Unknown"}
                           </span>
                         </td>
-
                         <td className="invoice-action">
                           <span
                             className="view-btn"
@@ -219,27 +218,38 @@ export default function InvoiceTable() {
               </table>
             </div>
           </div>
-        )}
 
-        <div className="pagination">
-          <button disabled={page === 1} onClick={() => setPage(page - 1)}>
-            Previous
-          </button>
-          <span>
-            {" "}
-            Page {page} of {totalPages}{" "}
-          </span>
-          <button onClick={() => setPage(page + 1)}>Next</button>
+          <div className="pagination">
+            <button
+              className="pagination-btn"
+              onClick={() => setPage(page - 1)}
+              disabled={page <= 1}
+            >
+              Previous
+            </button>
+            <div className="pagination-info">
+              <span>
+                Page {page} of {totalPages || 1}
+              </span>
+            </div>
+            <button
+              className="pagination-btn"
+              onClick={() => setPage(page + 1)}
+              disabled={!totalPages || page >= totalPages}
+            >
+              Next
+            </button>
+          </div>
         </div>
+      )}
 
-        {showUpdateForm && selectedInvoice && (
-          <InvoiceUpdateDialogbox
-            invoice={selectedInvoice}
-            onClose={closeUpdateForm}
-            setInvoices={setInvoices}
-          />
-        )}
-      </section>
+      {showUpdateForm && selectedInvoice && (
+        <InvoiceUpdateDialogbox
+          invoice={selectedInvoice}
+          onClose={closeUpdateForm}
+          setInvoices={setInvoices}
+        />
+      )}
     </div>
   );
 }

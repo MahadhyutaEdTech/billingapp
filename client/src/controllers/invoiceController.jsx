@@ -94,7 +94,7 @@ const useInvoices = () => {
 
         setInvoices(data);
         setFilteredInvoices(data); // Initially, show all invoices
-        setTotalPages(1); // Update as per API response if available
+        setTotalPages(Math.ceil(data.length / 10)); // Update as per API response if available
       } catch (err) {
         console.error("🔥 Error fetching invoices:", err);
         setError("Failed to load invoices");

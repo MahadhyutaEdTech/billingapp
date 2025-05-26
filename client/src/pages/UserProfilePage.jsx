@@ -123,7 +123,7 @@ const ProfilePage = ({ isOpen, onClose, profileImage, onImageUpdate }) => {
         return;
       }
 
-      // First set data from localStorage
+      // First set data from localStorage as fallback
       const localUserData = {
         user_id: storedUserId,
         email: storedEmail,
@@ -133,7 +133,6 @@ const ProfilePage = ({ isOpen, onClose, profileImage, onImageUpdate }) => {
       };
       setUser(localUserData);
 
-      // Then fetch fresh data from API
       try {
         console.log('Fetching fresh user data...');
         const response = await axiosInstance.get(`${API_BASE}/auth/userDetails`, {
@@ -144,24 +143,56 @@ const ProfilePage = ({ isOpen, onClose, profileImage, onImageUpdate }) => {
           }
         });
 
+        // Check if we have a valid response
+        if (!response.data) {
+          throw new Error('No data received from server');
+        }
+
+        // Handle user not found case
+        if (response.data.message === "User not found") {
+          console.warn('User not found in database, using local data');
+          return; // Keep using local data
+        }
+
+        // Handle successful response
         if (response.data?.message === "User Details" && response.data?.userExist?.[0]) {
           const userData = response.data.userExist[0];
           console.log('Fresh user data received:', userData);
-          setUser(userData);
-          // Only try to set image if profile_image exists and is not null
+          
+          // Update user data
+          setUser(prevUser => ({
+            ...prevUser,
+            ...userData
+          }));
+
+          // Handle profile image if it exists
           if (userData.profile_image) {
             try {
-              setImageSrc(userData.profile_image);
+              const processedImage = processImageUrl(userData.profile_image);
+              if (processedImage) {
+                // Clean up old image URL if it exists
+                if (imageSrc && imageSrc.startsWith('blob:')) {
+                  URL.revokeObjectURL(imageSrc);
+                }
+                setImageSrc(processedImage);
+              }
             } catch (imageError) {
-              console.error('Error processing image:', imageError);
+              console.error('Error processing profile image:', imageError);
+              // Don't set error - just keep using existing image
             }
           }
+        } else {
+          console.warn('Unexpected server response format:', response.data);
         }
       } catch (error) {
         console.error('Error fetching fresh data:', error);
-        // Don't set error if we have local data
+        const errorMessage = error.response?.data?.message || error.message || 'Error fetching user data';
+        
         if (!localUserData.email) {
-          setError(error.response?.data?.message || 'Error fetching user data');
+          setError(errorMessage);
+        } else {
+          // Log error but keep using local data
+          console.warn('Using local data due to API error:', errorMessage);
         }
       } finally {
         setLoading(false);
@@ -172,11 +203,11 @@ const ProfilePage = ({ isOpen, onClose, profileImage, onImageUpdate }) => {
     
     // Cleanup function
     return () => {
-      if (imageSrc) {
+      if (imageSrc && imageSrc.startsWith('blob:')) {
         URL.revokeObjectURL(imageSrc);
       }
     };
-  }, []);  // Removed API_BASE and user_id from dependencies
+  }, []); // Empty dependency array since we only want to fetch once
 
   // Check if modal root exists, if not create it
   useEffect(() => {

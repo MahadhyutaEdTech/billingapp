@@ -1,3 +1,5 @@
+@import './ScrollbarStyles.css';
+
 /* Product Table Styles */
 .expense-container {
     display: flex;
@@ -671,4 +673,66 @@
 .balance-summary,
 .balance-item {
     display: none;
+}
+
+.expenses-container {
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.expenses-content {
+    height: calc(100vh - 100px); /* Adjust based on your header/footer height */
+    width: 100%;
+    position: relative;
+    overflow: auto;
+}
+
+/* Remove the composes property and replace with direct class */
+.expenses-table-wrapper {
+  overflow: auto;
+  margin: 20px 0;
+}
+
+/* Apply scrollbar styles directly */
+.expenses-table-wrapper::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.expenses-table-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.expenses-table-wrapper::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.expenses-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Ensure content doesn't overflow horizontally */
+.expenses-section {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Table specific styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Prevent table cell content from causing overflow */
+td, th {
+    max-width: 300px; /* Adjust based on your needs */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 8px;
 }

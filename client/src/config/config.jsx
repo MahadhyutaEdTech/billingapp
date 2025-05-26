@@ -2,7 +2,7 @@
 
 // If Token is needed, export it properly
 // config/config.js
- const API_BASE = 'http://localhost:5001';
+ const API_BASE = import.meta.env.VITE_API_BASE;
 
 const TOKEN = "";
 
