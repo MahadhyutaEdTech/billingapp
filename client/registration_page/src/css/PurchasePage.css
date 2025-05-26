@@ -1,0 +1,247 @@
+/* Purchase Table Styles */
+.purchase-container {
+    display: flex;
+    flex-direction: column;
+    width: calc(100vw - 320px);
+    height: 100vh;
+    background-color: #ffffff !important;
+    padding: 10px;
+    position: fixed;
+    font-family: 'Poppins', sans-serif;
+    left: 280px;
+    top: 0;
+    margin-top: 60px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.purchase-fixed-header {
+    position: sticky;
+    top: 0;
+    background-color: rgb(242, 242, 248);
+    z-index: 100;
+    padding: 12px 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid #ba6e40;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+  
+.purchase-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #112f92;
+    padding: 5px;
+}
+  
+.purchase-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+  
+.purchase-search-bar {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 6px 12px;
+    background: white;
+    flex-grow: 1;
+    max-width: 250px;
+}
+  
+.purchase-search-bar input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+}
+  
+.purchase-search-icon {
+    color: #666;
+    margin-left: 8px;
+}
+  
+.purchase-create-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    margin-left: auto;  /* Pushes button to the right */
+}
+  
+.purchase-create-btn:hover {
+    background: #0056b3;
+}
+  
+.purchase-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+  
+.purchase-table th, .purchase-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+  
+.purchase-table th {
+    background-color: #007bff;
+    font-weight: bold;
+    color: white;
+}
+  
+.purchase-table tr:hover {
+    background-color: #ddd;;
+}
+
+.purchase-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+  
+.purchase-delete-btn, .purchase-update-btn {
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+  
+.purchase-delete-btn {
+    color: red;
+}
+  
+.purchase-delete-btn:hover {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+  
+.purchase-update-btn {
+    color: blue;
+}
+  
+.purchase-update-btn:hover {
+    background-color: rgba(0, 0, 255, 0.1);
+}
+  
+.text-center {
+    text-align: center;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px 0;
+    margin-top: 20px;
+}
+
+.pagination-btn {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background-color: #f0f0f0;
+}
+
+.pagination-btn.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Spinner Styles */
+.table-container {
+    position: relative;
+    width: 100%;
+    overflow: auto;
+}
+
+.spinner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Dark Mode Styles */
+.dark-mode .purchase-container {
+    background-color: #1a1a1a !important;
+    color: #ffffff;
+}
+
+.dark-mode .purchase-fixed-header {
+    background-color: #2d2d2d;
+    border-bottom-color: #8b4f2d;
+}
+
+.dark-mode .purchase-title {
+    color: #66a3ff;
+}
+
+.dark-mode .purchase-search-bar {
+    background: #2d2d2d;
+    border-color: #404040;
+}
+
+.dark-mode .purchase-search-bar input {
+    background: #2d2d2d;
+    color: #ffffff;
+}
+
+.dark-mode .purchase-search-icon {
+    color: #999;
+}
+
+.dark-mode .purchase-table th {
+    background-color: #404040;
+}
+
+.dark-mode .purchase-table td {
+    border-bottom-color: #404040;
+}
+
+.dark-mode .purchase-table tr:hover {
+    background-color: #333333;
+}
+
+.dark-mode .purchase-table tbody tr:nth-child(even) {
+    background-color: #2a2a2a;
+}
+
+.dark-mode .pagination-btn {
+    background-color: #2d2d2d;
+    border-color: #404040;
+    color: #ffffff;
+}
+
+.dark-mode .pagination-btn:hover:not(:disabled) {
+    background-color: #404040;
+}
+
+.dark-mode .pagination-btn.active {
+    background-color: #0056b3;
+    border-color: #004494;
+}

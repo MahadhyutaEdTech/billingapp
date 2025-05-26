@@ -1,0 +1,156 @@
+/* auth.css - Improved Modern UI */
+.gradient-background {
+    background: linear-gradient(to right, #e4e5e8, #c7d9ec) !important;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.auth-box {
+    background: #ffffff;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 380px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.auth-box:hover {
+    transform: scale(1.02);
+}
+
+.auth-title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.auth-toggle {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background: #f1f1f1;
+    padding: 5px;
+}
+
+.auth-toggle button,
+.auth-toggle a {
+    flex: 1;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333 !important;
+    font-weight: 500;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.auth-toggle .active {
+    background: linear-gradient(to right, #0046b5, #007bff) !important;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    background: #f9f9f9;
+    transition: all 0.3s ease-in-out;
+}
+
+.auth-form input:focus {
+    border-color: #007bff;
+    background: #fff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+    outline: none;
+}
+
+.auth-form .forgot-password {
+    display: block;
+    text-align: left;
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+    margin-bottom: 15px;
+    transition: color 0.3s ease-in-out;
+}
+
+.auth-form .forgot-password:hover {
+    color: #0046b5;
+}
+
+.auth-button {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(to right, #0046b5, #007bff);
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.auth-button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.auth-footer {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #333;
+}
+
+.auth-footer a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+.auth-footer a:hover {
+    color: #0046b5;
+}
+
+.auth-btn-back {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.auth-btn-back:hover {
+    background-color: #0056b3;
+}
+
+

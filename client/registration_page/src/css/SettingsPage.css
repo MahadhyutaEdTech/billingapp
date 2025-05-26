@@ -1,0 +1,188 @@
+/* Settings Page Overlay */
+.settings-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Settings Dialog */
+.settings-dialog {
+  width: 400px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gradient Header */
+.settings-dialog::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+/* Title */
+.settings-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Settings Sections */
+.settings-section {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.settings-section h3 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.settings-section p {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0;
+}
+
+/* Toggle & Dropdown Containers */
+.toggle-container, .dropdown-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f8f8;
+  padding: 8px 12px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Input & Select */
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+select {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Buttons */
+.settings-button {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  padding: 10px 15px;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+}
+.close-button {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  padding: 10px 15px;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: block;
+  width: 20%;
+  margin-top: 10px;
+}
+
+
+
+.settings-button:hover, .close-button:hover {
+  opacity: 0.85;
+}
+
+/* Theme Styles */
+.theme-selector {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.theme-options {
+  display: flex;
+  gap: 10px;
+}
+
+.theme-button {
+  padding: 8px 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.theme-button.active {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+/* Dark Theme Styles - Scoped to dialog only */
+.dark-mode .settings-dialog {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+.dark-mode .settings-title {
+  color: #e0e0e0;
+}
+
+.dark-mode .settings-section h3 {
+  color: #e0e0e0;
+}
+
+.dark-mode .toggle-container {
+  background-color: #2c2c2c;
+  color: #e0e0e0;
+}
+
+/* Keep overlay semi-transparent regardless of theme */
+.settings-overlay {
+  background: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Remove theme transition to prevent page flicker */
+body, 
+body * {
+  transition: none;
+}
+
+/* Remove previous theme-light and theme-dark classes */
+.theme-light,
+.theme-dark {
+  display: none;
+}

@@ -1,0 +1,434 @@
+.organization-container {
+  max-width: calc(100% - 100px); /* Account for sidebar width */
+  margin: 0 0 0 100px; /* Left margin matches sidebar width */
+  padding: 0.3rem 1rem;
+}
+
+.organization-container h2 {
+  color: #333;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.organization-form {
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 0.8rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 4fr 3fr;
+  gap: 0.8rem;
+}
+
+.form-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.section-group {
+  background: #f8f9fa;
+  border-radius: 6px;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-group h3 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.input-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.6rem;
+}
+
+.input-field {
+  margin-bottom: 0.3rem;
+}
+
+.input-field label {
+  display: block;
+  margin-bottom: 0.1rem;
+  font-size: 0.8rem;
+  color: #495057;
+}
+
+.input-field input,
+.input-field select,
+.input-field textarea {
+  width: 100%;
+  padding: 0.3rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  min-height: 28px;
+}
+
+.input-field textarea {
+  min-height: 45px;
+  resize: vertical;
+}
+
+.input-field input[name="invoicePrefix"] {
+  font-family: monospace;
+  letter-spacing: 0.5px;
+}
+
+.organization-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 8px;
+}
+
+.organization-details .full-width {
+  grid-column: span 2;
+}
+
+.organization-details .input-field {
+  margin-bottom: 1.2rem;
+}
+
+.organization-details input,
+.organization-details select,
+.organization-details textarea {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  transition: border-color 0.3s ease;
+}
+
+.organization-details input:focus,
+.organization-details select:focus,
+.organization-details textarea:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+.logo-upload {
+  grid-column: span 2;
+  padding: 1rem;
+  border: 2px dashed #ced4da;
+  border-radius: 6px;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.gst-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.gst-entry {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.gst-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  background: #f8f9fa;
+}
+
+.gst-row {
+  display: flex;
+  gap: 10px;
+}
+
+.state-code-input {
+  width: 80px;
+}
+
+.gst-number-input {
+  flex: 1;
+}
+
+.gst-address {
+  width: 100%;
+}
+
+.gst-address-input {
+  width: 100%;
+  min-height: 60px;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.gst-address-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+.gst-input-group textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.gst-input-group textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.gst-input-group textarea::placeholder {
+  color: #6c757d;
+}
+
+.gst-input-group input {
+  flex: 1;
+}
+
+.remove-gst-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+.add-gst-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  width: fit-content;
+  font-size: 0.8rem;
+}
+
+.error {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.error-message {
+  background: #fff3f3;
+  border: 1px solid #ffcdd2;
+  border-radius: 4px;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  color: #d32f2f;
+}
+
+.error-help {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+.optional {
+  color: #666;
+  font-size: 0.9em;
+  font-weight: normal;
+}
+
+.helper-text {
+  color: #666;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+.tooltip-icon {
+  margin-left: 5px;
+  font-size: 14px;
+  cursor: help;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: flex-end;
+  margin-top: 0.8rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.submit-btn,
+.btn-back {
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.submit-btn {
+  background: #007bff;
+  color: white;
+}
+
+.btn-back {
+  background: #6c757d;
+  color: white;
+}
+
+.submit-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Dark Mode Styles */
+.dark-mode .organization-container {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.dark-mode .organization-container h2 {
+  color: #e0e0e0;
+}
+
+.dark-mode .organization-form {
+  background-color: #1e1e1e;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .section-group {
+  background-color: #2c2c2c;
+}
+
+.dark-mode .section-group h3 {
+  color: #66a3ff;
+  border-bottom-color: #404040;
+}
+
+.dark-mode .input-field label {
+  color: #b0b0b0;
+}
+
+.dark-mode .input-field input,
+.dark-mode .input-field select,
+.dark-mode .input-field textarea {
+  background-color: #2c2c2c;
+  border-color: #404040;
+  color: #e0e0e0;
+}
+
+.dark-mode .organization-details {
+  background-color: #1e1e1e;
+}
+
+.dark-mode .organization-details input,
+.dark-mode .organization-details select,
+.dark-mode .organization-details textarea {
+  background-color: #2c2c2c;
+  border-color: #404040;
+}
+
+.dark-mode .organization-details input:focus,
+.dark-mode .organization-details select:focus,
+.dark-mode .organization-details textarea:focus {
+  border-color: #66a3ff;
+  box-shadow: 0 0 0 2px rgba(102, 163, 255, 0.1);
+}
+
+.dark-mode .logo-upload {
+  border-color: #404040;
+  color: #b0b0b0;
+}
+.dark-mode .gst-address-input:focus {
+  border-color: #66a3ff;
+  box-shadow: 0 0 0 0.2rem rgba(102, 163, 255, 0.25);
+}
+
+/* GST entries in dark mode */
+.dark-mode .gst-entry,
+.dark-mode .gst-input-group,.dark-mode,.dark-mode .gst-input-group textarea {
+  background: #2a2a2a;
+  border-color: #444;
+}
+
+.dark-mode .remove-gst-btn {
+  background-color: #8b2029;
+}
+
+.dark-mode .add-gst-btn {
+  background-color: #1e5a2d;
+}
+
+.dark-mode .error {
+  color: #ff6b6b;
+}
+
+.dark-mode .error-message {
+  background-color: #350f0f;
+  border-color: #5c1e1e;
+  color: #ff6b6b;
+}
+
+.dark-mode .error-help {
+  color: #b0b0b0;
+}
+
+.dark-mode .form-actions {
+  border-top-color: #404040;
+}
+
+.dark-mode .submit-btn {
+  background-color: #0056b3;
+}
+
+.dark-mode .btn-back {
+  background-color: #4a4f55;
+}
+
+.dark-mode .submit-btn:disabled {
+  background-color: #1e1e1e;
+  color: #666666;
+}
+
+/* Add smooth transitions */
+* {
+  transition: background-color 0.3s ease,
+              color 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+/* Add media query for responsiveness */
+@media (max-width: 1200px) {
+  .organization-container {
+    max-width: 98%;
+    margin: 0 auto;
+  }
+}

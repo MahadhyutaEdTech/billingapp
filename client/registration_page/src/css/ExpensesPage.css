@@ -1,0 +1,674 @@
+/* Product Table Styles */
+.expense-container {
+    display: flex;
+    flex-direction: column;
+    width: calc(100vw - 320px);
+    height: calc(100vh - 60px);  /* Adjusted height */
+    background-color: #ffffff;
+    padding: 15px;
+    position: fixed;
+    left: 280px;
+    top: 60px;  /* Fixed top position */
+    overflow: hidden;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Fixed Header */
+.expense-fixed-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    margin-bottom: 15px;
+    width: 100%;
+    background-color: rgb(242, 242, 248);
+    padding: 12px 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid #ba6e40;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Title */
+.expense-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #112f92;
+    padding: 8px;
+    transition: color 0.3s ease;
+}
+
+/* Controls (Search + Add Button) */
+.expense-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 12px;
+}
+
+/* Category Select */
+.category-select {
+    max-width: 200px;
+    height: 40px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Search Bar */
+.search-bar {
+    flex: 1;
+    max-width: 200px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: white;
+    padding: 0 12px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.search-bar input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background: transparent;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.search-bar input::placeholder {
+    color: #888;
+    transition: color 0.3s ease;
+}
+
+/* Common button styling */
+.action-button,
+.export-excel-btn,
+.filter-btn,
+.create-btn,
+.emp-btn,
+.project-btn,
+.graph-btn {
+    min-width: 120px;
+    height: 40px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    white-space: nowrap;
+}
+
+/* Icon-only buttons */
+.emp-btn,
+.project-btn,
+.export-excel-btn {
+    min-width: 50px;
+    width: 50px;
+    padding: 0;
+}
+
+/* Button colors */
+.create-btn {
+    background: #007bff;
+    color: white;
+}
+
+.create-btn:hover {
+    background: #0056b3;
+}
+
+.filter-btn {
+    background: #f8f9fa;
+    color: #4a5568;
+    border: 1px solid #e2e8f0;
+}
+
+.filter-btn:hover {
+    background: #e2e8f0;
+}
+
+.emp-btn,
+.project-btn {
+    background: #f8f9fa;
+    color: #4a5568;
+    border: 1px solid #e2e8f0;
+}
+
+.emp-btn:hover,
+.project-btn:hover {
+    background: #e2e8f0;
+}
+
+.graph-btn {
+    background: #6b46c1;
+    color: white;
+}
+
+.graph-btn:hover {
+    background: #553c9a;
+}
+
+.export-excel-btn {
+    background: #28a745;
+    color: white;
+}
+
+.export-excel-btn:hover {
+    background: #218838;
+}
+
+/* Dark mode support */
+.dark-mode .action-button,
+.dark-mode .export-excel-btn,
+.dark-mode .filter-btn,
+.dark-mode .emp-btn,
+.dark-mode .project-btn {
+    background: #2d3748;
+    color: #e2e8f0;
+    border-color: #4a5568;
+}
+
+.dark-mode .action-button:hover,
+.dark-mode .export-excel-btn:hover,
+.dark-mode .filter-btn:hover,
+.dark-mode .emp-btn:hover,
+.dark-mode .project-btn:hover {
+    background: #4a5568;
+}
+
+/* Product Table */
+.expense-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.expense-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #007bff;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.expense-table th {
+    background-color: #007bff;
+    font-weight: bold;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Table Rows */
+.expense-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Alternating Row Colors */
+.expense-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover Effect */
+.expense-table tbody tr:hover {
+    background-color: #ddd;
+    transition: background-color 0.3s ease;
+}
+
+/* Action Buttons */
+.expense-delete-btn, .expense-update-btn {
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 5px;
+    margin: 0 5px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Delete Button */
+.expense-delete-btn {
+    background: rgba(255, 0, 0, 0.1);
+    color: red;
+    border: none;
+}
+
+.expense-delete-btn:hover {
+    background: rgba(255, 0, 0, 0.2);
+}
+
+/* Update Button */
+.expense-update-btn {
+    background: rgba(0, 0, 255, 0.1);
+    color: blue;
+    border: none;
+}
+
+.expense-update-btn:hover {
+    background: rgba(0, 0, 255, 0.2);
+}
+
+/* Centered Text */
+.text-center {
+    text-align: center;
+}
+
+/* Expandable Rows */
+.expense-row {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.expense-row:hover {
+    background-color: #f8fafc;
+}
+
+.expense-row.expanded {
+    background-color: #e3f2fd;
+    transition: background-color 0.3s ease;
+}
+
+.expanded-details {
+    background: #f8fafc;
+    transition: background-color 0.3s ease;
+}
+
+.expanded-details td {
+    padding: 0 !important;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: #f8fafc;
+    transition: background-color 0.3s ease;
+}
+
+.detail-section {
+    background: #ffffff;
+    padding: 1.25rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.detail-section h4 {
+    color: #1e293b;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.detail-section p {
+    margin: 0.75rem 0;
+    color: #4a5568;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    transition: color 0.3s ease;
+}
+
+/* Table Container */
+.table-container {
+    height: calc(100vh - 220px);
+    overflow-y: auto;
+    margin-top: 10px;
+    position: relative;
+    overflow-x: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+    transition: border-color 0.3s ease;
+}
+
+/* Spinner Overlay */
+.spinner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+/* Scrollbar Styles */
+.table-container::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+    border: 2px solid #f1f1f1;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* ================= DARK MODE STYLES ================= */
+
+/* Main Container */
+.dark-mode .expense-container {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+/* Fixed Header */
+.dark-mode .expense-fixed-header {
+    background-color: #1e1e1e;
+    border-bottom-color: #6b4229;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Title */
+.dark-mode .expense-title {
+    color: #66a3ff;
+}
+
+/* Category Select */
+.dark-mode .category-select {
+    background-color: #2c2c2c;
+    border-color: #404040;
+    color: #e0e0e0;
+}
+
+/* Search Bar */
+.dark-mode .search-bar {
+    background-color: #2c2c2c;
+    border-color: #404040;
+}
+
+.dark-mode .search-bar input {
+    color: #e0e0e0;
+}
+
+.dark-mode .search-bar input::placeholder {
+    color: #808080;
+}
+
+/* Table Styles */
+.dark-mode .expense-table {
+    background-color: #1e1e1e;
+}
+
+.dark-mode .expense-table th {
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+    border-bottom-color: #404040;
+}
+
+.dark-mode .expense-table td {
+    border-bottom-color: #404040;
+    color: #e0e0e0;
+}
+
+/* Alternating Row Colors */
+.dark-mode .expense-table tbody tr:nth-child(even) {
+    background-color: #252525;
+}
+
+/* Hover States */
+.dark-mode .expense-table tbody tr:hover {
+    background-color: #333333;
+}
+
+/* Expandable Rows */
+.dark-mode .expense-row:hover {
+    background-color: #252525;
+}
+
+.dark-mode .expense-row.expanded {
+    background-color: #1a3a5a;
+}
+
+.dark-mode .expanded-details {
+    background-color: #1e1e1e;
+}
+
+.dark-mode .details-grid {
+    background-color: #1e1e1e;
+}
+
+.dark-mode .detail-section {
+    background-color: #2c2c2c;
+    border-color: #3a3a3a;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .detail-section h4 {
+    color: #e0e0e0;
+    border-bottom-color: #404040;
+}
+
+.dark-mode .detail-section p {
+    color: #b0b0b0;
+}
+
+/* Table Container */
+.dark-mode .table-container {
+    border-color: #404040;
+    scrollbar-color: #666 #2c2c2c;
+}
+
+/* Spinner Overlay */
+.dark-mode .spinner-overlay {
+    background: rgba(18, 18, 18, 0.8);
+}
+
+/* Scrollbar Styles */
+.dark-mode .table-container::-webkit-scrollbar-track {
+    background: #2c2c2c;
+}
+
+.dark-mode .table-container::-webkit-scrollbar-thumb {
+    background: #666;
+    border: 2px solid #2c2c2c;
+}
+
+.dark-mode .table-container::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+
+/* Advanced Filters Section */
+.advanced-filters {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.filter-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.filter-select {
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
+  height: 40px;
+  padding: 8px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background-color: white;
+  color: #4a5568;
+  cursor: pointer;
+  outline: none;
+  font-size: 0.9rem;
+}
+
+.filter-select:hover {
+  border-color: #cbd5e0;
+}
+
+.filter-select option {
+  padding: 8px;
+}
+
+.reset-btn {
+  min-width: 100px;
+  height: 40px;
+  background-color: #fff5f5;
+  color: #e53e3e;
+  border: 1px solid #e53e3e;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.reset-btn:hover {
+  background-color: #fed7d7;
+}
+
+/* Dark mode styles */
+.dark-mode .advanced-filters {
+  background: #2d3748;
+  border-color: #4a5568;
+}
+
+.dark-mode .filter-select {
+  background-color: #2d3748;
+  border-color: #4a5568;
+  color: #e2e8f0;
+}
+
+.dark-mode .filter-select:hover {
+  border-color: #718096;
+}
+
+.dark-mode .reset-btn {
+  background-color: #2d3748;
+  color: #fc8181;
+  border-color: #fc8181;
+}
+
+.dark-mode .reset-btn:hover {
+  background-color: #3d4756;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .filter-group {
+    flex-wrap: wrap;
+  }
+
+  .filter-select {
+    flex: 1 1 calc(33.333% - 1rem);
+    max-width: none;
+  }
+
+  .reset-btn {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .filter-select {
+    flex: 1 1 100%;
+  }
+
+  .expense-controls {
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .action-button,
+  .export-excel-btn,
+  .filter-btn,
+  .create-btn,
+  .emp-btn,
+  .project-btn,
+  .graph-btn {
+    flex: 1 1 auto;
+  }
+}
+
+.expense-table tfoot {
+    border-top: 2px solid #e2e8f0;
+    background: #f8fafc;
+}
+
+.expense-table tfoot .summary-row {
+    background: #f8fafc;
+}
+
+.expense-table tfoot .summary-row td {
+    padding: 16px 12px;
+    font-size: 15px;
+    white-space: nowrap;
+}
+
+.balance-indicator {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* Dark mode styles */
+.dark-mode .expense-table tfoot {
+    border-top-color: #4a5568;
+    background: #2d3748;
+}
+
+.dark-mode .expense-table tfoot .summary-row {
+    background: #2d3748;
+}
+
+/* Remove old balance summary styles since we're not using them anymore */
+.balance-summary,
+.balance-item {
+    display: none;
+}

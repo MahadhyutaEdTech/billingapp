@@ -1,0 +1,281 @@
+.update-expense-container {
+display: flex;
+flex-direction: column;
+width: calc(100vw - 320px);
+height: calc(100vh - 60px);
+background-color: #ffffff;
+padding: 30px;
+position: fixed;
+left: 280px;
+top: 60px;
+overflow-y: auto;
+}
+.update-expense-header {
+margin-bottom: 30px;
+padding-bottom: 20px;
+border-bottom: 2px solid #f1f5f9;
+}
+.update-expense-header h2 {
+color: #1e293b;
+font-size: 1.75rem;
+font-weight: 600;
+margin-bottom: 8px;
+display: flex;
+align-items: center;
+}
+.update-expense-header p {
+color: #64748b;
+font-size: 0.95rem;
+margin-top: 5px;
+}
+.update-expense-form {
+background: #ffffff;
+padding: 30px;
+border-radius: 12px;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+transition: all 0.3s ease;
+}
+.form-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+gap: 24px;
+}
+.form-group {
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+.form-group.full-width {
+grid-column: 1 / -1;
+}
+.form-group label {
+font-size: 0.95rem;
+font-weight: 500;
+color: #334155;
+display: flex;
+align-items: center;
+}
+.required {
+color: #e53e3e;
+margin-left: 4px;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+padding: 12px 15px;
+border: 1px solid #e2e8f0;
+border-radius: 8px;
+font-size: 1rem;
+transition: all 0.2s ease;
+background-color: #f8fafc;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+border-color: #3182ce;
+box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+outline: none;
+background-color: #fff;
+}
+.valid-input {
+border-color: #68d391 !important;
+background-color: #f0fff4 !important;
+}
+.date-input-wrapper {
+position: relative;
+display: flex;
+align-items: center;
+}
+.date-icon {
+position: absolute;
+right: 12px;
+color: #718096;
+pointer-events: none;
+}
+.nature-fund-container {
+display: flex;
+flex-direction: column;
+gap: 12px;
+margin-bottom: 12px;
+}
+.nature-fund-row {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.nature-input {
+flex: 1;
+}
+.remove-btn {
+padding: 8px;
+background: #fee2e2;
+color: #e53e3e;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.2s;
+}
+.remove-btn:hover {
+background: #fecaca;
+transform: scale(1.05);
+}
+.add-btn {
+background: #ebf8ff;
+color: #3182ce;
+border: 1px dashed #90cdf4;
+border-radius: 8px;
+padding: 10px 15px;
+font-size: 0.9rem;
+font-weight: 500;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+margin-top: 10px;
+transition: all 0.2s;
+width: fit-content;
+}
+.add-btn:hover {
+background: #bee3f8;
+transform: translateY(-2px);
+}
+.form-actions {
+display: flex;
+justify-content: flex-end;
+gap: 16px;
+margin-top: 30px;
+padding-top: 24px;
+border-top: 1px solid #e2e8f0;
+}
+.update-exp-cancel-btn,
+.update-exp-submit-btn {
+padding: 12px 24px;
+border-radius: 8px;
+font-weight: 500;
+cursor: pointer;
+transition: all 0.3s;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 0.95rem;
+}
+.update-exp-submit-btn {
+background: #3182ce;
+color: white;
+border: none;
+min-width: 160px;
+}
+.update-exp-submit-btn:hover:not(:disabled) {
+background: #2c5282;
+transform: translateY(-2px);
+box-shadow: 0 4px 12px rgba(44, 82, 130, 0.2);
+}
+.update-exp-cancel-btn {
+background: #fff;
+color: #4a5568;
+border: 1px solid #e2e8f0;
+}
+.update-exp-cancel-btn:hover {
+background: #f8fafc;
+border-color: #cbd5e0;
+}
+.btn-disabled {
+opacity: 0.6;
+cursor: not-allowed;
+}
+.btn-enabled {
+opacity: 1;
+}
+/* Animation for loading state */
+@keyframes pulse {
+0% { opacity: 1; }
+50% { opacity: 0.6; }
+100% { opacity: 1; }
+}
+button:disabled {
+animation: pulse 1.5s infinite ease-in-out;
+}
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+.update-expense-container {
+width: calc(100vw - 100px);
+left: 100px;
+}
+}
+@media (max-width: 768px) {
+.update-expense-container {
+width: 100vw;
+left: 0;
+padding: 20px;
+}
+.update-expense-form {
+padding: 20px;
+}
+.form-actions {
+flex-direction: column-reverse;
+}
+.update-exp-cancel-btn,
+.update-exp-submit-btn {
+width: 100%;
+}
+}
+/* Dark mode support */
+.dark-mode .update-expense-container {
+background: #1a202c;
+color: #e2e8f0;
+}
+.dark-mode .update-expense-header h2 {
+color: #f7fafc;
+}
+.dark-mode .update-expense-header p {
+color: #a0aec0;
+}
+.dark-mode .update-expense-form {
+background: #2d3748;
+}
+.dark-mode .form-group label {
+color: #e2e8f0;
+}
+.dark-mode .form-group input,
+.dark-mode .form-group select,
+.dark-mode .form-group textarea {
+background: #1a202c;
+border-color: #4a5568;
+color: #e2e8f0;
+}
+.dark-mode .form-group input:focus,
+.dark-mode .form-group select:focus,
+.dark-mode .form-group textarea:focus {
+border-color: #63b3ed;
+background: #2d3748;
+}
+.dark-mode .valid-input {
+background-color: #1c4532 !important;
+border-color: #48bb78 !important;
+}
+.dark-mode .add-btn {
+background: #2c5282;
+border-color: #4299e1;
+color: #ebf8ff;
+}
+.dark-mode .add-btn:hover {
+background: #2b6cb0;
+}
+.dark-mode .remove-btn {
+background: #742a2a;
+color: #fed7d7;
+}
+.dark-mode .remove-btn:hover {
+background: #9b2c2c;
+}
+.dark-mode .update-exp-cancel-btn {
+background: #2d3748;
+color: #e2e8f0;
+border-color: #4a5568;
+}
+.dark-mode .update-exp-cancel-btn:hover {
+background: #4a5568;
+}

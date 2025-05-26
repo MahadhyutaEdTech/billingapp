@@ -1,0 +1,358 @@
+.expenses-graph-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.expenses-graph-content {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    width: 80%;
+    max-width: 1000px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.graph-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.graph-header h2 {
+    color: #2d3748;
+    font-size: 20px;
+    margin: 0;
+}
+
+.close-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    color: #4a5568;
+    cursor: pointer;
+    padding: 8px 12px;
+    font-size: 14px;
+    transition: all 0.2s;
+    line-height: 1;
+}
+
+.close-button:hover {
+    background: #e2e8f0;
+    color: #1a202c;
+}
+
+.close-button:focus {
+    outline: 2px solid #3182ce;
+    outline-offset: 2px;
+}
+
+.close-icon {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.close-text {
+    font-weight: 500;
+}
+
+/* Dark mode styles for close button */
+.dark-mode .close-button {
+    background: #2d3748;
+    border-color: #4a5568;
+    color: #e2e8f0;
+}
+
+.dark-mode .close-button:hover {
+    background: #4a5568;
+    color: #ffffff;
+}
+
+.dark-mode .close-button:focus {
+    outline-color: #90cdf4;
+}
+
+.charts-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.chart-container {
+    background: #f7fafc;
+    border-radius: 6px;
+    padding: 12px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.chart-container h3 {
+    color: #2d3748;
+    font-size: 16px;
+    margin: 0 0 12px 0;
+    text-align: center;
+}
+
+.graph-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.summary-item {
+    background: #f7fafc;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.summary-item h4 {
+    color: #4a5568;
+    font-size: 12px;
+    margin: 0 0 4px 0;
+}
+
+.summary-item p {
+    color: #2d3748;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Dark mode styles */
+.dark-mode .expenses-graph-content {
+    background: #1a202c;
+}
+
+.dark-mode .graph-header {
+    border-bottom-color: #2d3748;
+}
+
+.dark-mode .graph-header h2 {
+    color: #e2e8f0;
+}
+
+.dark-mode .chart-container {
+    background: #2d3748;
+}
+
+.dark-mode .chart-container h3 {
+    color: #e2e8f0;
+}
+
+.dark-mode .graph-summary {
+    border-top-color: #2d3748;
+}
+
+.dark-mode .summary-item {
+    background: #2d3748;
+}
+
+.dark-mode .summary-item h4 {
+    color: #a0aec0;
+}
+
+.dark-mode .summary-item p {
+    color: #e2e8f0;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .expenses-graph-content {
+        width: 95%;
+        padding: 12px;
+        max-height: 90vh;
+    }
+
+    .charts-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-container {
+        min-height: 250px;
+    }
+
+    .graph-summary {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Recharts customization */
+.recharts-tooltip-wrapper {
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    padding: 6px;
+    font-size: 12px;
+}
+
+.dark-mode .recharts-tooltip-wrapper {
+    background: #2d3748;
+    color: #e2e8f0;
+}
+
+.balance-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+    padding: 16px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.balance-item {
+    text-align: center;
+    padding: 12px;
+    border-radius: 6px;
+    background: white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.balance-item h4 {
+    color: #64748b;
+    font-size: 14px;
+    margin: 0 0 8px 0;
+    font-weight: 500;
+}
+
+.balance-item p {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+/* Income styles */
+.balance-item.income h4 {
+    color: #047857;
+}
+
+.balance-item.income p {
+    color: #059669;
+}
+
+/* Expenses styles */
+.balance-item.expenses h4 {
+    color: #b91c1c;
+}
+
+.balance-item.expenses p {
+    color: #dc2626;
+}
+
+/* Balance styles */
+.balance-item.balance h4 {
+    color: #1e40af;
+}
+
+.balance-item.balance p.positive {
+    color: #059669;
+}
+
+.balance-item.balance p.negative {
+    color: #dc2626;
+}
+
+.balance-indicator {
+    display: inline-block;
+    font-size: 12px;
+    margin-left: 4px;
+    line-height: 1;
+}
+
+/* Hover effects */
+.balance-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+/* Dark mode styles */
+.dark-mode .balance-summary {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+.dark-mode .balance-item {
+    background: #2d3748;
+}
+
+.dark-mode .balance-item h4 {
+    color: #94a3b8;
+}
+
+.dark-mode .balance-item p {
+    color: #f1f5f9;
+}
+
+/* Dark mode income styles */
+.dark-mode .balance-item.income h4 {
+    color: #34d399;
+}
+
+.dark-mode .balance-item.income p {
+    color: #10b981;
+}
+
+/* Dark mode expenses styles */
+.dark-mode .balance-item.expenses h4 {
+    color: #f87171;
+}
+
+.dark-mode .balance-item.expenses p {
+    color: #ef4444;
+}
+
+/* Dark mode balance styles */
+.dark-mode .balance-item.balance h4 {
+    color: #60a5fa;
+}
+
+.dark-mode .balance-item.balance p.positive {
+    color: #10b981;
+}
+
+.dark-mode .balance-item.balance p.negative {
+    color: #ef4444;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .balance-summary {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .balance-item {
+        padding: 10px;
+    }
+
+    .balance-item p {
+        font-size: 18px;
+    }
+}
