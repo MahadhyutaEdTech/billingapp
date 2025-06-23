@@ -1,12 +1,17 @@
 import { generateHashedPassword, comparePassword, generateToken } from "../services/authServices.js"
 import {validateName,validateEmail} from "../services/validation.js"
-import { createUser,getUserByEmail, getUserById,updateUserImage} from "../models/userModel.js";
+import { createUser,getUserByEmail, getUserById,updateUserImage, updateUserPassword} from "../models/userModel.js";
 import { uploadToS3 } from "../middlewares/s3.js";
+import bcryptjs from 'bcryptjs';
 
 
 const registerUser = async(req,res) =>{
 
-  const{userName,email,password} = req.body;
+  const{userName,email,password,authCode} = req.body;
+  const ADMIN_SIGNUP_CODE = process.env.ADMIN_SIGNUP_CODE || 'yourSecretCode';
+  if (!authCode || authCode !== ADMIN_SIGNUP_CODE) {
+      return res.status(403).json({ message: 'Invalid authentication code.' });
+  }
   
   try {
       if(!validateEmail(email)){
@@ -24,8 +29,13 @@ const registerUser = async(req,res) =>{
       }
       const hashedPassword = await generateHashedPassword(password);
       await createUser(userName,email,hashedPassword);
-      const token = await generateToken({userName,email});
-      res.status(201).json({message:"User registered successfully ",token});
+      const { accessToken, refreshToken } = await generateToken({userName,email});
+      res.status(201).json({
+          message:"User registered successfully",
+          accessToken,
+          refreshToken,
+          user: { userName, email }
+      });
   } catch (error) {
       console.log(error);
       res.status(500).json({message:"Server Error",error});
@@ -45,10 +55,20 @@ const registerUser = async(req,res) =>{
       if(!isTrue){
           return res.status(400).json({message:"Invalid Password"});
       }
-      const token = await generateToken(user);
-      res.status(200).json({message:"Login Sucessful",token,user});
+      const { accessToken, refreshToken } = await generateToken(user);
+      res.status(200).json({
+          message:"Login Successful",
+          accessToken,
+          refreshToken,
+          user: {
+              id: user.user_id,
+              email: user.email,
+              userName: user.username
+          }
+      });
   } catch (error) {
-      res.status(500).json({message:"Server Error",error});
+      console.error('Login error:', error);
+      res.status(500).json({message:"Server Error", error: error.message});
   }
 }
 
@@ -98,7 +118,67 @@ const updateUserImageController = async (req, res) => {
     }
   };
   
-  
+const changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword, userId } = req.body;
 
+    if (!userId) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'User ID is required' 
+      });
+    }
 
-export {registerUser,loginUser,getUserDetails,updateUserImageController};
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Current password and new password are required' 
+      });
+    }
+
+    // Get user from database
+    const user = await getUserById(userId);
+    
+    if (!user || user.length === 0) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'User not found' 
+      });
+    }
+
+    // Verify current password using the service
+    const isValidPassword = await comparePassword(currentPassword, user[0].password);
+    
+    if (!isValidPassword) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Current password is incorrect' 
+      });
+    }
+
+    // Hash new password using the service
+    const hashedPassword = await generateHashedPassword(newPassword);
+
+    // Update password in database
+    await updateUserPassword(userId, hashedPassword);
+
+    // Generate new tokens after password change
+    const { accessToken, refreshToken } = await generateToken(user[0]);
+
+    res.json({ 
+      success: true, 
+      message: 'Password updated successfully',
+      accessToken,
+      refreshToken
+    });
+
+  } catch (error) {
+    console.error('Change password error:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Failed to change password' 
+    });
+  }
+};
+
+export {registerUser,loginUser,getUserDetails,updateUserImageController, changePassword};

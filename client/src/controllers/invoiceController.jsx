@@ -1,68 +1,6 @@
-/*import { useState, useEffect } from "react";
-import { fetchInvoices } from "../models/invoiceModel";
-
-const useInvoices = () => {
-    const [search, setSearch] = useState("");
-    const [invoices, setInvoices] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-
-    useEffect(() => {
-        const getInvoices = async () => {
-            setLoading(true);
-            setError(null);
-
-            try {
-                const data = await fetchInvoices();
-
-                if (!data || !Array.isArray(data)) {
-                    console.error("❌ Invalid data format. Expected an array, got:", data);
-                    setError("Invalid data format");
-                    setInvoices([]);
-                } else {
-                    setInvoices(data);
-                }
-            } catch (error) {
-                console.error("🔥 Error fetching invoices:", error);
-                setError("Failed to load invoices");
-                setInvoices([]); // Prevent UI crash
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        getInvoices();
-    }, []);
-    const filteredInvoices = invoices.filter((invoice) => {
-        const searchLower = search.toLowerCase();
-
-        return (
-            invoice.invoice_id.toString().includes(searchLower) ||
-            invoice.customer_id.toString().includes(searchLower) ||
-            invoice.total_amount.toString().includes(searchLower) ||
-            (`${invoice.first_name} ${invoice.last_name}`).toLowerCase().includes(searchLower) // 🔍 Search by full name
-        );
-    });
-
-    return { search, setSearch, filteredInvoices, loading, error, setInvoices };
-
-    // Safe filtering to prevent crashes
-    /*const filteredInvoices = invoices.filter((invoice) => 
-        invoice.invoice_id.toString().includes(search) || 
-        invoice.customer_id.toString().includes(search) || 
-        invoice.total_amount.includes(search)
-    );
-
-    //return { search, setSearch, filteredInvoices, loading, error, setInvoices };
-};
-
-export default useInvoices;*/
-
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { fetchInvoices ,searchInvoice} from "../models/invoiceModel";
+import { fetchInvoices ,searchInvoice, fetchInvoiceById} from "../models/invoiceModel";
 
 const useInvoices = () => {
   const [search, setSearch] = useState("");
@@ -74,6 +12,8 @@ const useInvoices = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [query,setQuery] =useState("");
+  const [invoiceDetailsLoading, setInvoiceDetailsLoading] = useState(false); // New loading state for details
+  const [invoiceDetailsError, setInvoiceDetailsError] = useState(null); // New error state for details
 
   // Fetch invoices when the page changes
   useEffect(() => {
@@ -94,7 +34,7 @@ const useInvoices = () => {
 
         setInvoices(data);
         setFilteredInvoices(data); // Initially, show all invoices
-        setTotalPages(Math.ceil(data.length / 10)); // Update as per API response if available
+        setTotalPages(1); // Update as per API response if available
       } catch (err) {
         console.error("🔥 Error fetching invoices:", err);
         setError("Failed to load invoices");
@@ -119,7 +59,7 @@ const useInvoices = () => {
       const fetchSearchResults = async () => {
         try {
           const result = await searchInvoice(debouncedQuery);
-          console.log("🔍 Setting Filtered Invoices:", result); // Debugging
+          //console.log("🔍 Setting Filtered Invoices:", result); // Debugging
           setFilteredInvoices(result); // ✅ Update table data
         } catch (error) {
           console.error("🔥 Error searching invoices:", error);
@@ -133,7 +73,24 @@ const useInvoices = () => {
     }
   }, [debouncedQuery, invoices]);
   
-  
+  const getInvoiceDetailsForDisplay = async (invoiceId) => {
+    setInvoiceDetailsLoading(true);
+    setInvoiceDetailsError(null);
+    try {
+      const details = await fetchInvoiceById(invoiceId);
+      if (!details) {
+        setInvoiceDetailsError("Invoice details not found.");
+        return null;
+      }
+      return details;
+    } catch (err) {
+      console.error("Error fetching invoice details for display:", err);
+      setInvoiceDetailsError("Failed to load invoice details.");
+      return null;
+    } finally {
+      setInvoiceDetailsLoading(false);
+    }
+  };
 
   return {
     search,
@@ -145,6 +102,11 @@ const useInvoices = () => {
     page,
     setPage,
     totalPages,
+    getInvoiceDetailsForDisplay,
+    invoiceDetailsLoading,
+    invoiceDetailsError,
+    setFilteredInvoices,
+    fetchInvoices
   };
 };
 

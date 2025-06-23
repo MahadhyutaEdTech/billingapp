@@ -40,6 +40,19 @@ const getExpenses = async (limit, offset) => {
   limit = Number(limit);
   offset = Number(offset);
   const sqlQuery = `SELECT * FROM expenses ORDER BY expenseId LIMIT ${limit} OFFSET ${offset}`;
+
+  //updated code to fetch distinct value by name
+  /*
+  const sqlQuery = `SELECT e.*
+FROM expenses e
+JOIN (
+  SELECT employee, MIN(expenseId) AS minId
+  FROM expenses
+  GROUP BY employee
+) AS t ON e.employee = t.employee AND e.expenseId = t.minId
+ORDER BY e.expenseId
+LIMIT ${limit} OFFSET ${offset}`;
+  */
   try {
     const [res] = await connectionPool.execute(sqlQuery);
     return res;
@@ -76,9 +89,36 @@ const deleteExpense = async (expenseId) => {
   return result;
 };
 
+const getExpenseById = async (expenseId) => {
+  const sqlQuery = 'SELECT * FROM expenses WHERE expenseId = ?';
+  const [rows] = await connectionPool.execute(sqlQuery, [expenseId]);
+  
+  if (rows.length === 0) {
+    return null;
+  }
+
+  const expense = rows[0];
+  
+  try {
+    if (expense.natureOfFund) {
+      if (typeof expense.natureOfFund === 'object') {
+        return expense;
+      }
+      expense.natureOfFund = JSON.parse(expense.natureOfFund);
+    } else {
+      expense.natureOfFund = [];
+    }
+  } catch (error) {
+    expense.natureOfFund = [{ type: expense.natureOfFund }];
+  }
+  
+  return expense;
+};
+
 export {
   createExpense,
   getExpenses,
   updateExpense,
-  deleteExpense
+  deleteExpense,
+  getExpenseById
 };

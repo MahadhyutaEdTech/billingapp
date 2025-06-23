@@ -1,5 +1,7 @@
-import axios from "axios";
+import axiosInstance from "../utils/axiosConfig";
 import { API_BASE } from "../config/config";
+
+
 
 // Helper function to get auth headers
 const getAuthHeaders = () => {
@@ -25,9 +27,7 @@ export const getExpenses = async () => {
       }
     }
 
-    const response = await axios.get(`${API_BASE}/exp/expenses`, {
-      headers: getAuthHeaders()
-    });
+    const response = await axiosInstance.get(`${API_BASE}/exp/expenses`);
 
     if (response.data) {
       localStorage.setItem("expenses", JSON.stringify(response.data));
@@ -37,11 +37,9 @@ export const getExpenses = async () => {
     
     throw new Error("No data received from server");
   } catch (error) {
-    console.error("Error fetching expenses:", error);
     // If there's cached data and we can't reach the server, use the cache as fallback
     const cached = localStorage.getItem("expenses");
     if (cached) {
-      console.log("Using cached expense data as fallback");
       return JSON.parse(cached);
     }
     throw error;
@@ -53,9 +51,7 @@ export const getEmployees = async () => {
   const cached = localStorage.getItem("employees");
   if (cached) return JSON.parse(cached);
 
-  const response = await axios.get(`${API_BASE}/emp/employees`, {
-    headers: getAuthHeaders()
-  });
+  const response = await axiosInstance.get(`${API_BASE}/emp/employees`);
 
   localStorage.setItem("employees", JSON.stringify(response.data));
   return response.data;
@@ -66,18 +62,14 @@ export const getProjects = async () => {
   const cached = localStorage.getItem("projects");
   if (cached) return JSON.parse(cached);
 
-  const response = await axios.get(`${API_BASE}/proj/projects`, {
-    headers: getAuthHeaders()
-  });
+  const response = await axiosInstance.get(`${API_BASE}/proj/projects`);
 
   localStorage.setItem("projects", JSON.stringify(response.data));
   return response.data;
 };
 
 export const deleteExpense = async (expenseId) => {
-  const response = await axios.delete(`${API_BASE}/exp/expenses/${expenseId}`, {
-    headers: getAuthHeaders(),
-  });
+  const response = await axiosInstance.delete(`${API_BASE}/exp/expenses/${expenseId}`);
 
   // Clear local cache
   localStorage.removeItem("expenses");
@@ -85,15 +77,16 @@ export const deleteExpense = async (expenseId) => {
 };
 
 
-const getExpenseById = async (id) => {
+export const getExpenseById = async (expenseId) => {
   try {
-    const response = await fetch(`/exp/expenses/${id}`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch expense: ${response.status}`);
+    const response = await axiosInstance.get(`${API_BASE}/exp/expenses/${expenseId}`);
+    
+    if (!response.data) {
+      throw new Error('No data received from server');
     }
-    return await response.json();
+    
+    return response.data;
   } catch (error) {
-    console.error('Error fetching expense:', error);
     throw error;
   }
 };
@@ -101,16 +94,9 @@ const getExpenseById = async (id) => {
 // Update expense
 export const updateExpense = async (expenseId, updatedData) => {
   try {
-    console.log(`Updating expense with ID: ${expenseId}`);
-    console.log(`API URL: ${API_BASE}/exp/expenses/${expenseId}`);
-    console.log('Update data:', updatedData);
-    
-    const response = await axios.put(
+    const response = await axiosInstance.put(
       `${API_BASE}/exp/expenses/${expenseId}`,
       updatedData,
-      {
-        headers: getAuthHeaders(),
-      }
     );
     
     // Clear local cache
@@ -118,11 +104,6 @@ export const updateExpense = async (expenseId, updatedData) => {
     
     return response.data;
   } catch (error) {
-    console.error(`Error updating expense with ID ${expenseId}:`, error);
-    if (error.response) {
-      console.error('Server response:', error.response.data);
-      console.error('Status code:', error.response.status);
-    }
     throw error;
   }
 };

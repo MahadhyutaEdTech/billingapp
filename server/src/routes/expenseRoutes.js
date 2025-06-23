@@ -4,6 +4,7 @@ import {
   handleGetExpenses,
   handleUpdateExpense,
   handleDeleteExpense,
+  handleGetExpenseById,
 } from "../controllers/expenseController.js";
 
 const router = express.Router();
@@ -13,6 +14,9 @@ router.post("/expenses", handleCreateExpense);
 
 // Get all expenses (with optional pagination)
 router.get("/expenses", handleGetExpenses);
+
+// Get a single expense by ID
+router.get("/expenses/:id", handleGetExpenseById);
 
 // Update a specific expense by ID
 router.put("/expenses/:id", handleUpdateExpense);

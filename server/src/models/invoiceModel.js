@@ -57,7 +57,8 @@ const createInvoice = async (
     const year = now.getFullYear();
     const gstPrefix = gst_number.substring(0, 2);  // Extract the first two letters from gst_number
     const formattedInvoiceNumber = `${orgPrefix}/${gstPrefix}/${monthAbbr}/${year}/${String(nextInvoiceNumber).padStart(4, '0')}`;
-
+   console.log("Formatted Invoice Number:", formattedInvoiceNumber);
+   console.log("Gst prfix:", gstPrefix);
 
     // 5. Insert the new invoice into the invoices table
     const invoiceQuery = `
@@ -159,7 +160,8 @@ const getInvoice = async (invoice_id) => {
       o.email,
       o.gst_details,
       o.logo_image,
-      o.reg_number,
+      o.signature_image,
+      o.pan_number,
       o.acc_num,
       o.acc_name,
       o.ifsc,
@@ -237,18 +239,27 @@ const deleteInvoice = async (invoice_id) => {
 }
 
 const getfilterInvoices = async (status) => {
-  const sqlQuery = `
-  SELECT 
-      i.*, 
-      c.first_name, 
-      c.last_name 
-  FROM invoices i
-  JOIN customers c ON i.customer_id = c.customer_id where i.status=?`;
+  console.log("🔍 Received status in backend:", status);
 
-  const [res] = await connectionPool.execute(sqlQuery, [status]);
+  let sqlQuery = `
+    SELECT i.*, c.first_name, c.last_name
+    FROM invoices i
+    JOIN customers c ON i.customer_id = c.customer_id
+  `;
+
+  const values = [];
+
+  // Only filter if status is passed and not empty
+  if (status && status.trim() !== "") {
+    sqlQuery += ` WHERE LOWER(TRIM(i.status)) = LOWER(TRIM(?))`;
+    values.push(status);
+  }
+
+  const [res] = await connectionPool.execute(sqlQuery, values);
   return res;
+};
 
-}
+
 
 const searchInvoices = async (searchQuery) => {
   // Split the search query into first name and last name
@@ -339,7 +350,76 @@ ORDER BY status
   return result;
 }
 
-export { createInvoice, getInvoice, updateInvoice, deleteInvoice, getAllInvoices, getfilterInvoices, searchInvoices, countInvoice, statusCount, amountStatus };
+// Function to get total unique customers
+const getTotalCustomers = async () => {
+  const sqlQuery = `
+    SELECT COUNT(DISTINCT customer_id) as total_customers 
+    FROM invoices;
+  `;
+  const [result] = await connectionPool.execute(sqlQuery);
+  return result[0]?.total_customers || 0;
+};
+
+// Function to get average invoice value
+const getAverageInvoiceValue = async () => {
+  try {
+    // First, let's check what data we have
+    const checkQuery = `
+      SELECT 
+        COUNT(*) as total_invoices,
+        MIN(total_amount) as min_amount,
+        MAX(total_amount) as max_amount,
+        SUM(total_amount) as sum_amount
+      FROM invoices 
+      WHERE total_amount > 0;
+    `;
+    
+    const [checkResult] = await connectionPool.execute(checkQuery);
+    console.log("📊 Invoice Amount Statistics:", checkResult[0]);
+
+    // Now get the average
+    const sqlQuery = `
+      SELECT 
+        ROUND(AVG(CAST(total_amount AS DECIMAL(10,2))), 2) as average_value 
+      FROM invoices 
+      WHERE total_amount > 0;
+    `;
+    
+    const [result] = await connectionPool.execute(sqlQuery);
+    console.log("💰 Average Invoice Value Result:", result[0]);
+    
+    return result[0]?.average_value || 0;
+  } catch (error) {
+    console.error("❌ Error calculating average invoice value:", error);
+    return 0;
+  }
+};
+
+// Function to get highest sale product
+const getHighestSaleProduct = async () => {
+  try {
+    const sqlQuery = `
+      SELECT 
+        p.product_name,
+        SUM(ii.quantity) as total_sold,
+        SUM(ii.quantity * ii.unit_price) as total_revenue
+      FROM invoice_items ii
+      JOIN product p ON ii.product_id = p.product_id
+      GROUP BY p.product_id, p.product_name
+      ORDER BY total_sold DESC
+      LIMIT 5;
+    `;
+    
+    const [result] = await connectionPool.execute(sqlQuery);
+    console.log("📊 Highest Sale Products:", result);
+    return result;
+  } catch (error) {
+    console.error("❌ Error fetching highest sale products:", error);
+    return [];
+  }
+};
+
+export { createInvoice, getInvoice, updateInvoice, deleteInvoice, getAllInvoices, getfilterInvoices, searchInvoices, countInvoice, statusCount, amountStatus, getTotalCustomers, getAverageInvoiceValue, getHighestSaleProduct };
 
 
 

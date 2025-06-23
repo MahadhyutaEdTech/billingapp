@@ -80,12 +80,14 @@ export const getReports = async (reportType) => {
       case "organizationwise":
         sqlQuery = `
           SELECT 
-            org_id,
-            COUNT(invoice_id) AS total_invoices,
-            SUM(total_amount) AS total_invoiced_amount,
-            SUM(tax_amount) AS total_tax_collected
-          FROM invoices
-          GROUP BY org_id
+            i.org_id,
+            o.name AS org_name,
+            COUNT(i.invoice_id) AS total_invoices,
+            SUM(i.total_amount) AS total_invoiced_amount,
+            SUM(i.tax_amount) AS total_tax_collected
+          FROM invoices i
+          LEFT JOIN organizations o ON i.org_id = o.org_id
+          GROUP BY i.org_id, o.name
           ORDER BY total_invoiced_amount DESC;
         `;
         break;

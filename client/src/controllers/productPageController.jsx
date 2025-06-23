@@ -24,7 +24,7 @@ export function useProductController() {
 
     try {
       const url = `${API_BASE}/products/get`;
-      console.log("Fetching:", url);
+      //console.log("Fetching:", url);
 
       const response = await axiosInstance.get(url, {
         headers: {
@@ -33,7 +33,7 @@ export function useProductController() {
         },
       });
 
-      console.log("✅ API Response:", response.data);
+      //console.log("✅ API Response:", response.data);
 
       let productData = response.data;
 
@@ -86,18 +86,25 @@ export const fetchProductById = async (productId) => {
   }
 
   try {
-    const url = `${API_BASE}/products/get/${productId}`;
-    console.log("Fetching Product:", url);
-    
+    const url = `${API_BASE}/products/byId?product_id=${productId}`;
+    //console.log("Fetching Product Details:", url);
+
     const response = await axiosInstance.get(url, {
-      headers: { "Authorization": `Bearer ${token}` },
+      headers: { 
+        "Authorization": `Bearer ${token}`,
+        "ngrok-skip-browser-warning": "true"
+      }
     });
 
-    console.log("✅ Product Response:", response.data);
-    return Product.fromData(response.data); // Convert to model if needed
+    if (!response.data || response.data.length === 0) {
+      throw new Error("Product not found");
+    }
+
+    // The backend returns an array, so use the first item
+    return Product.fromData(response.data[0]);
   } catch (error) {
-    console.error("❌ Error fetching product:", error.message);
-    toast.error("Error fetching product details.");
+    console.error("❌ Error fetching product details:", error);
+    toast.error(error.message || "Error fetching product details.");
     return null;
   }
 };
@@ -115,7 +122,7 @@ export const deleteProduct = async (id) => {
     if (!confirmDelete) return false;
 
     const url = `${API_BASE}/products/delete?product_id=${id}`;
-    console.log(`🛠 Sending DELETE request to:`, url);
+    //console.log(`🛠 Sending DELETE request to:`, url);
 
     await axiosInstance.delete(url, {
       headers: { 

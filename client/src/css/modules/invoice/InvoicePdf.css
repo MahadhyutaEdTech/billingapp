@@ -1,0 +1,498 @@
+/* Reset styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box !important;
+}
+
+/* Global Styles */
+.gradient {
+  font-family: Arial, sans-serif!important;
+  background-color: #f9fafb !important;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Invoice Container - Base A4 size */
+.invoice {
+  width: 210mm;
+  min-height: 297mm;
+  background: white;
+  padding: 20mm;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px !important;
+  transform-origin: top center;
+  zoom: 0.75 !important; /* Further reduced zoom to ensure fit */
+  overflow: hidden !important; /* Ensure content is clipped */
+}
+
+.invoice__title {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  padding: 0 10px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  line-height: 1.4;
+}
+
+/* Invoice Header */
+.invoice__header {
+  width: 210mm;
+  min-height: 297mm;
+  background: white;
+  margin: 0;
+  padding: 8mm !important; /* Maximized content space */
+  overflow: hidden !important; /* Ensure overflow is clipped */
+  border: 2px solid #000;
+  box-sizing: border-box !important;
+  transform: scale(0.85) !important; /* Overall scale for fit */
+  transform-origin: top center !important;
+}
+
+/* Adjust font size for invoice number and date */
+.invoice__table tbody tr:first-child td:last-child {
+  font-size: 9px !important; /* Increased font size */
+  word-break: break-all !important;
+  white-space: normal !important; /* Ensure text wraps */
+  padding: 1px !important;
+  text-align: right; /* Keep alignment */
+}
+
+.invoice__table tbody tr:first-child td:last-child b {
+  display: block !important; /* Force invoice number and date onto separate lines */
+}
+
+/* Invoice Details */
+.invoice__details {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.invoice__details td {
+  width: 33%;
+  vertical-align: top;
+  font-size: 14px;
+  padding: 8px;
+}
+
+/* Invoice Table */
+.invoice__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 50px 0;
+  border: 1px solid #000;
+  table-layout: fixed !important;
+}
+.invoice__table th{
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.invoice__table td{
+  font-size: 9px !important;
+}
+
+.invoice__table th,
+.invoice__table td {
+  border: 1px solid #000;
+  text-align: left;
+  padding: 2px !important;
+  /* Slightly reduced font size */
+  box-sizing: border-box !important;
+  word-break: break-word !important; /* Changed from break-all to break-word for better wrapping */
+  overflow-wrap: break-word !important;
+  white-space: normal !important; /* Ensure text wraps */
+  font-weight: bold !important; /* Make text bold */
+}
+
+.invoice__table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+/* Explicit column widths for the product table */
+.invoice__table th:nth-child(1) { width: 5%; } /* Sr No. */
+.invoice__table th:nth-child(2) { width: 20%; } /* Product/Service */
+.invoice__table th:nth-child(3) { width: 10%; } /* HSN/SAC */
+.invoice__table th:nth-child(4) { width: 8%; } /* Quantity */
+.invoice__table th:nth-child(5) { width: 10%; } /* Unit Price ₹ */
+.invoice__table th:nth-child(6) { width: 15%; } /* Taxable Amount ₹ */
+.invoice__table th:nth-child(7) { width: 7%; } /* GST Rate */
+.invoice__table th:nth-child(8) { width: 10%; } /* GST Amount ₹ */
+.invoice__table th:nth-child(9) { width: 15%; } /* Total Amount ₹ (colSpan=2) */
+
+/* Buttons */
+.invoice__button {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.invoice__back-button,
+.invoice__print-button {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.invoice__back-button {
+  background-color: #6c757d;
+  color: white;
+}
+
+.invoice__back-button:hover {
+  background-color: #5a6268;
+}
+
+.invoice__print-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.invoice__print-button:hover {
+  background-color: #0056b3;
+}
+
+/* Error Message */
+.invoice__error {
+  text-align: center;
+  font-size: 16px;
+  color: red;
+}
+
+/* Headers */
+h2, h3, h4 {
+  margin: 10px 0;
+  color: #333;
+}
+
+/* Table wrapper for scrolling */
+.invoice__table-wrapper {
+  max-height: calc(297mm - 120mm);
+  overflow-y: auto;
+}
+
+.no-print {
+  display: none;
+}
+@media print {
+  .dashboard-content {
+    background-color: #ffffff !important;
+  }
+}
+/* DESKTOP STYLES */
+@media screen and (min-width: 1024px) {
+  body {
+    background: #e0e0e0;
+    margin: 0;
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  html, body {
+    height: 100vh;
+    overflow: auto;
+  }
+
+  .invoice {
+    transform: scale(1);
+    overflow: visible;
+  }
+
+  .invoice__header {
+    margin: 20px auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  
+  .no-print {
+    display: inline-block;
+  }
+}
+
+/* TABLET STYLES - Scale to fit */
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+  html, body {
+    height: 100vh;
+    overflow: hidden;
+    background: #e0e0e0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .gradient {
+    padding: 10px;
+    overflow: hidden;
+  }
+
+  .invoice {
+    transform: scale(0.75);
+    margin-top: -50px !important;
+  }
+
+  .invoice__header {
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  .invoice__table-wrapper {
+    overflow: visible;
+    max-height: none;
+  }
+
+  .no-print {
+    display: inline-block;
+  }
+}
+
+/* MOBILE LANDSCAPE STYLES - Scale to fit width */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  html, body {
+    height: 100vh;
+    overflow: hidden;
+    background: #e0e0e0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .gradient {
+    padding: 5px;
+    overflow: hidden;
+  }
+
+  .invoice {
+    transform: scale(0.6);
+    margin-top: -80px !important;
+  }
+
+  .invoice__header {
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  .invoice__table-wrapper {
+    overflow: visible;
+    max-height: none;
+  }
+
+  .no-print {
+    display: inline-block;
+  }
+}
+
+/* MOBILE PORTRAIT STYLES - Scale to fit screen */
+@media screen and (max-width: 768px) and (orientation: portrait) {
+  
+
+  .gradient {
+    padding: 2px;
+    overflow: hidden;
+  }
+
+  .invoice {
+    transform: scale(0.45);
+    margin-top: -120px !important;
+  }
+
+  .invoice__header {
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  .invoice__table-wrapper {
+    overflow: visible;
+    max-height: none;
+  }
+
+  .no-print {
+    display: inline-block;
+  }
+}
+
+/* SMALL MOBILE PORTRAIT - Further scale down */
+@media screen and (max-width: 480px) and (orientation: portrait) {
+  .invoice {
+    transform: scale(0.35);
+    margin-top: -150px !important;
+  }
+
+  .gradient {
+    padding: 1px;
+  }
+}
+
+/* VERY SMALL MOBILE - Extreme scale down */
+@media screen and (max-width: 360px) and (orientation: portrait) {
+  .invoice {
+    transform: scale(0.3);
+    margin-top: -170px !important;
+  }
+}
+
+/* SMALL MOBILE LANDSCAPE - Scale for small landscape screens */
+@media screen and (max-width: 480px) and (orientation: landscape) {
+  .invoice {
+    transform: scale(0.5);
+    margin-top: -100px !important;
+  }
+}
+
+/* PRINT STYLES - Keep original A4 formatting */
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  html, body {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: white;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .invoice {
+    transform: scale(1) !important;
+    margin-top: 0 !important;
+  }
+
+  .invoice__header {
+    width: 210mm;
+    min-height: 267mm;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    margin-top: 30px;
+    padding: 8mm !important;
+    overflow: hidden !important;
+    print-color-adjust: exact;
+    border: 2px solid #000;
+    background: white;
+  }
+
+  .invoice__button {
+    display: none !important;
+  }
+
+  .invoice__table {
+    page-break-inside: auto;
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 60px;
+    border: 1px solid #000;
+    table-layout: fixed !important;
+  }
+
+  .invoice__table tr {
+    page-break-inside: avoid;
+  }
+
+  .invoice__table-wrapper {
+    max-height: none;
+    overflow: visible;
+    transform: scale(0.96);
+    transform-origin: top left;
+  }
+
+  .invoice__table th,
+  .invoice__table td {
+    background: white !important;
+    color: black !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    font-size: 9px !important;
+    word-break: break-all !important;
+  }
+
+  .invoice__details,
+  .invoice__totals {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .invoice__table tr {
+    page-break-inside: avoid;
+  }
+
+  /* Hide all non-essential elements */
+  .sidebar, .header, nav, .invoice__button {
+    display: none !important;
+  }
+
+  .invoice {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 8mm !important;
+    transform: none !important;
+    box-shadow: none;
+    border: none;
+    z-index: 9999;
+  }
+
+  /* Reset any header/sidebar related spacing */
+  body, 
+  .main-content,
+  .content-wrapper,
+  [class*="content-"] {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    left: 0 !important;
+  }
+
+  /* Hide screen-only elements */
+  .gradient,
+  .invoice__button,
+  .invoice__print-button,
+  .invoice__back-button,
+  .no-print {
+    display: none !important;
+  }
+}@media print {
+  html, body {
+    background: white !important;
+  }
+
+  .gradient {
+    background: white !important;
+  }
+}
+@media print {
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+}
+
+@media print {
+  .sidebar,
+  .sidebar-toggle,
+  nav,
+  .dashboard-header,
+  .dashboard-sidebar,
+  .no-print {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}

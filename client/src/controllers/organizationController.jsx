@@ -2,21 +2,13 @@ import organizationModel from "../models/organizationModel";
 
 const organizationController = {
   fetchOrganizations: async (navigate, page = 1, limit = 10) => {
-    const token = localStorage.getItem("authToken");
-
-    if (!token) {
-      console.warn("No authentication token found. Redirecting to login.");
-      navigate("/login");
-      return [];
-    }
-
     try {
-      console.log("📤 Fetching organizations...");
-      console.log(`🔹 Page: ${page}, Limit: ${limit}`);
+      //console.log("📤 Fetching organizations...");
+      //console.log(`🔹 Page: ${page}, Limit: ${limit}`);
 
-      const data = await organizationModel.getOrganizations(token, page, limit);
+      const data = await organizationModel.getOrganizations(page, limit);
 
-      console.log("✅ Data received:", data);
+      //console.log("✅ Data received:", data);
       return data;
 
     } catch (error) {

@@ -1,0 +1,181 @@
+/* Settings Page Overlay */
+.settings-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Settings Dialog */
+.settings-dialog {
+  width: 450px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  padding: 25px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Close Button (Cross Sign) */
+.settings-dialog .close-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.settings-dialog .close-icon::before,
+.settings-dialog .close-icon::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 2px;
+  background-color: #333;
+  border-radius: 1px;
+}
+
+.settings-dialog .close-icon::before {
+  transform: rotate(45deg);
+}
+
+.settings-dialog .close-icon::after {
+  transform: rotate(-45deg);
+}
+
+.settings-dialog .close-icon:hover {
+  opacity: 1;
+}
+
+/* Gradient Header */
+.settings-dialog::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+/* Title */
+.settings-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #1f2937;
+}
+
+/* Settings Sections */
+.settings-section {
+  margin-bottom: 25px;
+}
+
+.settings-section h3 {
+  font-size: 18px;
+  color: #374151;
+  margin-bottom: 12px;
+}
+
+/* Toggle & Dropdown Containers */
+.toggle-container, .dropdown-container {
+  background: #f3f4f6;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  transition: background-color 0.2s ease;
+}
+
+.toggle-container:hover, .dropdown-container:hover {
+  background: #e5e7eb;
+}
+
+/* Input & Select */
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+select {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Settings Button */
+.settings-button {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
+}
+
+.settings-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(99, 102, 241, 0.3);
+}
+
+/* Dark Theme Styles - Scoped to dialog only */
+.dark-mode .settings-dialog {
+  background-color: #1f2937;
+}
+
+.dark-mode .settings-title {
+  color: #ffffff;
+}
+
+.dark-mode .settings-section h3 {
+  color: #ffffff;
+}
+
+.dark-mode .toggle-container {
+  background-color: #374151;
+}
+
+.dark-mode .toggle-container span {
+  color: #ffffff;
+}
+
+.dark-mode .settings-section p {
+  color: #d1d5db;
+}
+
+.dark-mode .close-icon::before,
+.dark-mode .close-icon::after {
+  background-color: #ffffff;
+}
+
+/* Keep overlay semi-transparent regardless of theme */
+.settings-overlay {
+  background: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Remove theme transition to prevent page flicker */
+body, 
+body * {
+  transition: none;
+}
+
+/* Remove previous theme-light and theme-dark classes */
+.theme-light,
+.theme-dark {
+  display: none;
+}

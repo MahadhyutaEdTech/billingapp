@@ -3,6 +3,7 @@ import {
   getExpenses,
   updateExpense,
   deleteExpense,
+  getExpenseById,
 } from "../models/expenseModel.js";
 
 /**
@@ -96,5 +97,37 @@ export const handleDeleteExpense = async (req, res) => {
   } catch (error) {
     console.error("Error deleting expense:", error);
     res.status(500).json({ error: "Failed to delete expense" });
+  }
+};
+
+/**
+ * Get single expense by ID
+ */
+export const handleGetExpenseById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const expense = await getExpenseById(id);
+
+    if (!expense) {
+      return res.status(404).json({ 
+        message: `Expense with ID ${id} not found`,
+        success: false 
+      });
+    }
+
+    const formattedExpense = {
+      ...expense,
+      natureOfFund: Array.isArray(expense.natureOfFund) 
+        ? expense.natureOfFund.map(nf => typeof nf === 'object' ? nf : { type: nf })
+        : [{ type: expense.natureOfFund }]
+    };
+
+    res.status(200).json(formattedExpense);
+  } catch (error) {
+    res.status(500).json({ 
+      error: "Failed to fetch expense details",
+      message: error.message,
+      success: false
+    });
   }
 };

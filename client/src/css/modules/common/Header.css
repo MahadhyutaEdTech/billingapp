@@ -1,0 +1,288 @@
+/* Header styles */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 60px; /* Explicitly define header height */
+  background: linear-gradient(135deg, #2B2D42 0%, #1A1B2E 100%); /* Deep navy to darker navy gradient */
+  color: #FFFFFF;
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 999;
+  border-radius: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  left: 0;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.header-left h1 {
+  font-size: 20px;
+  margin-left: 80px;
+  color: #FFFFFF;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-right input {
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  outline: none;
+  font-size: 13px;
+  width: 160px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  transition: all 0.3s ease;
+}
+
+.header-right input:focus {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: #4ECDC4; /* Teal accent color */
+  box-shadow: 0 0 0 2px rgba(78, 205, 196, 0.3);
+}
+
+.header-right input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.header-right .profile,
+.header-right .settings,
+.header-right .logout,
+.header-right .dark-mode-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header-right .profile:hover,
+.header-right .settings:hover {
+  background-color: #4ECDC4;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(78, 205, 196, 0.3);
+  border-color: #4ECDC4;
+}
+
+.header-right .logout:hover {
+  background-color: #FF6B6B;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+  border-color: #FF6B6B;
+}
+
+/* Specific hover for Dark Mode Toggle */
+.header-right .dark-mode-toggle:hover {
+  background-color: #FFD700; /* Gold-like color for moon/sun */
+  border-color: #FFD700;
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4); /* Stronger gold shadow */
+  transform: scale(1.05) rotate(10deg); /* Slight scale and rotate */
+}
+
+.header-right svg {
+  font-size: 18px;
+  color: #FFFFFF;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.header-right .profile:hover svg,
+.header-right .settings:hover svg {
+  transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.header-right .logout:hover svg {
+  transform: scale(1.1) rotate(-5deg);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Specific SVG hover for Dark Mode Toggle */
+.header-right .dark-mode-toggle:hover svg {
+  color: #2B2D42; /* Darker color for icon when hovered with gold background */
+  transform: scale(1.2) rotate(0deg); /* Larger scale, reset rotate as the button rotates */
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Add tooltip effect */
+.header-right .profile::after,
+.header-right .settings::after,
+.header-right .logout::after,
+.header-right .dark-mode-toggle::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 12px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.header-right .profile:hover::after,
+.header-right .settings:hover::after,
+.header-right .logout:hover::after,
+.header-right .dark-mode-toggle:hover::after {
+  opacity: 1;
+  visibility: visible;
+  bottom: -35px;
+}
+
+/* Dark Mode Styles */
+body.dark-mode .header {
+  background: linear-gradient(135deg, #1A1B2E 0%, #0F1017 100%); /* Darker gradient for dark mode */
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .header-left h1 {
+  color: #FFFFFF;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .header-right input {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+
+body.dark-mode .header-right input:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: #4ECDC4;
+  box-shadow: 0 0 0 2px rgba(78, 205, 196, 0.2);
+}
+
+body.dark-mode .header-right input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+body.dark-mode .header-right .profile,
+body.dark-mode .header-right .settings,
+body.dark-mode .header-right .logout,
+body.dark-mode .header-right .dark-mode-toggle {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #BBBBBB; /* Lighter icon color in dark mode */
+}
+
+body.dark-mode .header-right svg {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+body.dark-mode .header-right .profile:hover,
+body.dark-mode .header-right .settings:hover {
+  background-color: #4ECDC4;
+  box-shadow: 0 4px 12px rgba(78, 205, 196, 0.4);
+}
+
+body.dark-mode .header-right .logout:hover {
+  background-color: #FF6B6B;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+}
+
+/* Specific dark mode hover for Dark Mode Toggle */
+body.dark-mode .header-right .dark-mode-toggle:hover {
+  background-color: #FFD700; /* Gold-like color for moon/sun */
+  border-color: #FFD700;
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4); /* Stronger gold shadow */
+  transform: scale(1.05) rotate(10deg); /* Slight scale and rotate */
+}
+
+body.dark-mode .header-right .dark-mode-toggle:hover svg {
+  color: #1A1B2E; /* Darker color for icon when hovered with gold background in dark mode */
+  transform: scale(1.2) rotate(0deg);
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .header {
+    padding: 6px 12px;
+  }
+
+  .header-left h1 {
+    font-size: 18px;
+    margin-left: 12px;
+  }
+
+  .header-right {
+    gap: 8px;
+  }
+
+  .header-right input {
+    width: 120px;
+    padding: 5px 10px;
+  }
+
+  .header-right .profile,
+  .header-right .settings,
+  .header-right .logout,
+  .header-right .dark-mode-toggle {
+    width: 32px;
+    height: 32px;
+    padding: 6px;
+  }
+
+  .header-right svg {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header {
+    padding: 5px 10px;
+  }
+
+  .header-right input {
+    display: none;
+  }
+
+  .header-right {
+    gap: 6px;
+  }
+
+  .header-left h1 {
+    font-size: 16px;
+    margin-left: 8px;
+  }
+
+  .header-right .profile,
+  .header-right .settings,
+  .header-right .logout,
+  .header-right .dark-mode-toggle {
+    width: 28px;
+    height: 28px;
+    padding: 5px;
+  }
+
+  .header-right svg {
+    font-size: 14px;
+  }
+}
+

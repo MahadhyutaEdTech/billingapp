@@ -1,0 +1,164 @@
+.update-quotation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.update-quotation-wrapper {
+  background: #fff;
+  padding: 12px 18px 16px 18px;
+  border-radius: 10px;
+  width: 520px;
+  max-width: 98vw;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  min-height: unset;
+}
+
+.update-quotation-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.update-quotation-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.update-quotation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.update-quotation-form label {
+  text-align: left;
+  font-weight: 600;
+  margin-top: 6px;
+  margin-bottom: 2px;
+}
+
+.update-quotation-input {
+  width: 100%;
+  padding: 7px 10px;
+  margin-top: 2px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.update-quotation-btn-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  gap: 8px;
+}
+
+.update-quotation-btn-save {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.update-quotation-btn-save:hover {
+  background-color: #45a049;
+}
+
+.update-quotation-btn-cancel {
+  background-color: #f44336;
+  color: white;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.update-quotation-btn-cancel:hover {
+  background-color: #d32f2f;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .update-quotation-wrapper {
+    width: 98vw;
+    padding: 8px 4vw 12px 4vw;
+    min-width: 0;
+  }
+  .update-quotation-title {
+    font-size: 17px;
+  }
+  .update-quotation-btn-save,
+  .update-quotation-btn-cancel {
+    font-size: 14px;
+    padding: 8px 8px;
+  }
+}
+
+/* Dark Mode Styles */
+.dark-mode .update-quotation-modal {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.dark-mode .update-quotation-wrapper {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .update-quotation-close {
+  color: #e0e0e0;
+}
+
+.dark-mode .update-quotation-form label {
+  color: #b0b0b0;
+}
+
+.dark-mode .update-quotation-input {
+  background-color: #2c2c2c;
+  border-color: #404040;
+  color: #e0e0e0;
+}
+
+.dark-mode .update-quotation-btn-save {
+  background-color: #1e5a2d;
+}
+
+.dark-mode .update-quotation-btn-save:hover {
+  background-color: #164020;
+}
+
+.dark-mode .update-quotation-btn-cancel {
+  background-color: #8b2029;
+}
+
+.dark-mode .update-quotation-btn-cancel:hover {
+  background-color: #6b1820;
+}
+
+/* Add smooth transitions */
+* {
+  transition: background-color 0.3s ease,
+              color 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+} 

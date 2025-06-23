@@ -21,12 +21,37 @@ const comparePassword= async(password, hashPassword)=>{
 //function for generating jwt token
 
 const generateToken= async(user)=>{
-    return jwt.sign({username:user.userName,email:user.email},
+    // Generate access token
+    const accessToken = jwt.sign(
+        { 
+            userId: user.user_id || user.id,
+            email: user.email,
+            userName: user.userName || user.username
+        },
         process.env.JWTKEY,
-        {expiresIn:"2h"}
-
+        { expiresIn: '1h' }
     );
+
+    // Generate refresh token
+    const refreshToken = jwt.sign(
+        { userId: user.user_id || user.id },
+        process.env.REFRESH_TOKEN_SECRET,
+        { expiresIn: '7d' }
+    );
+
+    return {
+        accessToken,
+        refreshToken
+    };
 }
+
+export const generateEmailVerificationToken = (userId) => {
+    return jwt.sign(
+        { userId },
+        process.env.EMAIL_VERIFICATION_SECRET,
+        { expiresIn: '24h' }
+    );
+};
 
 //export all
 export { generateHashedPassword, comparePassword, generateToken };

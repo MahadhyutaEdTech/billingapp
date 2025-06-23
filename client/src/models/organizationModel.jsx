@@ -2,22 +2,20 @@ import axiosInstance from '../utils/axiosConfig';
 import { API_BASE } from "../config/config";
 
 const organizationModel = {
-  getOrganizations: async (token, page = 1, limit = 10) => {
-    console.log("📤 Sending request to fetch organizations...");
-    console.log("🔹 API URL:", `${API_BASE}/organization/get`);
-    console.log("🔹 Params:", { page, limit });
-    console.log("🔹 Token:", token);
+  getOrganizations: async (page = 1, limit = 10) => {
+   // console.log("📤 Sending request to fetch organizations...");
+    //console.log("🔹 API URL:", `${API_BASE}/organization/get`);
+    //console.log("🔹 Params:", { page, limit });
 
     try {
       const response = await axiosInstance.get(`${API_BASE}/organization/get`, {
         headers: {
-          Authorization: `Bearer ${token}`,
           "ngrok-skip-browser-warning": "true",
         },
         params: { page, limit },
       });
 
-      console.log("✅ Response received:", response.data);
+     // console.log("✅ Response received:", response.data);
       return response.data;
     } catch (error) {
       console.error("❌ Error fetching organizations:", error);
@@ -55,7 +53,7 @@ const organizationModel = {
         },
       });
 
-      console.log("🗑️ Delete Response:", response.data);
+      //console.log("🗑️ Delete Response:", response.data);
 
       if (response.status === 200 && response.data.message.includes("deleted successfully")) {
         alert("✅ Organization deleted successfully!");

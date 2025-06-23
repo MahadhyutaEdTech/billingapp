@@ -13,13 +13,13 @@ return res;
 
 const highestSale=async()=>{
     const sqlQuery=`SELECT 
-    p. product_name , 
+    p.product_name, 
     SUM(ii.quantity) AS total_sold 
 FROM invoice_items ii
 JOIN product p ON ii.product_id = p.product_id 
-GROUP BY p.product_id 
+GROUP BY p.product_id, p.product_name 
 ORDER BY total_sold DESC
-LIMIT 1`;
+LIMIT 5`;
 const [res]=await connectionPool.execute(sqlQuery);
 return res;
 }

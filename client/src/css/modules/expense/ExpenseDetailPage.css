@@ -1,0 +1,262 @@
+.expense-detail-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.expense-detail-dialog-container {
+  background: #fff;
+  width: 75%;
+  max-width: 700px;
+  border-radius: 8px;
+  font-family: 'Arial', sans-serif;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.expense-detail-dialog-container.compact {
+  padding: 6px 10px;
+  width: 65%;
+}
+
+.expense-detail-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.expense-detail-dialog-header h3 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.expense-detail-close-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.expense-detail-dialog-body {
+  padding: 8px 10px;
+}
+
+.expense-detail-grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.expense-detail-grid-container.compact {
+  gap: 6px;
+}
+
+.expense-detail-box {
+  background: #f5f5f5;
+  border-radius: 4px;
+  padding: 6px 8px;
+  flex: 1 1 calc(33.3% - 10px);
+  min-width: 180px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.05);
+}
+
+.expense-detail-box.compact h4 {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.expense-detail-box.compact {
+  padding: 6px;
+}
+
+.expense-detail-box.full-width {
+  flex: 1 1 100%;
+}
+
+.expense-detail-label {
+  font-size: 12px;
+  margin-bottom: 2px;
+  color: #333;
+  line-height: 1.3;
+}
+
+.expense-detail-value {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.expense-detail-credit {
+  color: #059669;
+}
+
+.expense-detail-debit {
+  color: #dc2626;
+}
+
+.expense-detail-dialog-footer {
+  padding: 6px 12px;
+  text-align: right;
+  border-top: 1px solid #eee;
+}
+
+.expense-detail-primary-button {
+  padding: 4px 10px;
+  font-size: 13px;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.expense-detail-primary-button:hover {
+  background: #125ca1;
+}
+
+/* Dark Mode Styles */
+.dark-mode .expense-detail-dialog-overlay {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.dark-mode .expense-detail-dialog-container {
+  background: #1a1a1a;
+  color: #e0e0e0;
+}
+
+.dark-mode .expense-detail-dialog-header {
+  border-bottom-color: #333;
+}
+
+.dark-mode .expense-detail-box {
+  background: #2a2a2a;
+  color: #e0e0e0;
+}
+
+.dark-mode .expense-detail-label {
+  color: #b0b0b0;
+}
+
+.dark-mode .expense-detail-value {
+  color: #ffffff;
+}
+
+.dark-mode .expense-detail-dialog-footer {
+  border-top-color: #333;
+}
+
+/* Dark Mode Styles */
+.dark-mode .dialog-overlay {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.dark-mode .dialog-container {
+  background: #1e1e1e;
+  color: #e0e0e0;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .dialog-header {
+  background: #242424;
+  border-bottom-color: #2c2c2c;
+}
+
+.dark-mode .dialog-header h3 {
+  color: #66a3ff;
+}
+
+.dark-mode .close-button {
+  color: #e0e0e0;
+  background: #333;
+}
+
+.dark-mode .close-button:hover {
+  background: #ff4757;
+  color: white;
+}
+
+.dark-mode .detail-box {
+  background: #2b2b2b;
+  border: 1px solid #3a3a3a;
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode .box-title {
+  color: #a0aec0;
+}
+
+.dark-mode .label {
+  color: #a0aec0;
+}
+
+.dark-mode .value {
+  color: #e0e0e0;
+}
+
+.dark-mode .value.credit {
+  color: #059669;
+}
+
+.dark-mode .value.debit {
+  color: #dc2626;
+}
+
+.dark-mode .dialog-footer {
+  border-top: 1px solid #2c2c2c;
+}
+
+.dark-mode .primary-button {
+  background: #059669;
+  color: #ffffff;
+}
+
+.dark-mode .primary-button:hover {
+  background: #047857;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .dialog-container {
+    width: 95%;
+    margin: 20px auto;
+    max-height: 90vh;
+  }
+  
+  .grid-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .detail-box {
+    padding: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .dialog-container {
+    width: 98%;
+    margin: 10px auto;
+    padding: 1rem;
+  }
+  
+  .dialog-header h3 {
+    font-size: 1.1rem;
+  }
+  
+  .box-title {
+    font-size: 0.9rem;
+  }
+  
+  .label, .value {
+    font-size: 0.85rem;
+  }
+}

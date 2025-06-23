@@ -14,14 +14,14 @@ export const fetchReports = async (reportType) => {
       params: { type: reportType }
     });
 
-    console.log('Raw API Response:', response.data); // Debug log
+    //console.log('Raw API Response:', response.data); // Debug log
 
     if (response.data?.success && Array.isArray(response.data.data)) {
       const mappedData = response.data.data.map(item => {
-        console.log('Processing item:', item); // Debug log
+        //console.log('Processing item:', item); // Debug log
         return createReport(item);
       });
-      console.log('Mapped Data:', mappedData); // Debug log
+      //console.log('Mapped Data:', mappedData); // Debug log
       return mappedData;
     }
     throw new Error("Invalid data format received");

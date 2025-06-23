@@ -1,0 +1,83 @@
+.dashboard-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main-layout {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 80px !important; /* Initial margin for collapsed sidebar width */
+  width: calc(100% - 80px) !important; /* Adjust width based on collapsed sidebar */
+  transition: margin-left 0.3s ease, width 0.3s ease; /* Smooth transition for adjustment */
+}
+
+.main-layout.sidebar-active {
+  margin-left: 250px !important; /* Expanded sidebar width */
+  width: calc(100% - 250px) !important; /* Adjust width based on expanded sidebar */
+}
+
+/* Media queries for responsive layout adjustments */
+@media screen and (max-width: 768px) {
+  .main-layout {
+    margin-left: 0 !important; /* No margin when sidebar is hidden on mobile */
+    width: 100% !important; /* Take full width when sidebar is hidden */
+  }
+
+  .main-layout.sidebar-active {
+    margin-left: 250px !important; /* Expanded sidebar width when active on mobile */
+    width: calc(100% - 250px) !important; /* Adjust width when sidebar is open on mobile */
+  }
+}
+
+.dashboard-content {
+  flex-grow: 1;
+  padding: 20px;
+  padding-top: 40px; /* Increased padding further to ensure header visibility */
+  overflow-y: auto;
+  background-color: #f0f2f5; /* Light grey background for content */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.dashboard-content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Dark mode adjustments for content area */
+.dark-mode .dashboard-content {
+  background-color: #2c3a4d;
+}
+
+.dark-mode .main-layout {
+  border-left: 1px solid #3b4b60; /* Darker border for contrast */
+}
+
+/* Ensure the headerbar occupies its space */
+.header-bar {
+  height: 60px; /* Assuming header bar has a fixed height */
+  background-color: #f8f9fa; /* Light background */
+  border-bottom: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 999; /* Ensure it stays above content */
+}
+
+.dark-mode .header-bar {
+  background-color: #1f2a37;
+  border-bottom: 1px solid #3b4b60;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Add smooth transitions */
+* {
+  transition: background-color 0.3s ease,
+              color 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+

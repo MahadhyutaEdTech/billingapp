@@ -1,0 +1,389 @@
+.project-update-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.project-update-dialog {
+  background: white;
+  padding: 0.75rem;
+  border-radius: 8px;
+  width: 50%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  
+  /* Hide scrollbar for Webkit browsers (Chrome, Safari, Edge) */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+/* Hide scrollbar for Webkit browsers */
+.project-update-dialog::-webkit-scrollbar {
+  display: none;
+}
+
+.project-update-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.project-update-header h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.close-btn:hover {
+  color: #1a1a1a;
+}
+
+.project-update-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.form-group label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 0.4rem 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: #1a1a1a;
+  background: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+  outline: none;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.cancel-btn {
+  padding: 0.4rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #4b5563;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancel-btn:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.update-btn {
+  padding: 0.4rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: #4f46e5;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.update-btn:hover {
+  background: #4338ca;
+}
+
+.update-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Dark Mode Styles */
+.dark-mode .project-update-dialog {
+  background: #1e1e1e;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .project-update-header {
+  border-bottom-color: #404040;
+}
+
+.dark-mode .project-update-header h2 {
+  color: #ffffff;
+}
+
+.dark-mode .close-btn {
+  color: #b0b0b0;
+}
+
+.dark-mode .close-btn:hover {
+  color: #ffffff;
+}
+
+.dark-mode .form-group label {
+  color: #e0e0e0;
+}
+
+.dark-mode .form-group input,
+.dark-mode .form-group select,
+.dark-mode .form-group textarea {
+  background: #2c2c2c;
+  border-color: #404040;
+  color: #ffffff;
+}
+
+.dark-mode .form-group input:focus,
+.dark-mode .form-group select:focus,
+.dark-mode .form-group textarea:focus {
+  border-color: #66a3ff;
+  box-shadow: 0 0 0 2px rgba(102, 163, 255, 0.1);
+}
+
+.dark-mode .form-actions {
+  border-top-color: #404040;
+}
+
+.dark-mode .cancel-btn {
+  background: #2c2c2c;
+  border-color: #404040;
+  color: #e0e0e0;
+}
+
+.dark-mode .cancel-btn:hover {
+  background: #3a3a3a;
+  border-color: #666666;
+}
+
+.dark-mode .update-btn {
+  background: #66a3ff;
+}
+
+.dark-mode .update-btn:hover {
+  background: #3b82f6;
+}
+
+.dark-mode .update-btn:disabled {
+  background: #666666;
+}
+
+.dark-mode .error-message {
+  color: #ff6b6b;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 900px) {
+  .project-update-dialog {
+    width: 90%;
+    max-width: 98vw;
+    padding: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .project-update-dialog {
+    width: 98%;
+    padding: 0.25rem;
+  }
+  .form-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Dark Mode Styles */
+.project-update-container.dark-mode {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.project-update-container.dark-mode .project-update-dialog {
+  background-color: #2d2d2d;
+  border: 1px solid #444;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.project-update-container.dark-mode .project-update-header {
+  background-color: #333;
+  border-bottom: 1px solid #555;
+}
+
+.project-update-container.dark-mode .project-update-header h2 {
+  color: #ffffff;
+}
+
+.project-update-container.dark-mode .close-btn {
+  color: #ffffff;
+  background-color: #444;
+}
+
+.project-update-container.dark-mode .close-btn:hover {
+  background-color: #555;
+}
+
+.project-update-container.dark-mode .project-update-form {
+  background-color: #2d2d2d;
+}
+
+.project-update-container.dark-mode .form-group label {
+  color: #ffffff;
+}
+
+.project-update-container.dark-mode .form-group input,
+.project-update-container.dark-mode .form-group select,
+.project-update-container.dark-mode .form-group textarea {
+  background-color: #1a1a1a;
+  border: 1px solid #555;
+  color: #ffffff;
+}
+
+.project-update-container.dark-mode .form-group input:focus,
+.project-update-container.dark-mode .form-group select:focus,
+.project-update-container.dark-mode .form-group textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.project-update-container.dark-mode .form-row {
+  border-bottom: 1px solid #444;
+}
+
+.project-update-container.dark-mode .dialog-buttons {
+  background-color: #333;
+  border-top: 1px solid #555;
+}
+
+.project-update-container.dark-mode .save-btn {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.project-update-container.dark-mode .save-btn:hover {
+  background-color: #0056b3;
+}
+
+.project-update-container.dark-mode .cancel-btn {
+  background-color: #6c757d;
+  color: #ffffff;
+}
+
+.project-update-container.dark-mode .cancel-btn:hover {
+  background-color: #545b62;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .project-update-dialog {
+    width: 95%;
+    margin: 20px auto;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .form-group {
+    width: 100%;
+  }
+  
+  .dialog-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .save-btn,
+  .cancel-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-update-dialog {
+    width: 98%;
+    margin: 10px auto;
+    padding: 15px;
+  }
+  
+  .project-update-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}

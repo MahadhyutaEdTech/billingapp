@@ -9,13 +9,18 @@ import {
   fetchMonthlyRevenue,
   fetchProfitTrend,
   fetchHighestProductSale,
+  fetchTotalCustomers,
+  fetchAverageInvoiceValue,
 } from "../models/dashboardModel";
+import axiosInstance from '../utils/axiosConfig';
 
 export const useDashboardData = () => {
-  const [totalInvoices, setTotalInvoices] = useState(10); // Static default
+  const [totalInvoices, setTotalInvoices] = useState(0);
   const [filteredInvoices, setFilteredInvoices] = useState([]);
-  const [pendingPayment, setPendingPayment] = useState(5000);
-  const [paidInvoice, setPaidInvoices] = useState(15000);
+  const [pendingPayment, setPendingPayment] = useState(0);
+  const [paidInvoice, setPaidInvoices] = useState(0);
+  const [totalCustomers, setTotalCustomers] = useState(0);
+  const [averageInvoiceValue, setAverageInvoiceValue] = useState(0);
   const [invoiceData, setInvoiceData] = useState({
     labels: ["Paid", "Pending"],
     datasets: [{ data: [70, 30], backgroundColor: ["#4CAF50", "#FFC107"] }],
@@ -48,6 +53,8 @@ export const useDashboardData = () => {
           revenueData,
           profitData,
           highestSaleData,
+          customers,
+          averageValue
         ] = await Promise.all([
           fetchTotalInvoices(),
           fetchPendingPayments(),
@@ -57,6 +64,8 @@ export const useDashboardData = () => {
           fetchMonthlyRevenue(),
           fetchProfitTrend(),
           fetchHighestProductSale(),
+          fetchTotalCustomers(),
+          fetchAverageInvoiceValue()
         ]);
 
         setTotalInvoices(total);
@@ -67,6 +76,8 @@ export const useDashboardData = () => {
         setMonthlyRevenue(revenueData);
         setProfitTrend(profitData);
         setHighestSaleProduct(highestSaleData);
+        setTotalCustomers(customers);
+        setAverageInvoiceValue(averageValue);
       } catch (error) {
         console.error("Error loading dashboard data:", error);
       } finally {
@@ -82,6 +93,8 @@ export const useDashboardData = () => {
     filteredInvoices,
     pendingPayment,
     paidInvoice,
+    totalCustomers,
+    averageInvoiceValue,
     invoiceData,
     monthlyRevenue,
     profitTrend,

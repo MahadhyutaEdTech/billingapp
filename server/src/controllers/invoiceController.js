@@ -1,4 +1,4 @@
-import { createInvoice, getInvoice,updateInvoice,deleteInvoice, getAllInvoices ,getfilterInvoices,searchInvoices,countInvoice,statusCount,amountStatus} from "../models/invoiceModel.js";
+import { createInvoice, getInvoice,updateInvoice,deleteInvoice, getAllInvoices ,getfilterInvoices,searchInvoices,countInvoice,statusCount,amountStatus,getTotalCustomers,getAverageInvoiceValue,getHighestSaleProduct} from "../models/invoiceModel.js";
 const createInvoices = async (req, res) => {
     const { customer_id, org_id,invoice_date, due_date, advance,total_amount,discount,due_amount, tax_amount, status, created_at,gst_no,gst_number,gst_type, shippingAddresses, products } = req.body;
   console.log(req.body);
@@ -148,4 +148,55 @@ const searchInvoicesAPI = async (req, res) => {
     }
 };
 
-export {createInvoices, getInvoices, updateInvoices, deleteInvoices,getAllInvoice,getfilerInvoice,searchInvoicesAPI,countInvoices,statusCounts,amountStatuses};
+const getTotalCustomersCount = async (req, res) => {
+  try {
+    const result = await getTotalCustomers();
+    res.status(200).json({ total_customers: result });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server Error", error });
+  }
+};
+
+const getAverageInvoice = async (req, res) => {
+  try {
+    console.log("📤 Fetching average invoice value...");
+    const result = await getAverageInvoiceValue();
+    console.log("✅ Average invoice value:", result);
+    
+    // Ensure we're sending a number
+    const averageValue = parseFloat(result) || 0;
+    console.log("💰 Formatted average value:", averageValue);
+    
+    res.status(200).json({ 
+      average_value: averageValue,
+      message: "Average invoice value calculated successfully"
+    });
+  } catch (error) {
+    console.error("❌ Error in getAverageInvoice:", error);
+    res.status(500).json({ 
+      message: "Server Error", 
+      error: error.message,
+      average_value: 0 
+    });
+  }
+};
+
+const getHighestSaleProducts = async (req, res) => {
+  try {
+    console.log("📤 Fetching highest sale products...");
+    const result = await getHighestSaleProduct();
+    console.log("✅ Highest sale products:", result);
+    
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("❌ Error in getHighestSaleProducts:", error);
+    res.status(500).json({ 
+      message: "Server Error", 
+      error: error.message,
+      data: [] 
+    });
+  }
+};
+
+export {createInvoices, getInvoices, updateInvoices, deleteInvoices,getAllInvoice,getfilerInvoice,searchInvoicesAPI,countInvoices,statusCounts,amountStatuses,getTotalCustomersCount,getAverageInvoice,getHighestSaleProducts};

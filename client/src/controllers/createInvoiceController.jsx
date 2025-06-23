@@ -34,7 +34,7 @@ export const fetchCustomers = async (setCustomerList) => {
       };
     });
 
-    console.log("Mapped customers:", customers); // Debug log
+    //console.log("Mapped customers:", customers); // Debug log
     setCustomerList(customers);
   } catch (error) {
     console.error("❌ Error fetching customers:", error);
@@ -73,7 +73,7 @@ export const fetchGstType = async (orgGst, customerGst, callback) => {
     return;
   }
 
-  console.log("Sending GST Numbers to API:", { orgGst, customerGst });
+  //console.log("Sending GST Numbers to API:", { orgGst, customerGst });
 
   try {
     const response = await axiosInstance.post(
@@ -91,7 +91,7 @@ export const fetchGstType = async (orgGst, customerGst, callback) => {
       }
     );
 
-    console.log("GST API Response:", response.data);
+    //console.log("GST API Response:", response.data);
     
     if (response.data && response.data.gstType) {
       callback(response.data.gstType);
@@ -117,7 +117,7 @@ export const saveInvoice = async (invoiceData) => {
     return;
   }
 
-  console.log("Sending invoice data:", invoiceData);
+  //console.log("Sending invoice data:", invoiceData);
 
   try {
     const response = await axiosInstance.post(
@@ -171,7 +171,7 @@ export const fetchInvoices = async () => {
 // Fetch list of organizations with token authentication
 export const fetchOrganizations = async (setOrganizationList) => {
   try {
-    console.log("Fetching organizations...");
+    //console.log("Fetching organizations...");
 
     // Retrieve token (Assuming it's stored in localStorage)
     const token = getAuthToken();
@@ -186,7 +186,7 @@ export const fetchOrganizations = async (setOrganizationList) => {
       },
     });
 
-    console.log("Response received:", response);
+    //console.log("Response received:", response);
 
     // Check if response contains valid data
     if (!response.data || !Array.isArray(response.data)) {

@@ -1,0 +1,399 @@
+/* Global Box Sizing */
+* {
+  box-sizing: border-box;
+}
+
+.modern-invoice-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff !important;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px; /* Reduced padding */
+}
+
+.modern-invoice {
+  width: 210mm; /* A4 width */
+  min-height: 297mm; /* A4 height */
+  background: white;
+  padding: 15mm 20mm; /* Adjusted padding to match image */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  color: #333;
+  position: relative; /* For absolute positioning of elements like page number */
+}
+
+.modern-invoice-header {
+  .invoice-action-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+} 
+}
+
+.modern-invoice-header .company-logo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.modern-invoice-header .logo {
+  max-width: 80px; /* Further adjusted size */
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 5px;
+}
+
+.modern-invoice-header .company-name {
+  font-size: 16px; /* Adjusted size */
+  font-weight: 700 !important; /* Made bolder */
+  color: #000 !important; /* Made darker */
+  margin-bottom: 2px;
+}
+
+.modern-invoice-header .company-slogan {
+  font-size: 9px;
+  font-weight: 600 !important; /* Made bolder */
+  color: #333 !important; /* Made darker */
+}
+
+.modern-invoice-header .invoice-title-section {
+  text-align: right;
+}
+
+.modern-invoice-header .invoice-title-section h1 {
+  font-size: 22px; /* Adjusted size */
+  font-weight: 800 !important; /* Made bolder */
+  color: #000 !important; /* Made darker */
+  margin-bottom: 5px;
+}
+
+.modern-invoice-header .invoice-info p {
+  font-size: 10px; /* Adjusted size */
+  line-height: 1.3;
+  margin: 0;
+  font-weight: 600 !important; /* Made bolder */
+  color: #333 !important; /* Made darker */
+}
+
+.modern-invoice-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px; /* Adjusted margin */
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.modern-invoice-details .bill-to-section {
+  width: 100%;
+}
+
+.modern-invoice-details h3 {
+  font-size: 13px; /* Adjusted font size */
+  font-weight: 700 !important; /* Made bolder */
+  color: #000 !important; /* Made darker */
+  margin-bottom: 3px; /* Adjusted margin */
+  border-bottom: none;
+  padding-bottom: 0;
+  display: block;
+}
+
+.modern-invoice-details p {
+  font-size: 10px;
+  margin: 2px 0;
+  line-height: 1.3;
+  font-weight: 600 !important; /* Made bolder */
+  color: #333 !important; /* Made darker */
+}
+
+.invoice-date-bar {
+  background-color: #1a2a6b; /* Dark blue background */
+  color: white;
+  padding: 6px 15px; /* Adjusted padding */
+  margin-bottom: 15px; /* Margin below the bar */
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.invoice-date-bar p {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.invoice-date-bar span {
+  margin: 0 8px; /* Adjusted separator margin */
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.modern-invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px; /* Adjusted margin */
+  table-layout: fixed !important;
+}
+
+.modern-invoice-table th,
+.modern-invoice-table td {
+  border: 1px solid #eee;
+  padding: 5px 7px !important; /* Further reduced padding */
+  text-align: left;
+  font-size: 9px !important; /* Further smaller font for table content */
+  word-wrap: break-word !important;
+  white-space: normal !important;
+  overflow: hidden;
+  font-weight: 600 !important; /* Made bolder */
+  color: #333 !important; /* Made darker */
+}
+
+.modern-invoice-table th {
+  background-color: #1a2a6b !important;
+  color: white !important;
+  font-weight: 700 !important; /* Ensure headers are very bold */
+  text-transform: uppercase;
+  font-size: 9px !important; /* Keep font same as td for consistency if needed */
+  text-overflow: ellipsis;
+  text-align: center; /* Center align headers */
+}
+
+/* Finalized Explicit column widths to prevent overflow, now important */
+.modern-invoice-table th:nth-child(1) { width: 3% !important; }   /* # */
+.modern-invoice-table th:nth-child(2) { width: 25% !important; }  /* Product/Service */
+.modern-invoice-table th:nth-child(3) { width: 10% !important; }  /* HSN/SAC */
+.modern-invoice-table th:nth-child(4) { width: 6% !important; }   /* Qty */
+.modern-invoice-table th:nth-child(5) { width: 10% !important; }  /* Unit Price */
+.modern-invoice-table th:nth-child(6) { width: 9% !important; }   /* Discount */
+.modern-invoice-table th:nth-child(7) { width: 10% !important; }  /* Taxable Amt. */
+.modern-invoice-table th:nth-child(8) { width: 7% !important; }   /* GST Rate */
+.modern-invoice-table th:nth-child(9) { width: 9% !important; }   /* GST Amt. */
+.modern-invoice-table th:nth-child(10) { width: 11% !important; }  /* Total Amt. */
+
+.modern-invoice-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.modern-invoice-table .text-right {
+  text-align: right !important;
+}
+
+.modern-invoice-table .text-center {
+  text-align: center !important;
+}
+
+.modern-invoice-summary-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px; /* Adjusted margin */
+}
+
+.modern-invoice-summary {
+  width: 45%; /* Adjusted width to match image */
+  /* margin-left: auto; already handled by flex-end on container */
+}
+
+.modern-invoice-summary p {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px; /* Adjusted size */
+  padding: 3px 0;
+  border-bottom: 1px dashed #eee;
+  font-weight: 600 !important; /* Made bolder */
+  color: #333 !important; /* Made darker */
+}
+
+.modern-invoice-summary p strong {
+  font-weight: 700 !important; /* Made bolder */
+}
+
+.modern-invoice-summary .grand-total {
+  font-size: 14px; /* Adjusted size */
+  font-weight: 800 !important; /* Made bolder */
+  color: #000 !important; /* Made darker */
+  border-top: 2px solid #000;
+  padding-top: 5px;
+  margin-top: 5px;
+}
+
+.modern-invoice-bank-details {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.modern-invoice-bank-details h3 {
+  font-size: 13px;
+  font-weight: 700 !important; /* Made bolder */
+  color: #000 !important; /* Made darker */
+  margin-bottom: 3px;
+  border-bottom: none;
+  padding-bottom: 0;
+  display: block;
+}
+
+.modern-invoice-bank-details p {
+  font-size: 10px;
+  margin: 2px 0;
+  font-weight: 600 !important; /* Made bolder */
+  color: #333 !important; /* Made darker */
+}
+
+.modern-invoice-terms {
+  margin-top: 10px;
+  font-size: 9px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.modern-invoice-terms h4 {
+  font-size: 11px;
+  font-weight: 700 !important; /* Made bolder */
+  color: #000 !important; /* Made darker */
+  margin-bottom: 3px;
+  border-bottom: none;
+  padding-bottom: 0;
+  display: block;
+}
+
+.modern-invoice-terms ul {
+  list-style: decimal;
+  padding-left: 20px;
+  margin-top: 3px;
+}
+
+.modern-invoice-terms ul li {
+  font-weight: 600 !important; /* Made bolder */
+  color: #333 !important; /* Made darker */
+}
+
+.modern-invoice-signature {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px; /* Adjusted margin */
+  text-align: right;
+}
+
+.modern-invoice-signature .signature-line {
+  border-top: 1px solid #000;
+  padding-top: 5px;
+  width: 120px; /* Adjusted width */
+  font-size: 10px;
+  font-weight: 700 !important; /* Made bolder */
+  color: #000 !important; /* Made darker */
+}
+
+.modern-invoice-signature img {
+  max-height: 40px !important; /* Ensure visibility */
+  max-width: 100px !important; /* Ensure visibility */
+  object-fit: contain;
+  margin-bottom: 3px;
+}
+
+.modern-invoice-signature .signature-image {
+  display: block !important; /* Ensure the image is always displayed */
+}
+
+.modern-invoice-footer {
+  position: absolute;
+  bottom: 8mm; /* Adjusted position */
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 8px;
+  font-weight: 600 !important; /* Made bolder */
+  color: #333 !important; /* Made darker */
+}
+
+/* Print Styles for Modern Invoice */
+@media print {
+  html,
+  body {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    padding: 0;
+    overflow: hidden !important;
+    background: white;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .modern-invoice-container {
+    background-color: white !important;
+    padding: 0 !important;
+    min-height: auto;
+    align-items: flex-start;
+  }
+
+  .modern-invoice {
+    width: 210mm !important;
+    min-height: 297mm !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding: 15mm 20mm !important; /* Ensure padding is maintained for print */
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+  }
+
+  .modern-invoice-header,
+  .modern-invoice-details,
+  .modern-invoice-table,
+  .modern-invoice-totals,
+  .modern-invoice-bank-details,
+  .modern-invoice-terms,
+  .modern-invoice-signature,
+  .modern-invoice-footer {
+    break-inside: avoid;
+  }
+
+  .modern-invoice,
+  .modern-invoice-header .invoice-info p,
+  .modern-invoice-details p,
+  .modern-invoice-table th,
+  .modern-invoice-table td,
+  .modern-invoice-summary p,
+  .modern-invoice-bank-details p,
+  .modern-invoice-terms,
+  .modern-invoice-signature .signature-line,
+  .modern-invoice-footer p {
+    color: black !important;
+    font-weight: bold !important; /* Ensure boldness on print */
+  }
+
+  .modern-invoice-table th {
+    background-color: #e0e0e0 !important;
+  }
+
+  .modern-invoice-header .invoice-title-section h1,
+  .modern-invoice-details h3,
+  .modern-invoice-bank-details h3,
+  .modern-invoice-terms h4,
+  .modern-invoice-summary .grand-total {
+    color: #333 !important;
+  }
+
+  .modern-invoice-details h3,
+  .modern-invoice-bank-details h3,
+  .modern-invoice-summary .grand-total {
+    border-color: #ccc !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .modern-invoice > * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .modern-invoice-table {
+    width: 100% !important;
+    table-layout: fixed !important;
+  }
+} 
