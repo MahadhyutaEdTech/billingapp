@@ -381,16 +381,22 @@ export default function AddQuotationPage({ onClose }) {
       return;
     }
 
-    const totalAmount = quotationData.products.reduce((sum, product) => sum + product.total, 0);
-    const discountAmount = quotationData.discountType === "percent" 
-      ? (totalAmount * quotationData.discountValue) / 100 
-      : quotationData.discountValue;
-    
+    const totalAmount = quotationData.products.reduce((sum, product) => sum + (product.total || 0), 0);
+    const discountValue = Number(quotationData.discountValue) || 0;
+    const discountAmount = quotationData.discountType === "percent"
+      ? (totalAmount * discountValue) / 100
+      : discountValue;
     const taxableAmount = totalAmount - discountAmount;
+
+    // Calculate tax for each product based on its share of the discount
     const totalTax = quotationData.products.reduce((sum, product) => {
-      const taxBreakdown = calculateTaxBreakdown(product, product.total);
+      const productShare = (product.total || 0) / totalAmount || 0;
+      const productTaxable = (product.total || 0) - (discountAmount * productShare);
+      const taxBreakdown = calculateTaxBreakdown(product, productTaxable);
       return sum + taxBreakdown.total;
     }, 0);
+
+    const finalAmount = Math.max(0, taxableAmount + totalTax);
 
     const quotationPayload = {
       customer_id: quotationData.customer_id,
@@ -431,16 +437,22 @@ export default function AddQuotationPage({ onClose }) {
     }
   };
 
-  const totalAmount = quotationData.products.reduce((sum, product) => sum + product.total, 0);
-  const discountAmount = quotationData.discountType === "percent" 
-    ? (totalAmount * quotationData.discountValue) / 100 
-    : quotationData.discountValue;
+  const totalAmount = quotationData.products.reduce((sum, product) => sum + (product.total || 0), 0);
+  const discountValue = Number(quotationData.discountValue) || 0;
+  const discountAmount = quotationData.discountType === "percent"
+    ? (totalAmount * discountValue) / 100
+    : discountValue;
   const taxableAmount = totalAmount - discountAmount;
+
+  // Calculate tax for each product based on its share of the discount
   const totalTax = quotationData.products.reduce((sum, product) => {
-    const taxBreakdown = calculateTaxBreakdown(product, product.total);
+    const productShare = (product.total || 0) / totalAmount || 0;
+    const productTaxable = (product.total || 0) - (discountAmount * productShare);
+    const taxBreakdown = calculateTaxBreakdown(product, productTaxable);
     return sum + taxBreakdown.total;
   }, 0);
-  const finalAmount = taxableAmount + totalTax;
+
+  const finalAmount = Math.max(0, taxableAmount + totalTax);
 
   return (
     <div className={`add-quotation-container ${isDarkMode ? 'dark-mode' : ''}`}>
@@ -733,4 +745,4 @@ export default function AddQuotationPage({ onClose }) {
       </div>
     </div>
   );
-} 
+}
