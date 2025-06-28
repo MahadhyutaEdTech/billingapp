@@ -1,324 +1,138 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Twitter, 
-  Linkedin, 
-  Facebook,
-  Shield,
-  FileText,
-  Database,
-  Zap,
-  ArrowRight,
-  Check,
-  Star,
-  Users,
-  Headphones
-} from 'lucide-react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ModernHomepage = () => {
-  const [activeFeature, setActiveFeature] = useState(0);
+const features = [
+  {
+    title: 'Automated Invoicing',
+    description: 'Generate, send, and track invoices with ease. Reduce manual work and errors.',
+    img: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80',
+    alt: 'Automated Invoicing'
+  },
+  {
+    title: 'Real-Time Analytics',
+    description: 'Get actionable insights into your billing, revenue, and outstanding payments.',
+    img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80',
+    alt: 'Real-Time Analytics'
+  },
+  {
+    title: 'Secure Data',
+    description: 'Enterprise-grade security and compliance for all your financial data.',
+    img: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80',
+    alt: 'Secure Data'
+  },
+  {
+    title: 'Multi-User Access',
+    description: 'Collaborate with your team and manage permissions with ease.',
+    img: 'https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?auto=format&fit=crop&w=400&q=80',
+    alt: 'Multi-User Access'
+  },
+  {
+    title: 'Customizable Templates',
+    description: 'Professional invoice templates tailored to your brand.',
+    img: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80',
+    alt: 'Customizable Templates'
+  },
+  {
+    title: 'Priority Support',
+    description: 'Dedicated support team for fast, reliable assistance.',
+    img: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80',
+    alt: 'Priority Support'
+  }
+];
+
+const Homepage = () => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveFeature(prev => (prev + 1) % 3);
-    }, 3000);
-    document.body.classList.add('home-page');
-    return () => {
-      clearInterval(interval);
-      document.body.classList.remove('home-page');
-    };
-  }, []);
-
-  const features = [
-    {
-      icon: <Shield className="w-8 h-8" />,
-      title: "Secure Authentication",
-      description: "Advanced OTP and email verification with enterprise-grade security protocols.",
-      color: "from-blue-500 to-cyan-500"
-    },
-    {
-      icon: <FileText className="w-8 h-8" />,
-      title: "Smart Invoice Management",
-      description: "AI-powered invoice processing with automated tracking and smart categorization.",
-      color: "from-purple-500 to-pink-500"
-    },
-    {
-      icon: <Database className="w-8 h-8" />,
-      title: "Unified Database",
-      description: "Centralized data management with real-time synchronization across platforms.",
-      color: "from-green-500 to-emerald-500"
-    }
-  ];
-
-  const stats = [
-    { value: "5000+", label: "Active Users", icon: <Users className="w-6 h-6" /> },
-    { value: "98%", label: "Satisfaction Rate", icon: <Star className="w-6 h-6" /> },
-    { value: "24/7", label: "Support", icon: <Headphones className="w-6 h-6" /> },
-    { value: "99.9%", label: "Uptime", icon: <Zap className="w-6 h-6" /> }
-  ];
-
-  const benefits = [
-    "Create professional invoices in minutes",
-    "Real-time payment tracking & analytics",
-    "Automated payment reminders & follow-ups",
-    "Multi-currency support with live rates",
-    "Advanced reporting & business insights",
-    "Seamless integrations with 100+ apps"
-  ];
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-pink-50 text-gray-900">
+    <div style={{ fontFamily: 'Segoe UI, Arial, sans-serif', background: '#f7fafd', minHeight: '100vh', color: '#1a2233' }}>
       {/* Navigation */}
-      <nav className="sticky top-0 w-full z-50 bg-white/80 backdrop-blur border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                <Zap className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                BillFlow
-              </span>
-            </div>
-            <div className="flex space-x-4">
-              <button
-                className="px-4 py-2 text-blue-700 hover:text-white hover:bg-blue-500 rounded-lg transition-colors duration-200"
-                onClick={() => navigate('/auth')}
-              >
-                Login
-              </button>
-              <button
-                className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-200 transform hover:scale-105 shadow"
-                onClick={() => navigate('/auth')}
-              >
-                Sign Up
-              </button>
-            </div>
+      <nav style={{ background: '#fff', borderBottom: '1px solid #e5eaf1', position: 'sticky', top: 0, zIndex: 10 }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64, padding: '0 32px' }}>
+          <div style={{ fontWeight: 700, fontSize: 24, color: '#2563eb', letterSpacing: 1 }}>BillFlow</div>
+          <div style={{ display: 'flex', gap: 32 }}>
+            <button style={{ background: 'none', border: 'none', color: '#1a2233', fontSize: 16, cursor: 'pointer' }} onClick={() => navigate('/auth')}>Login</button>
+            <button style={{ background: '#2563eb', color: '#fff', border: 'none', borderRadius: 4, padding: '8px 24px', fontWeight: 600, fontSize: 16, cursor: 'pointer', boxShadow: '0 2px 8px rgba(37,99,235,0.08)' }} onClick={() => navigate('/auth')}>Sign Up</button>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-12 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-white to-pink-50">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-            Invoice Management <br /> Reimagined
-          </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Experience the future of billing with our AI-powered platform. Streamline your workflow, automate tedious tasks, and focus on growing your business.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl shadow-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300 font-semibold">
-              Start Free Trial
-            </button>
-            <button className="px-8 py-4 border border-blue-200 text-blue-700 bg-white rounded-xl shadow hover:bg-blue-50 transition">
-              Watch Demo
-            </button>
+      <section style={{ background: '#f7fafd', padding: '64px 0 48px 0', borderBottom: '1px solid #e5eaf1' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', padding: '0 32px' }}>
+          <div style={{ flex: 1, minWidth: 320, marginRight: 32 }}>
+            <h1 style={{ fontSize: 48, fontWeight: 800, marginBottom: 16, color: '#1a2233', letterSpacing: -1 }}>Corporate Invoice Management</h1>
+            <p style={{ fontSize: 20, color: '#4b5563', marginBottom: 32, maxWidth: 600 }}>
+              Streamline your company's billing and revenue operations with a secure, scalable, and intuitive platform trusted by leading enterprises.
+            </p>
+            <button style={{ background: '#2563eb', color: '#fff', border: 'none', borderRadius: 4, padding: '16px 48px', fontWeight: 700, fontSize: 20, cursor: 'pointer', boxShadow: '0 2px 8px rgba(37,99,235,0.12)' }} onClick={() => navigate('/auth')}>Get Started</button>
+          </div>
+          <div style={{ flex: 1, minWidth: 320, textAlign: 'center' }}>
+            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80" alt="Corporate dashboard" style={{ maxWidth: '100%', borderRadius: 16, boxShadow: '0 4px 24px rgba(37,99,235,0.08)' }} />
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center text-blue-700">
-            Powerful Features for Modern Businesses
-          </h2>
-          <p className="text-gray-500 text-lg max-w-2xl mx-auto text-center mb-12">
-            Everything you need to manage your billing, all in one place
-          </p>
-          <div className="grid md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <div 
-                key={index}
-                className={`p-8 rounded-2xl bg-gray-50 border border-gray-200 shadow hover:shadow-xl transition ${
-                  activeFeature === index ? 'ring-2 ring-blue-400' : ''
-                }`}
-              >
-                <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${feature.color} flex items-center justify-center mb-6`}>
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-semibold mb-4 text-gray-900">{feature.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+      <section style={{ background: '#f7fafd', padding: '64px 0' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px' }}>
+          <h2 style={{ fontSize: 32, fontWeight: 700, color: '#1a2233', marginBottom: 32, textAlign: 'center' }}>Key Features</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 32 }}>
+            {features.map((feature, idx) => (
+              <div key={idx} style={{ background: '#fff', border: '1px solid #e5eaf1', borderRadius: 8, padding: 32, boxShadow: '0 2px 8px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <img src={feature.img} alt={feature.alt} style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: 12, marginBottom: 20, boxShadow: '0 2px 8px rgba(37,99,235,0.08)' }} />
+                <div style={{ fontWeight: 600, fontSize: 20, marginBottom: 12, color: '#2563eb', textAlign: 'center' }}>{feature.title}</div>
+                <div style={{ color: '#4b5563', fontSize: 16, textAlign: 'center' }}>{feature.description}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-blue-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-200 to-purple-200 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  {stat.icon}
-                </div>
-                <div className="text-3xl font-bold mb-2 text-blue-700">
-                  {stat.value}
-                </div>
-                <div className="text-gray-500">{stat.label}</div>
-              </div>
-            ))}
+      {/* About Section */}
+      <section style={{ background: '#fff', padding: '64px 0', borderBottom: '1px solid #e5eaf1' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto', display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 48, padding: '0 32px' }}>
+          <div style={{ flex: 1, minWidth: 320 }}>
+            <h2 style={{ fontSize: 32, fontWeight: 700, color: '#1a2233', marginBottom: 24 }}>About NOVAMIND INSIGHTS PRIVATE LIMITED</h2>
+            <p style={{ color: '#4b5563', fontSize: 18, lineHeight: 1.7 }}>
+              NOVAMIND INSIGHTS PRIVATE LIMITED is a pioneering force in educational technology, specializing in AI and ML solutions that transform learning experiences. Our innovative billing platform represents our commitment to simplifying complex processes through intelligent automation and cutting-edge technology.
+            </p>
           </div>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-pink-50 via-purple-50 to-blue-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-blue-700">
-                Why Choose BillFlow?
-              </h2>
-              <p className="text-gray-500 text-lg mb-8">
-                Join thousands of businesses that trust BillFlow for their billing needs
-              </p>
-              <div className="space-y-4 mt-8">
-                {benefits.map((benefit, index) => (
-                  <div key={index} className="flex items-center gap-4">
-                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-green-500">
-                      <Check className="w-5 h-5 text-white" />
-                    </span>
-                    <span className="text-lg text-gray-700">{benefit}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="relative">
-              <div className="aspect-square bg-gradient-to-r from-purple-100 to-pink-100 rounded-3xl border border-gray-200 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-24 h-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <FileText className="w-12 h-12 text-white" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-2 text-blue-700">Smart Dashboard</h3>
-                  <p className="text-gray-500">Manage everything from one place</p>
-                </div>
-              </div>
-            </div>
+          <div style={{ flex: 1, minWidth: 320, textAlign: 'center' }}>
+            <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80" alt="About our company" style={{ maxWidth: '100%', borderRadius: 16, boxShadow: '0 4px 24px rgba(37,99,235,0.08)' }} />
           </div>
-        </div>
-      </section>
-
-      {/* Company Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-purple-50">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-blue-700">About NOVAMIND INSIGHTS PRIVATE LIMITED</h2>
-          <p className="text-gray-600 text-lg max-w-4xl mx-auto leading-relaxed">
-          NOVAMIND INSIGHTS PRIVATE LIMITED is a pioneering force in educational technology, specializing in AI and ML 
-            solutions that transform learning experiences. Our innovative billing platform represents 
-            our commitment to simplifying complex processes through intelligent automation and 
-            cutting-edge technology.
-          </p>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-cyan-50 via-white to-blue-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-700">Get In Touch</h2>
-            <p className="text-gray-500 text-lg">We'd love to hear from you</p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-100 to-cyan-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Mail className="w-8 h-8 text-blue-400" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-blue-700">Email</h3>
-              <p className="text-gray-600">mahadhyutaedtech@gmail.com</p>
+      <section style={{ background: '#f7fafd', padding: '64px 0' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center', padding: '0 32px' }}>
+          <h2 style={{ fontSize: 32, fontWeight: 700, color: '#1a2233', marginBottom: 24 }}>Get In Touch</h2>
+          <p style={{ color: '#4b5563', fontSize: 18, marginBottom: 32 }}>We'd love to hear from you</p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 48 }}>
+            <div style={{ minWidth: 220 }}>
+              <div style={{ fontWeight: 600, color: '#2563eb', fontSize: 18, marginBottom: 8 }}>Email</div>
+              <div style={{ color: '#4b5563', fontSize: 16 }}>mahadhyutaedtech@gmail.com</div>
             </div>
-            
-            <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-r from-green-100 to-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Phone className="w-8 h-8 text-green-400" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-blue-700">Phone</h3>
-              <p className="text-gray-600">+91 9452801761</p>
+            <div style={{ minWidth: 220 }}>
+              <div style={{ fontWeight: 600, color: '#2563eb', fontSize: 18, marginBottom: 8 }}>Phone</div>
+              <div style={{ color: '#4b5563', fontSize: 16 }}>+91 9452801761</div>
             </div>
-            
-            <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <MapPin className="w-8 h-8 text-purple-400" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-blue-700">Location</h3>
-              <p className="text-gray-600">Bhubaneswar, Odisha<br />India - 751015</p>
+            <div style={{ minWidth: 220 }}>
+              <div style={{ fontWeight: 600, color: '#2563eb', fontSize: 18, marginBottom: 8 }}>Location</div>
+              <div style={{ color: '#4b5563', fontSize: 16 }}>Bhubaneswar, Odisha<br />India - 751015</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-4 sm:px-6 lg:px-8 bg-white border-t border-gray-200">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-white" />
-                </div>
-                <span className="text-xl font-bold text-blue-700">BillFlow</span>
-              </div>
-              <p className="text-gray-500">
-                Your complete invoice management solution for modern businesses.
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg font-semibold mb-4 text-blue-700">Quick Links</h4>
-              <ul className="space-y-2">
-                {['Login', 'Sign Up', 'Features', 'About Us'].map((link) => (
-                  <li key={link}>
-                    <a href="#" className="text-gray-500 hover:text-blue-700 transition-colors duration-200">
-                      {link}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="text-lg font-semibold mb-4 text-blue-700">Legal</h4>
-              <ul className="space-y-2">
-                {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map((link) => (
-                  <li key={link}>
-                    <a href="#" className="text-gray-500 hover:text-blue-700 transition-colors duration-200">
-                      {link}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="text-lg font-semibold mb-4 text-blue-700">Follow Us</h4>
-              <div className="flex space-x-4">
-                {[
-                  { icon: <Twitter className="w-5 h-5" />, href: "#" },
-                  { icon: <Linkedin className="w-5 h-5" />, href: "#" },
-                  { icon: <Facebook className="w-5 h-5" />, href: "#" }
-                ].map((social, index) => (
-                  <a 
-                    key={index}
-                    href={social.href}
-                    className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-blue-100 transition-colors duration-200"
-                  >
-                    {social.icon}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-100 pt-8 text-center text-gray-400">
-            <p>&copy; {new Date().getFullYear()} NOVAMIND INSIGHTS PRIVATE LIMITED. All rights reserved.</p>
+      <footer style={{ background: '#fff', borderTop: '1px solid #e5eaf1', padding: '32px 0', marginTop: 32 }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
+          <div style={{ fontWeight: 700, fontSize: 20, color: '#2563eb' }}>BillFlow</div>
+          <div style={{ color: '#6b7280', fontSize: 15 }}>© {new Date().getFullYear()} NOVAMIND INSIGHTS PRIVATE LIMITED. All rights reserved.</div>
+          <div style={{ color: '#6b7280', fontSize: 15 }}>
+            <a href="#" style={{ color: '#2563eb', textDecoration: 'none', marginRight: 16 }}>Privacy Policy</a>
+            <a href="#" style={{ color: '#2563eb', textDecoration: 'none', marginRight: 16 }}>Terms of Service</a>
+            <a href="#" style={{ color: '#2563eb', textDecoration: 'none' }}>Contact</a>
           </div>
         </div>
       </footer>
@@ -326,4 +140,4 @@ const ModernHomepage = () => {
   );
 };
 
-export default ModernHomepage;
+export default Homepage;
