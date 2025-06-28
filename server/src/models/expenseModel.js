@@ -1,4 +1,28 @@
-import connectionPool from "../config/databaseConfig.js";
+import connectionPoolPromise from "../config/databaseConfig.js";
+
+// Ensure expenses table exists at module load
+const createExpensesTableIfNotExists = async () => {
+  const connectionPool = await connectionPoolPromise;
+  await connectionPool.query(`
+    CREATE TABLE IF NOT EXISTS expenses (
+      expenseId VARCHAR(20) NOT NULL PRIMARY KEY,
+      project VARCHAR(100),
+      employee VARCHAR(100),
+      paidby VARCHAR(50),
+      natureOfFund JSON,
+      debit DECIMAL(10,2),
+      credit DECIMAL(10,2),
+      date DATE,
+      updatedDate DATE,
+      remarks TEXT,
+      createdDate DATE
+    )
+  `);
+};
+
+(async () => {
+  await createExpensesTableIfNotExists();
+})();
 
 const createExpense = async (
   expenseId,
@@ -13,6 +37,7 @@ const createExpense = async (
   remarks,
   createdDate
 ) => {
+  const connectionPool = await connectionPoolPromise;
   const sqlQuery = `
     INSERT INTO expenses (
       expenseId, project, employee, paidby, natureOfFund, debit, credit, date, updatedDate, remarks, createdDate
@@ -37,22 +62,10 @@ const createExpense = async (
 };
 
 const getExpenses = async (limit, offset) => {
+  const connectionPool = await connectionPoolPromise;
   limit = Number(limit);
   offset = Number(offset);
   const sqlQuery = `SELECT * FROM expenses ORDER BY expenseId LIMIT ${limit} OFFSET ${offset}`;
-
-  //updated code to fetch distinct value by name
-  /*
-  const sqlQuery = `SELECT e.*
-FROM expenses e
-JOIN (
-  SELECT employee, MIN(expenseId) AS minId
-  FROM expenses
-  GROUP BY employee
-) AS t ON e.employee = t.employee AND e.expenseId = t.minId
-ORDER BY e.expenseId
-LIMIT ${limit} OFFSET ${offset}`;
-  */
   try {
     const [res] = await connectionPool.execute(sqlQuery);
     return res;
@@ -63,6 +76,7 @@ LIMIT ${limit} OFFSET ${offset}`;
 };
 
 const updateExpense = async (expenseId, data) => {
+  const connectionPool = await connectionPoolPromise;
   const fields = Object.keys(data);
   const values = Object.values(data);
 
@@ -82,14 +96,15 @@ const updateExpense = async (expenseId, data) => {
   return result;
 };
 
-
 const deleteExpense = async (expenseId) => {
+  const connectionPool = await connectionPoolPromise;
   const sqlQuery = 'DELETE FROM expenses WHERE expenseId = ?';
   const [result] = await connectionPool.execute(sqlQuery, [expenseId]);
   return result;
 };
 
 const getExpenseById = async (expenseId) => {
+  const connectionPool = await connectionPoolPromise;
   const sqlQuery = 'SELECT * FROM expenses WHERE expenseId = ?';
   const [rows] = await connectionPool.execute(sqlQuery, [expenseId]);
   
@@ -122,3 +137,6 @@ export {
   deleteExpense,
   getExpenseById
 };
+
+
+

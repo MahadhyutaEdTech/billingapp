@@ -1,5 +1,37 @@
-import connectionPool from "../config/databaseConfig.js";
+import connectionPoolPromise from "../config/databaseConfig.js";
 import { uploadToS3 } from "../middlewares/s3.js";
+
+// Ensure organizations table exists at module load
+const createOrganizationsTableIfNotExists = async () => {
+  const connectionPool = await connectionPoolPromise;
+  await connectionPool.query(`
+    CREATE TABLE IF NOT EXISTS organizations (
+      org_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      type VARCHAR(100) NOT NULL,
+      email VARCHAR(255) NOT NULL UNIQUE,
+      phone VARCHAR(20) NOT NULL UNIQUE,
+      website VARCHAR(255) UNIQUE,
+      reg_number VARCHAR(100) NOT NULL UNIQUE,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      logo_image VARCHAR(255),
+      gst_details JSON DEFAULT (JSON_OBJECT()),
+      bank_name VARCHAR(255),
+      acc_name VARCHAR(255),
+      ifsc VARCHAR(50),
+      branch VARCHAR(100),
+      acc_num VARCHAR(100),
+      invoice_prefix VARCHAR(50),
+      signature_image VARCHAR(255),
+      pan_number VARCHAR(20),
+      quotation_prefix VARCHAR(10) DEFAULT 'QT'
+    )
+  `);
+};
+
+(async () => {
+  await createOrganizationsTableIfNotExists();
+})();
 
 const createOrganization = async (
   name,
@@ -19,6 +51,7 @@ const createOrganization = async (
   branch,
   acc_num
 ) => {
+  const connectionPool = await connectionPoolPromise;
   const sqlQuery = `
     INSERT INTO organizations 
     (name, type, email, phone, website, reg_number,pan_number, gst_details, invoice_prefix, logo_image, signature_image, bank_name, acc_name, ifsc, branch, acc_num) 
@@ -70,27 +103,27 @@ const createOrganization = async (
   }
 };
 
-
 const getOrganization = async () => {
-   
-    const sqlQuery = `SELECT * FROM organizations`;
-    try {
-        const [res] = await connectionPool.execute(sqlQuery);
-        return res;
-    } catch (error) {
-        console.error('Error executing query:', error);
-        throw new Error("Error executing the SQL query.");
-    }
+  const connectionPool = await connectionPoolPromise;
+  const sqlQuery = `SELECT * FROM organizations`;
+  try {
+    const [res] = await connectionPool.execute(sqlQuery);
+    return res;
+  } catch (error) {
+    console.error('Error executing query:', error);
+    throw new Error("Error executing the SQL query.");
+  }
 };
 
-const getOrganizationById=async(org_id)=>{
-    const sqlQuery = "SELECT * FROM organizations where org_id=?";
-    const [res]=await  connectionPool.execute(sqlQuery,[org_id]);
-    return res;
-}
-
+const getOrganizationById = async (org_id) => {
+  const connectionPool = await connectionPoolPromise;
+  const sqlQuery = "SELECT * FROM organizations where org_id=?";
+  const [res] = await connectionPool.execute(sqlQuery, [org_id]);
+  return res;
+};
 
 const updateOrganization = async (org_id, data) => {
+  const connectionPool = await connectionPoolPromise;
   try {
     const { logo_image, signature_image, ...otherData } = data;
     let updateValues = { ...otherData };
@@ -145,12 +178,13 @@ const updateOrganization = async (org_id, data) => {
     console.error("Error in updateOrganization:", error);
     throw error;
   }
-}
+};
 
-const deleteOrganization=async(org_id)=>{
-    const sqlQuery='delete from organizations where org_id= ?';
-    const [result]=await connectionPool.execute(sqlQuery,[org_id]);
-    return result;
+const deleteOrganization = async (org_id) => {
+  const connectionPool = await connectionPoolPromise;
+  const sqlQuery = 'delete from organizations where org_id= ?';
+  const [result] = await connectionPool.execute(sqlQuery, [org_id]);
+  return result;
+};
 
-}
-export {createOrganization,getOrganization,updateOrganization,deleteOrganization,getOrganizationById} ;
+export { createOrganization, getOrganization, updateOrganization, deleteOrganization, getOrganizationById };

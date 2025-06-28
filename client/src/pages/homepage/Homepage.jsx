@@ -97,7 +97,7 @@ const Homepage = () => {
             </p>
           </div>
           <div style={{ flex: 1, minWidth: 320, textAlign: 'center' }}>
-            <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80" alt="About our company" style={{ maxWidth: '100%', borderRadius: 16, boxShadow: '0 4px 24px rgba(37,99,235,0.08)' }} />
+            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80" alt="About our company" style={{ maxWidth: '100%', borderRadius: 16, boxShadow: '0 4px 24px rgba(37,99,235,0.08)' }} />
           </div>
         </div>
       </section>
@@ -110,7 +110,7 @@ const Homepage = () => {
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 48 }}>
             <div style={{ minWidth: 220 }}>
               <div style={{ fontWeight: 600, color: '#2563eb', fontSize: 18, marginBottom: 8 }}>Email</div>
-              <div style={{ color: '#4b5563', fontSize: 16 }}>mahadhyutaedtech@gmail.com</div>
+              <div style={{ color: '#4b5563', fontSize: 16 }}>novamindinsights@gmail.com</div>
             </div>
             <div style={{ minWidth: 220 }}>
               <div style={{ fontWeight: 600, color: '#2563eb', fontSize: 18, marginBottom: 8 }}>Phone</div>

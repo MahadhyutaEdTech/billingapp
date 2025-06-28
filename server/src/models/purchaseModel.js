@@ -1,4 +1,4 @@
-import connectionPool from "../config/databaseConfig.js";
+import connectionPoolPromise from "../config/databaseConfig.js";
 import { createProduct, getProductById, updateProduct } from "./productModel.js";
 
 // Create tables queries
@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS purchase_items (
 
 // CRUD Operations
 const createPurchase = async (data) => {
+  const connectionPool = await connectionPoolPromise;
   const {
     purchase_id, expenses_number, supplier_name,
     purchase_date, due_date, total_amount,
@@ -106,11 +107,13 @@ const createPurchase = async (data) => {
 };
 
 const getAllPurchases = async () => {
+  const connectionPool = await connectionPoolPromise;
   const [rows] = await connectionPool.execute("SELECT * FROM purchases");
   return rows;
 };
 
 const getPurchaseById = async (id) => {
+  const connectionPool = await connectionPoolPromise;
   const [purchase] = await connectionPool.execute(
     "SELECT * FROM purchases WHERE purchase_id = ?",
     [id]
@@ -128,6 +131,7 @@ const getPurchaseById = async (id) => {
 };
 
 const updatePurchase = async (id, data) => {
+  const connectionPool = await connectionPoolPromise;
   const {
     expenses_number, supplier_name, purchase_date,
     due_date, total_amount, payment_status,
@@ -209,6 +213,7 @@ const updatePurchase = async (id, data) => {
 };
 
 const deletePurchase = async (id) => {
+  const connectionPool = await connectionPoolPromise;
   await connectionPool.execute(
     "DELETE FROM purchases WHERE purchase_id = ?",
     [id]
@@ -216,6 +221,7 @@ const deletePurchase = async (id) => {
 };
 
 const initializeTables = async () => {
+  const connectionPool = await connectionPoolPromise;
   try {
     await connectionPool.execute(createPurchaseTableQuery);
     await connectionPool.execute(createPurchaseItemsTableQuery);

@@ -1,4 +1,46 @@
-import connectionPool from "../config/databaseConfig.js";
+import connectionPoolPromise from "../config/databaseConfig.js";
+
+// Ensure quotations and quotation_items tables exist at module load
+const createQuotationTablesIfNotExists = async () => {
+  const connectionPool = await connectionPoolPromise;
+  await connectionPool.query(`
+    CREATE TABLE IF NOT EXISTS quotations (
+      quotation_id INT AUTO_INCREMENT PRIMARY KEY,
+      customer_id INT,
+     org_id BIGINT UNSIGNED,
+      quotation_date DATE,
+      valid_until DATE,
+      total_amount DECIMAL(10,2),
+      discount DECIMAL(10,2),
+      tax_amount DECIMAL(10,2),
+      status VARCHAR(50),
+      gst_type VARCHAR(50),
+      gst_no VARCHAR(50),
+      gst_number VARCHAR(50),
+      created_at DATETIME,
+      notes TEXT,
+      terms_conditions TEXT,
+      quotation_number VARCHAR(255),
+      FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+      FOREIGN KEY (org_id) REFERENCES organizations(org_id)
+    )
+  `);
+  await connectionPool.query(`
+    CREATE TABLE IF NOT EXISTS quotation_items (
+      item_id INT AUTO_INCREMENT PRIMARY KEY,
+      quotation_id INT,
+      product_id INT,
+      quantity INT,
+      unit_price DECIMAL(10,2),
+      FOREIGN KEY (quotation_id) REFERENCES quotations(quotation_id),
+      FOREIGN KEY (product_id) REFERENCES product(product_id)
+    )
+  `);
+};
+
+(async () => {
+  await createQuotationTablesIfNotExists();
+})();
 
 const createQuotation = async (
   customer_id,
@@ -18,6 +60,7 @@ const createQuotation = async (
   notes,
   terms_conditions
 ) => {
+  const connectionPool = await connectionPoolPromise;
   const connection = await connectionPool.getConnection();
   try {
     await connection.beginTransaction();
@@ -112,6 +155,7 @@ const createQuotation = async (
 };
 
 const getQuotation = async (quotation_id) => {
+  const connectionPool = await connectionPoolPromise;
   const sqlQuery = `
     SELECT 
       q.quotation_id,
@@ -194,6 +238,7 @@ const getQuotation = async (quotation_id) => {
 };
 
 const getAllQuotations = async (limit, offset) => {
+  const connectionPool = await connectionPoolPromise;
   limit = Number(limit);
   offset = Number(offset);
   const sqlQuery = `
@@ -211,6 +256,7 @@ const getAllQuotations = async (limit, offset) => {
 };
 
 const updateQuotation = async (quotation_id, data) => {
+  const connectionPool = await connectionPoolPromise;
   const fields = Object.keys(data);
   const values = Object.values(data);
   if (fields.length === 0) {
@@ -223,12 +269,14 @@ const updateQuotation = async (quotation_id, data) => {
 };
 
 const deleteQuotation = async (quotation_id) => {
+  const connectionPool = await connectionPoolPromise;
   const sqlQuery = 'DELETE FROM quotations WHERE quotation_id = ?';
   const [result] = await connectionPool.execute(sqlQuery, [quotation_id]);
   return result;
 };
 
 const getFilterQuotations = async (status) => {
+  const connectionPool = await connectionPoolPromise;
   console.log("🔍 Received status in backend:", status);
 
   let sqlQuery = `
@@ -250,6 +298,7 @@ const getFilterQuotations = async (status) => {
 };
 
 const searchQuotations = async (searchQuery) => {
+  const connectionPool = await connectionPoolPromise;
   // Split the search query into first name and last name
   const searchTerms = searchQuery.split(" ");
 
@@ -309,12 +358,14 @@ const searchQuotations = async (searchQuery) => {
 };
 
 const countQuotations = async () => {
+  const connectionPool = await connectionPoolPromise;
   const sqlQuery = `SELECT COUNT(*) as TotalQuotations FROM quotations;`;
   const [result] = await connectionPool.execute(sqlQuery);
   return result;
 };
 
 const statusCount = async () => {
+  const connectionPool = await connectionPoolPromise;
   const sqlQuery = `SELECT status, COUNT(*) as count 
     FROM quotations 
     GROUP BY status 
@@ -324,6 +375,7 @@ const statusCount = async () => {
 };
 
 const amountStatus = async () => {
+  const connectionPool = await connectionPoolPromise;
   const sqlQuery = `SELECT status, SUM(total_amount + tax_amount) AS total 
     FROM quotations 
     GROUP BY status 
@@ -334,6 +386,7 @@ const amountStatus = async () => {
 
 // Function to get total unique customers for quotations
 const getTotalCustomers = async () => {
+  const connectionPool = await connectionPoolPromise;
   const sqlQuery = `
     SELECT COUNT(DISTINCT customer_id) as total_customers 
     FROM quotations;
@@ -344,6 +397,7 @@ const getTotalCustomers = async () => {
 
 // Function to get average quotation value
 const getAverageQuotationValue = async () => {
+  const connectionPool = await connectionPoolPromise;
   try {
     const sqlQuery = `
       SELECT 
@@ -364,6 +418,7 @@ const getAverageQuotationValue = async () => {
 
 // Convert quotation to invoice
 const convertToInvoice = async (quotation_id) => {
+  const connectionPool = await connectionPoolPromise;
   const connection = await connectionPool.getConnection();
   try {
     await connection.beginTransaction();
@@ -452,4 +507,4 @@ export {
   getTotalCustomers, 
   getAverageQuotationValue,
   convertToInvoice
-}; 
+};

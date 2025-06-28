@@ -1,4 +1,90 @@
-import connectionPool from "../config/databaseConfig.js";
+import connectionPoolPromise from "../config/databaseConfig.js";
+
+
+
+const createInvoiceTablesIfNotExists = async () => {
+  const connectionPool = await connectionPoolPromise;
+  // Create invoices table
+  await connectionPool.query(`
+    CREATE TABLE IF NOT EXISTS invoices (
+      invoice_id INT AUTO_INCREMENT PRIMARY KEY,
+      customer_id INT NOT NULL,
+      org_id BIGINT UNSIGNED NULL,
+      invoice_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      due_date TIMESTAMP NULL,
+      advance DECIMAL(10,2) NULL,
+      total_amount DECIMAL(10,2) NOT NULL,
+      discount DECIMAL(10,2) NULL,
+      due_amount DECIMAL(10,2) NULL,
+      tax_amount DECIMAL(10,2) NOT NULL,
+      status VARCHAR(20) NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      gst_no VARCHAR(255) NULL,
+      gst_type VARCHAR(100) NULL,
+      gst_number VARCHAR(100) NULL,
+      invoice_number VARCHAR(50) NULL,
+      UNIQUE(invoice_number)
+    )
+  `);
+  // Create invoice_items table
+  await connectionPool.query(`
+    CREATE TABLE IF NOT EXISTS invoice_items (
+      item_id INT AUTO_INCREMENT PRIMARY KEY,
+      invoice_id INT NOT NULL,
+      product_id INT NOT NULL,
+      quantity INT NOT NULL,
+      unit_price DECIMAL(10,2) NOT NULL,
+      FOREIGN KEY (invoice_id) REFERENCES invoices(invoice_id),
+      FOREIGN KEY (product_id) REFERENCES product(product_id)
+    )
+  `);
+  // Create product table if not exists (minimal columns)
+  await connectionPool.query(`
+    CREATE TABLE IF NOT EXISTS product (
+      product_id INT AUTO_INCREMENT PRIMARY KEY,
+      product_name VARCHAR(255) NOT NULL,
+      hsn_sac VARCHAR(255),
+      tax DECIMAL(10,2),
+      current_stock INT DEFAULT 0
+    )
+  `);
+  // Create customers table if not exists (minimal columns)
+  await connectionPool.query(`
+    CREATE TABLE IF NOT EXISTS customers (
+      customer_id INT AUTO_INCREMENT PRIMARY KEY,
+      first_name VARCHAR(255),
+      last_name VARCHAR(255),
+      cust_gst_details TEXT,
+      shipping_addresses TEXT,
+      email VARCHAR(255),
+      phone VARCHAR(20)
+    )
+  `);
+  // Create organizations table if not exists (minimal columns)
+  await connectionPool.query(`
+    CREATE TABLE IF NOT EXISTS organizations (
+      org_id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255),
+      gst_details TEXT,
+      invoice_prefix VARCHAR(255),
+      email VARCHAR(255),
+      logo_image TEXT,
+      signature_image TEXT,
+      pan_number VARCHAR(255),
+      acc_num VARCHAR(255),
+      acc_name VARCHAR(255),
+      ifsc VARCHAR(255),
+      branch VARCHAR(255),
+      bank_name VARCHAR(255),
+      phone VARCHAR(20)
+    )
+  `);
+};
+
+(async () => {
+  await createInvoiceTablesIfNotExists();
+})();
+
 const createInvoice = async (
   customer_id,
   org_id,
@@ -17,6 +103,7 @@ const createInvoice = async (
   shippingAddresses,
   products,
 ) => {
+  const connectionPool = await connectionPoolPromise;
   const connection = await connectionPool.getConnection();
   try {
     await connection.beginTransaction();
@@ -123,6 +210,7 @@ const createInvoice = async (
 };
 
 const getInvoice = async (invoice_id) => {
+  const connectionPool = await connectionPoolPromise;
   const sqlQuery = `
     SELECT 
       i.invoice_id,
@@ -203,23 +291,24 @@ const getInvoice = async (invoice_id) => {
 };
 
 const getAllInvoices = async (limit, offset) => {
+  const connectionPool = await connectionPoolPromise;
   limit = Number(limit);
   offset = Number(offset);
   const sqlQuery = `
-  SELECT 
-    i.*, 
-    c.first_name, 
-    c.last_name 
-FROM invoices i 
-JOIN customers c ON i.customer_id = c.customer_id order by i.invoice_id
-LIMIT ${limit} OFFSET ${offset};`;
-
+    SELECT 
+      i.*, 
+      c.first_name, 
+      c.last_name 
+    FROM invoices i 
+    JOIN customers c ON i.customer_id = c.customer_id 
+    ORDER BY i.invoice_id
+    LIMIT ${limit} OFFSET ${offset};`;
   const [res] = await connectionPool.execute(sqlQuery);
   return res;
-
-}
+};
 
 const updateInvoice = async (invoice_id, data) => {
+  const connectionPool = await connectionPoolPromise;
   const fields = Object.keys(data);
   const values = Object.values(data);
   if (fields.length === 0) {
@@ -229,39 +318,34 @@ const updateInvoice = async (invoice_id, data) => {
   const sqlQuery = `UPDATE invoices SET ${setClause} WHERE invoice_id = ?`;
   const [result] = await connectionPool.execute(sqlQuery, [...values, invoice_id]);
   return result;
-}
+};
 
 const deleteInvoice = async (invoice_id) => {
-  const sqlQuery = 'delete from invoices where invoice_id= ?';
+  const connectionPool = await connectionPoolPromise;
+  const sqlQuery = 'DELETE FROM invoices WHERE invoice_id= ?';
   const [result] = await connectionPool.execute(sqlQuery, [invoice_id]);
   return result;
-
-}
+};
 
 const getfilterInvoices = async (status) => {
+  const connectionPool = await connectionPoolPromise;
   console.log("🔍 Received status in backend:", status);
-
   let sqlQuery = `
     SELECT i.*, c.first_name, c.last_name
     FROM invoices i
     JOIN customers c ON i.customer_id = c.customer_id
   `;
-
   const values = [];
-
-  // Only filter if status is passed and not empty
   if (status && status.trim() !== "") {
     sqlQuery += ` WHERE LOWER(TRIM(i.status)) = LOWER(TRIM(?))`;
     values.push(status);
   }
-
   const [res] = await connectionPool.execute(sqlQuery, values);
   return res;
 };
 
-
-
 const searchInvoices = async (searchQuery) => {
+  const connectionPool = await connectionPoolPromise;
   // Split the search query into first name and last name
   const searchTerms = searchQuery.split(" ");
 
@@ -322,36 +406,29 @@ const searchInvoices = async (searchQuery) => {
 
 
 const countInvoice = async () => {
-
-  const sqlQuery = `select count(*) as TotalInvoices from invoices;`;
+  const connectionPool = await connectionPoolPromise;
+  const sqlQuery = `SELECT count(*) as TotalInvoices FROM invoices;`;
   const [result] = await connectionPool.execute(sqlQuery);
   return result;
-}
-
-
+};
 
 const statusCount = async () => {
-
-  const sqlQuery = `SELECT status, COUNT(*) as count 
-FROM invoices 
-GROUP BY status 
-ORDER BY status;`;
+  const connectionPool = await connectionPoolPromise;
+  const sqlQuery = `SELECT status, COUNT(*) as count FROM invoices GROUP BY status ORDER BY status;`;
   const [result] = await connectionPool.execute(sqlQuery);
   return result;
-}
+};
 
 const amountStatus = async () => {
-  const sqlQuery = `SELECT status, SUM(total_amount + tax_amount) AS total 
-FROM invoices 
-GROUP BY status 
-ORDER BY status
-`;
+  const connectionPool = await connectionPoolPromise;
+  const sqlQuery = `SELECT status, SUM(total_amount + tax_amount) AS total FROM invoices GROUP BY status ORDER BY status`;
   const [result] = await connectionPool.execute(sqlQuery);
   return result;
-}
+};
 
 // Function to get total unique customers
 const getTotalCustomers = async () => {
+  const connectionPool = await connectionPoolPromise;
   const sqlQuery = `
     SELECT COUNT(DISTINCT customer_id) as total_customers 
     FROM invoices;
@@ -362,6 +439,7 @@ const getTotalCustomers = async () => {
 
 // Function to get average invoice value
 const getAverageInvoiceValue = async () => {
+  const connectionPool = await connectionPoolPromise;
   try {
     // First, let's check what data we have
     const checkQuery = `
@@ -397,6 +475,7 @@ const getAverageInvoiceValue = async () => {
 
 // Function to get highest sale product
 const getHighestSaleProduct = async () => {
+  const connectionPool = await connectionPoolPromise;
   try {
     const sqlQuery = `
       SELECT 
@@ -419,7 +498,21 @@ const getHighestSaleProduct = async () => {
   }
 };
 
-export { createInvoice, getInvoice, updateInvoice, deleteInvoice, getAllInvoices, getfilterInvoices, searchInvoices, countInvoice, statusCount, amountStatus, getTotalCustomers, getAverageInvoiceValue, getHighestSaleProduct };
+export {
+  createInvoice,
+  getInvoice,
+  updateInvoice,
+  deleteInvoice,
+  getAllInvoices,
+  getfilterInvoices,
+  searchInvoices,
+  countInvoice,
+  statusCount,
+  amountStatus,
+  getTotalCustomers,
+  getAverageInvoiceValue,
+  getHighestSaleProduct
+};
 
 
 
