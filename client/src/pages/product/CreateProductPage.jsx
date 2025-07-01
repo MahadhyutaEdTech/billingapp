@@ -102,6 +102,11 @@ export default function CreateProductPage() {
           <option value="">Select Product Service</option>
           <option value="Training">Training</option>
           <option value="Developing">Developing</option>
+          <option value="Consulting">Consulting</option>
+          <option value="Product">Product</option>
+          <option value="Service">Service</option>
+          <option value="Purchase">Purchase</option>
+          <option value="Sales">Sales</option>
         </select>
         <input
           className="input-field"

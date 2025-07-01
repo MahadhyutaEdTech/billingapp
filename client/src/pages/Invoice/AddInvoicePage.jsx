@@ -14,6 +14,20 @@ import {
 import { debounce } from "lodash"
 import "../../css/modules/invoice/AddInvoicePage.css"
 
+// Helper function to determine GST type based on GSTIN prefix
+function getGstType(orgGst, custGst) {
+  if (
+    orgGst &&
+    custGst &&
+    orgGst.length >= 2 &&
+    custGst.length >= 2 &&
+    orgGst.substring(0, 2) === custGst.substring(0, 2)
+  ) {
+    return "CGST_SGST"
+  }
+  return "IGST"
+}
+
 export default function AddInvoicePage({ onClose }) {
   const navigate = useNavigate()
   const [isDarkMode, setIsDarkMode] = useState(false)
@@ -53,7 +67,6 @@ export default function AddInvoicePage({ onClose }) {
     zip: "",
     phone: "",
   })
-  const [gstType, setGstType] = useState(null)
   const [quantityError, setQuantityError] = useState("")
   const [selectedStock, setSelectedStock] = useState(0)
   const [sizeMap, setSizeMap] = useState({})
@@ -124,7 +137,6 @@ export default function AddInvoicePage({ onClose }) {
 
       if (selectedGST && invoiceData.clientGst) {
         fetchGstType(selectedGST, invoiceData.clientGst, (type) => {
-          setGstType(type)
           setInvoiceData((prev) => ({ ...prev, gst_type: type }))
         })
       }
@@ -137,10 +149,8 @@ export default function AddInvoicePage({ onClose }) {
     const customer = customerList.find((cust) => cust.customer_id === customerId)
 
     if (customer) {
-     // console.log("Selected Customer:", customer)
-
+      // Get GST details if available
       const gstDetails = customer.cust_gst_details
-     .// console.log("GST Details:", gstDetails)
 
       setInvoiceData((prev) => ({
         ...prev,
@@ -150,16 +160,19 @@ export default function AddInvoicePage({ onClose }) {
         clientEmail: customer.email,
         clientPhone: customer.phone,
         clientGst: gstDetails?.gst_no || "",
-        clientAddress: gstDetails?.address || "",
-        clientState: gstDetails?.state_code || "",
+        clientAddress: gstDetails?.address || customer.address || "",
+        clientState: gstDetails?.state_code || customer.state || "",
         gst_type: null,
       }))
 
+      // Optionally, auto-fill shipping address if same as billing
+      if (sameAsBilling) {
+        setSelectedShippingAddress(null)
+        setShowNewShippingForm(false)
+      }
+
       if (invoiceData.gst_number && gstDetails?.gst_no) {
-       // console.log("Checking GST Type:", invoiceData.gst_number, gstDetails.gst_no)
         fetchGstType(invoiceData.gst_number, gstDetails.gst_no, (type) => {
-        //  console.log("Got GST Type:", type)
-          setGstType(type)
           setInvoiceData((prev) => ({ ...prev, gst_type: type }))
         })
       }
@@ -170,7 +183,6 @@ export default function AddInvoicePage({ onClose }) {
     const selectedGst = e.target.value
     if (selectedGst && invoiceData.gst_number) {
       fetchGstType(invoiceData.gst_number, selectedGst, (type) => {
-        setGstType(type)
         setInvoiceData((prev) => ({ ...prev, gst_type: type, clientGst: selectedGst }))
       })
     }
@@ -360,10 +372,9 @@ export default function AddInvoicePage({ onClose }) {
 
   const calculateTaxBreakdown = (product, taxableAmount) => {
     const productTax = product.tax || 0
-    const currentGstType = invoiceData.gst_type || gstType
-    
+    const gstTypeToUse = invoiceData.gst_type || getGstType(invoiceData.gst_number, invoiceData.clientGst)
 
-    if (currentGstType === "IGST") {
+    if (gstTypeToUse === "IGST") {
       return {
         igst: (taxableAmount * productTax) / 100,
         cgst: 0,
@@ -455,7 +466,7 @@ export default function AddInvoicePage({ onClose }) {
   }
 
   const handleSaveInvoice = async () => {
-    //console.log("💾 Saving invoice with products:", invoiceData.products)
+    console.log("💾 Saving invoice with products:", invoiceData.products)
 
     if (!selectedOrganization?.org_id) {
       toast.error("Please select an organization")
@@ -485,7 +496,7 @@ export default function AddInvoicePage({ onClose }) {
       advance: Number(advance) || 0,
       discount: Number(invoiceData.discountValue) || 0,
       due_amount: Number(dueAmount) || 0,
-      gst_type: gstType || "CGST + SGST",
+      gst_type: getGstType(invoiceData.gst_number, invoiceData.clientGst) || "CGST + SGST",
       created_at: new Date().toISOString().slice(0, 19).replace("T", " "),
       products: invoiceData.products.map((p) => ({
         product_id: Number(p.product_id),
@@ -1041,7 +1052,7 @@ export default function AddInvoicePage({ onClose }) {
               <span className="inv-form-summary-label">Discount ({discountPercentage}%):</span>
               <span className="inv-form-summary-value">₹{discountAmount.toFixed(2)}</span>
             </div>
-            {gstType === "IGST" ? (
+            {getGstType(invoiceData.gst_number, invoiceData.clientGst) === "IGST" ? (
               <div className="inv-form-summary-item">
                 <span className="inv-form-summary-label">IGST ({totalTax.maxRate}%):</span>
                 <span className="inv-form-summary-value">₹{totalTax.igst.toFixed(2)}</span>

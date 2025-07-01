@@ -1,5 +1,7 @@
 const determineGstType = (req, res) => {
-  const { orgGst, customerGst } = req.body;
+  // Accept multiple possible keys for robustness
+  const orgGst = (req.body.orgGst || req.body.gst_number || "").toString().trim().toUpperCase();
+  const customerGst = (req.body.customerGst || req.body.clientGst || "").toString().trim().toUpperCase();
 
   // Check if orgGst is provided and valid
   if (!orgGst || orgGst.length < 2) {
@@ -19,7 +21,11 @@ const determineGstType = (req, res) => {
   const orgStateCode = orgGst.slice(0, 2);
   const customerStateCode = customerGst.slice(0, 2);
 
+  // Debug log for troubleshooting
+  // console.log({ orgGst, customerGst, orgStateCode, customerStateCode });
+
   // Determine GST type based on state codes
+  // If state codes are different, GST type is IGST; if same, CGST + SGST
   const gstType = orgStateCode === customerStateCode ? 'CGST + SGST' : 'IGST';
 
   return res.status(200).json({

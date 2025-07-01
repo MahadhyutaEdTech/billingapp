@@ -1,7 +1,9 @@
-import connectionPool from "../config/databaseConfig.js";
+import connectionPoolPromise from "../config/databaseConfig.js";
 
 export const getReports = async (reportType) => {
   try {
+    const connectionPool = await connectionPoolPromise;
+
     let sqlQuery = "";
 
     switch (reportType) {

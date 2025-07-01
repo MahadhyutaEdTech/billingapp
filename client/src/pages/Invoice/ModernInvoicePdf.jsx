@@ -217,7 +217,15 @@ const ModernInvoicePdf = () => {
   if (!invoice) return <div>No invoice found.</div>;
 
   const products = invoice?.products || [];
-  const isIGST = invoice?.gst_type === "IGST";
+
+  // Use GST type from API if present, else fallback to GSTIN logic
+  const orgGst = invoice?.organization?.gst_number || "";
+  const custGst = invoice?.customer?.gst_details?.gst_no || "";
+  let gstType = invoice?.gst_type;
+  if (!gstType) {
+    gstType = getGstTypeFromGstins(orgGst, custGst);
+  }
+  const isIGST = gstType === "IGST";
 
   const result = products.reduce(
     (acc, product) => {
@@ -303,8 +311,14 @@ const ModernInvoicePdf = () => {
       <div className="invoice-template-container">
         <div className="modern-invoice-container">
           <div className="modern-invoice">
+            {/* TAX INVOICE Heading at the top */}
+            <div style={{ textAlign: "center", margin: "0 0 1em 0" }}>
+              <h1 style={{ fontSize: "1.7rem", fontWeight: "bold", margin: 0 }}>
+                TAX INVOICE
+              </h1>
+            </div>
             {/* Header Section */}
-            <div className="modern-invoice-header">
+            <div className="modern-invoice-header" style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
               <div className="company-logo-section">
                 {!logoError && invoice?.organization?.logo ? (
                   <img
@@ -316,12 +330,13 @@ const ModernInvoicePdf = () => {
                 ) : (
                   <h2 className="company-name">{invoice?.organization?.name || "COMPANY"}</h2>
                 )}
-                <p className="company-slogan">SLOGAN HERE</p>
               </div>
-              <div className="invoice-title-section">
-                <h1>TAX INVOICE</h1>
+              <div className="invoice-title-section" style={{ flex: 1, marginLeft: "2rem" }}>
                 <div className="invoice-info">
-                  <p>Room No. {invoice?.organization?.address}</p>
+                  <p style={{ fontSize: "1.2rem", fontWeight: "bold", marginBottom: "0.5rem" }}>
+                    {invoice?.organization?.name}
+                  </p>
+                  <p>Address: {invoice?.organization?.address}</p>
                   <p>GSTIN: {invoice?.organization?.gst_number}</p>
                   <p>Phone: +91{invoice?.organization?.phone} | Email: {invoice?.organization?.email}</p>
                 </div>
@@ -342,8 +357,7 @@ const ModernInvoicePdf = () => {
                     <>
                       <br />
                       GSTIN: {invoice.customer.gst_details.gst_no}
-                      <br />
-                      State Code: {invoice.customer.gst_details.state_code}
+                     
                     </>
                   )}
                 </p>
@@ -365,7 +379,7 @@ const ModernInvoicePdf = () => {
             <table className="modern-invoice-table">
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th>Sr No.</th>
                   <th>Product/Service</th>
                   <th>HSN/SAC</th>
                   <th className="text-right">Qty</th>
@@ -420,11 +434,28 @@ const ModernInvoicePdf = () => {
                   <span>Discount:</span>
                   <span>₹{calculations.totalDiscount.toFixed(2)}</span>
                 </p>
-                {/* Display GST based on type, combined for simplicity if not IGST */}
-                <p>
-                  <span>GST ({products[0]?.tax_percentage}%):</span>
-                  <span>₹{(result.totalIGST + result.totalCGST + result.totalSGST).toFixed(2)}</span>
-                </p>
+               {/* GST Section: Show IGST or CGST/SGST based on gst_type */}
+                {isIGST ? (
+                  <p>
+                    <span>IGST ({products[0]?.tax_percentage}%):</span>
+                    <span>₹{result.totalIGST.toFixed(2)}</span>
+                  </p>
+                ) : (
+                  <>
+                    <p>
+                      <span>CGST ({(products[0]?.tax_percentage || 0) / 2}%):</span>
+                      <span>₹{result.totalCGST.toFixed(2)}</span>
+                    </p>
+                    <p>
+                      <span>SGST ({(products[0]?.tax_percentage || 0) / 2}%):</span>
+                      <span>₹{result.totalSGST.toFixed(2)}</span>
+                    </p>
+                    <p>
+                      <span>CGST + SGST:</span>
+                      <span>₹{(result.totalCGST + result.totalSGST).toFixed(2)}</span>
+                    </p>
+                  </>
+                )}
                 <p className="grand-total">
                   <span>Grand Total:</span>
                   <span>₹{calculations.grandTotal.toFixed(2)}</span>
@@ -438,6 +469,11 @@ const ModernInvoicePdf = () => {
                   <span>₹{Math.max(calculations.payableAmount, 0).toFixed(2)}</span>
                 </p>
               </div>
+            </div>
+
+            {/* Amount in Words */}
+            <div className="modern-invoice-amount-in-words" style={{ fontSize: "11px", margin: "10px 0", fontWeight: 500 }}>
+              <strong>Amount in Words:</strong> {getAmountInWords(calculations.grandTotal)}
             </div>
 
             {/* Bank Details */}
@@ -454,8 +490,8 @@ const ModernInvoicePdf = () => {
             <div className="modern-invoice-terms">
               <h4>Terms and Conditions:</h4>
               <ul>
-                <li>Payment is due within 30 days.</li>
-                <li>Goods once sold will not be taken back.</li>
+                <li>Payment is due within 1 weeks.</li>
+                <li>Goods/Services once sold will not be taken back.</li>
                 <li>Interest will be charged at 18% PA if payment is not made within due date.</li>
                 <li>All disputes are subject to local jurisdiction only.</li>
                 <li>This is a computer generated invoice.</li>
@@ -470,21 +506,20 @@ const ModernInvoicePdf = () => {
                     src={invoice.organization.signature_image}
                     alt="Authorized Signature"
                     className="signature-image"
+                    
                     onError={(e) => {
                       console.error("Signature image failed to load:", invoice.organization.signature_image);
                       e.target.style.display = "none";
                     }}
                   />
-                  <div className="signature-line">Authorized Signatory</div>
+                  <div className="signature-line">Signature</div>
                 </div>
               ) : (
-                <div className="signature-line">Authorized Signatory</div>
+                <div className="signature-line">Signature</div>
               )}
             </div>
 
-            <div className="modern-invoice-footer">
-              <p>Amount in Words: {getAmountInWords(calculations.grandTotal)}</p>
-            </div>
+           
           </div>
         </div>
       </div>
@@ -492,4 +527,4 @@ const ModernInvoicePdf = () => {
   );
 };
 
-export default ModernInvoicePdf; 
+export default ModernInvoicePdf;

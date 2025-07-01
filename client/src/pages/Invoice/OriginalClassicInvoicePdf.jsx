@@ -193,6 +193,24 @@ const OriginalClassicInvoicePdf = () => {
         return words.trim() + 'Only';
     };
 
+    // Calculate total discount and total amount for summary
+    const totalDiscount = (invoice.products || []).reduce((sum, item) => {
+        const unitPrice = item.unit_price || item.mrp;
+        const grossAmount = unitPrice * item.quantity;
+        const discountAmount = (grossAmount * (item.discount || 0)) / 100;
+        return sum + discountAmount;
+    }, 0);
+
+    const totalAmount = (invoice.products || []).reduce((sum, item) => {
+        const unitPrice = item.unit_price || item.mrp;
+        const grossAmount = unitPrice * item.quantity;
+        const discountAmount = (grossAmount * (item.discount || 0)) / 100;
+        const taxableAmount = grossAmount - discountAmount;
+        const gstAmount = (taxableAmount * (item.tax || item.gstRate || 0)) / 100;
+        const rowTotal = taxableAmount + gstAmount;
+        return sum + rowTotal;
+    }, 0);
+
     return (
         <>
             <div className="invoice-template-actions">
@@ -266,59 +284,47 @@ const OriginalClassicInvoicePdf = () => {
                             </div>
                         </div>
 
-                        <div className="original-classic-invoice-table-wrapper">
+                        <div className="original-classic-invoice-table-wrapperrr">
                             <table className="original-classic-invoice-table">
                                 <thead>
                                     <tr>
-                                        <th rowSpan="2">S.No.</th>
-                                        <th rowSpan="2">ITEMS</th>
-                                        <th rowSpan="2">HSN</th>
-                                        <th rowSpan="2">QUANTITY</th>
-                                        <th rowSpan="2">MRP</th>
-                                        <th rowSpan="2">RATE/ITEM</th>
-                                        <th rowSpan="2">DISC.</th>
-                                        <th colSpan="2">TAX</th>
-                                        <th rowSpan="2">AMOUNT</th>
-                                    </tr>
-                                    <tr>
-                                        <th>(%)</th>
-                                        <th>AMT</th>
+                                        <th>Sr No.</th>
+                                        <th>Product/Service</th>
+                                        <th>HSN/SAC</th>
+                                        <th className="text-right">Qty</th>
+                                        <th className="text-right">Unit Price</th>
+                                        <th className="text-right">Discount</th>
+                                        <th className="text-right">Taxable Amt.</th>
+                                        <th className="text-right">GST Rate</th>
+                                        <th className="text-right">GST Amt.</th>
+                                        <th className="text-right">Total Amt.</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {invoice.products?.map((item, index) => (
-                                        <tr key={index}>
-                                            <td>{index + 1}</td>
-                                            <td>
-                                                {item.productName}
-                                                {item.imeiNumber && <span><br />IMEI: {item.imeiNumber}</span>}
-                                                {item.serialNumber && <span><br />Serial: {item.serialNumber}</span>}
-                                            </td>
-                                            <td>{item.hsnSac}</td>
-                                            <td>{item.quantity} {item.unit}</td>
-                                            <td>{formatCurrency(item.mrp)}</td>
-                                            <td>{formatCurrency(item.rate)}</td>
-                                            <td>{formatCurrency(item.discount)}</td>
-                                            <td>{item.gstRate}%</td>
-                                            <td>{formatCurrency(item.gstAmount)}</td>
-                                            <td>{formatCurrency(item.totalAmount)}</td>
-                                        </tr>
-                                    ))}
-                                    {/* Dummy rows to fill space */}
-                                    {Array.from({ length: Math.max(0, 10 - (invoice.products?.length || 0)) }).map((_, i) => (
-                                        <tr key={`dummy-${i}`} className="original-classic-invoice-dummy-row">
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    ))}
+                                    {invoice.products?.map((item, index) => {
+                                        const unitPrice = item.unit_price || item.mrp;
+                                        const grossAmount = unitPrice * item.quantity;
+                                        const discountAmount = (grossAmount * (item.discount || 0)) / 100;
+                                        const taxableAmount = grossAmount - discountAmount;
+                                        const gstAmount = (taxableAmount * (item.tax || item.gstRate || 0)) / 100;
+                                        const totalAmount = taxableAmount + gstAmount;
+                                        return (
+                                            <tr key={index}>
+                                                <td className="text-center">{index + 1}</td>
+                                                <td>{item.productName}</td>
+                                                <td className="text-center">{item.hsnSac}</td>
+                                                <td className="text-right">{item.quantity}</td>
+                                                <td className="text-right">{formatCurrency(unitPrice)}</td>
+                                                <td className="text-right">{formatCurrency(discountAmount)}</td>
+                                                <td className="text-right">{formatCurrency(taxableAmount)}</td>
+                                                <td className="text-right">{item.gstRate}%</td>
+                                                <td className="text-right">{formatCurrency(gstAmount)}</td>
+                                                <td className="text-right">{formatCurrency(totalAmount)}</td>
+                                            </tr>
+                                        );
+                                    })}
+                                   
+                                    {/* Summary rows remain unchanged for classic UI */}
                                     <tr>
                                         <td colSpan="7" className="original-classic-invoice-summary-label">Delivery Charges</td>
                                         <td colSpan="3" className="original-classic-invoice-summary-value">{formatCurrency(invoice.deliveryCharges || 0)}</td>
@@ -333,11 +339,11 @@ const OriginalClassicInvoicePdf = () => {
                                     </tr>
                                     <tr>
                                         <td colSpan="7" className="original-classic-invoice-summary-label">Discount</td>
-                                        <td colSpan="3" className="original-classic-invoice-summary-value">{formatCurrency(invoice.totalDiscount || 0)}</td>
+                                        <td colSpan="3" className="original-classic-invoice-summary-value">{formatCurrency(totalDiscount)}</td>
                                     </tr>
                                     <tr>
                                         <td colSpan="7" className="original-classic-invoice-total-label">TOTAL AMOUNT</td>
-                                        <td colSpan="3" className="original-classic-invoice-total-value">{formatCurrency(calculateTotalAmount())}</td>
+                                        <td colSpan="3" className="original-classic-invoice-total-value">{formatCurrency(totalAmount)}</td>
                                     </tr>
                                     <tr>
                                         <td colSpan="7" className="original-classic-invoice-received-label">RECEIVED AMOUNT</td>
@@ -351,57 +357,9 @@ const OriginalClassicInvoicePdf = () => {
                             </table>
                         </div>
 
-                        <div className="original-classic-invoice-gst-summary">
-                            <table className="original-classic-invoice-gst-table">
-                                <thead>
-                                    <tr>
-                                        <th rowSpan="2">HSN/SAC</th>
-                                        <th rowSpan="2">Taxable Value</th>
-                                        <th colSpan="2">CGST</th>
-                                        <th colSpan="2">SGST</th>
-                                        <th rowSpan="2">Total Tax Amount</th>
-                                    </tr>
-                                    <tr>
-                                        <th>Rate</th>
-                                        <th>Amount</th>
-                                        <th>Rate</th>
-                                        <th>Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {/* Assuming invoice.gstSummary is an array of objects like:
-                                    { hsnSac: '123456', taxableValue: 15000, cgstRate: '9%', cgstAmount: 1350, sgstRate: '9%', sgstAmount: 1350, totalTaxAmount: 2700 }
-                                    */}
-                                    {invoice.gstSummary?.map((gstItem, index) => (
-                                        <tr key={index}>
-                                            <td>{gstItem.hsnSac}</td>
-                                            <td>{formatCurrency(gstItem.taxableValue)}</td>
-                                            <td>{gstItem.cgstRate}</td>
-                                            <td>{formatCurrency(gstItem.cgstAmount)}</td>
-                                            <td>{gstItem.sgstRate}</td>
-                                            <td>{formatCurrency(gstItem.sgstAmount)}</td>
-                                            <td>{formatCurrency(gstItem.totalTaxAmount)}</td>
-                                        </tr>
-                                    ))}
-                                    {/* Dummy rows to fill space */}
-                                    {Array.from({ length: Math.max(0, 3 - (invoice.gstSummary?.length || 0)) }).map((_, i) => (
-                                        <tr key={`gst-dummy-${i}`} className="original-classic-invoice-dummy-row">
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-
                         <div className="original-classic-invoice-amount-in-words">
                             <p>Amount Chargeable (in words)</p>
-                            <b>{convertNumberToWords(calculateTotalAmount())}</b>
+                            <b>{convertNumberToWords(totalAmount).toUpperCase()}</b>
                         </div>
 
                         <div className="original-classic-invoice-footer">
@@ -442,12 +400,10 @@ const OriginalClassicInvoicePdf = () => {
                                 {invoice.organization?.signature_image && (
                                      <img src={invoice.organization.signature_image} alt="Signature" className="original-classic-invoice-signature-img" />
                                 )}
-                                <p>Authorised Signatory for</p>
+                                <p>Signature</p>
                                 <p>{invoice.organization?.name}</p>
                             </div>
-                            <div className="original-classic-invoice-page-number">
-                                <p>Page 1</p>
-                            </div>
+                           
                         </div>
                     </div>
                 </div>

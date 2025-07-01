@@ -18,25 +18,26 @@ const ModernProfessionalInvoicePdf = () => {
     setLogoError(true);
   };
 
-  const toWords = new ToWords({
-    localeCode: "en-IN",
-    converterOptions: {
-      currency: true,
-      ignoreDecimal: false,
-      ignoreZeroCurrency: false,
-      doNotAddOnly: false,
-      currencyOptions: {
-        name: "Dollar", // Changed to Dollar as per image
-        plural: "Dollars", // Changed to Dollars as per image
-        symbol: "$", // Changed to $ as per image
-        fractionalUnit: {
-          name: "Cent",
-          plural: "Cents",
-          symbol: "",
+  
+    const toWords = new ToWords({
+      localeCode: "en-IN",
+      converterOptions: {
+        currency: true,
+        ignoreDecimal: false,
+        ignoreZeroCurrency: false,
+        doNotAddOnly: false,
+        currencyOptions: {
+          name: "Rupee",
+          plural: "Rupees",
+          symbol: "₹",
+          fractionalUnit: {
+            name: "Paisa",
+            plural: "Paise",
+            symbol: "",
+          },
         },
       },
-    },
-  });
+    });
 
   const getAmountInWords = (amount) => {
     try {
@@ -44,7 +45,7 @@ const ModernProfessionalInvoicePdf = () => {
       return words.toUpperCase();
     } catch (error) {
       console.error("Error converting amount to words:", error);
-      return toWords.convert(Math.round(amount)).toUpperCase() + " DOLLARS ONLY"; // Changed to DOLLARS
+      return toWords.convert(Math.round(amount)).toUpperCase() + "RUPEES ONLY"; // Changed to DOLLARS
     }
   };
 
@@ -282,7 +283,7 @@ const ModernProfessionalInvoicePdf = () => {
         <button className="change-template-btn" onClick={handleChangeTemplate}>
           Change Template
         </button>
-        <button className="download-btn" onClick={handleDownload}>
+        <button className="download-btn" onClick={handleDownload} disabled={isLoading || !invoice}>
           Download
         </button>
         <button className="back-btn" onClick={handleBack}>
@@ -295,6 +296,10 @@ const ModernProfessionalInvoicePdf = () => {
           <div className="header-section">
             <div className="left-header">
               <h1>INVOICE</h1>
+              <div className="invoice-meta">
+                <div><strong>Invoice No:</strong> {invoice?.invoice_id || "N/A"}</div>
+                <div><strong>Date:</strong> {formatDate(invoice?.invoice_date)}</div>
+              </div>
             </div>
             <div className="right-header">
               <div className="company-info">
@@ -306,11 +311,10 @@ const ModernProfessionalInvoicePdf = () => {
                       onError={handleLogoError}
                     />
                   ) : (
-                    // Default logo/placeholder if no logo or error
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
+                      width="32"
+                      height="32"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -324,59 +328,174 @@ const ModernProfessionalInvoicePdf = () => {
                   )}
                 </div>
                 <h2>{invoice?.organization?.name || "Your Company Name"}</h2>
-                <p>{invoice?.organization?.address || "123 Anywhere St, Any City, ST 12345"}</p>
-                <p>Tel: {invoice?.organization?.phone || "+123-456-7890"}</p>
+                <div className="company-details">
+                  <div>{invoice?.organization?.address || "123 Anywhere St, Any City, ST 12345"}</div>
+                  <div>GSTIN: {invoice?.organization?.gst_number || "N/A"}</div>
+                  <div>PAN: {invoice?.organization?.pan_number || "N/A"}</div>
+                  <div>Tel: {invoice?.organization?.phone || "+123-456-7890"}</div>
+                  <div>Email: {invoice?.organization?.email || "hello@reallygreatsite.com"}</div>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Invoice Details */}
-          <div className="invoice-details-section">
-            <p>Invoice No: {invoice?.invoice_id || "N/A"}</p>
-            <p>Date: {formatDate(invoice?.invoice_date)}</p>
+          {/* Bill To & Customer Details */}
+          <div className="billto-customer-details">
+            <div className="billto-section">
+              <div className="billto-title">Bill To:</div>
+              <div className="billto-details">
+                <div>
+                  <strong>{invoice?.customer?.first_name} {invoice?.customer?.last_name}</strong>
+                </div>
+                {invoice?.customer?.gst_details?.address && (
+                  <div>{invoice.customer.gst_details.address}</div>
+                )}
+                <div>Email: {invoice?.customer?.email}</div>
+                <div>Phone: {invoice?.customer?.phone}</div>
+                {invoice?.customer?.gst_details?.gst_no && (
+                  <div>GSTIN: {invoice.customer.gst_details.gst_no}</div>
+                )}
+              </div>
+            </div>
+            <div className="shipto-section">
+              {/* Optionally add Ship To or other info here */}
+            </div>
           </div>
 
           {/* Items Table */}
-          <table className="items-table">
+          <table className="items-table" style={{ margin: "0 0 18px 0", width: "100%" }}>
             <thead>
               <tr>
                 <th>Description</th>
+                <th>HSN/SAC</th>
                 <th>Qty</th>
-                <th>Price</th>
+                <th>Unit Price</th>
+                <th>Discount</th>
+                <th>Taxable Amt.</th>
+                <th>GST Rate</th>
+                <th>GST Amt.</th>
                 <th>Total</th>
               </tr>
             </thead>
             <tbody>
               {products.length > 0 ? (
-                products.map((product, index) => (
-                  <tr key={index}>
-                    <td>{product.product_name || "Your Description"}</td>
-                    <td>{product.quantity || 1}</td>
-                    <td>${product.unit_price.toFixed(2) || "0.00"}</td>
-                    <td>${(product.quantity * product.unit_price).toFixed(2) || "0.00"}</td>
-                  </tr>
-                ))
+                products.map((product, index) => {
+                  const grossAmount = product.unit_price * product.quantity;
+                  const discountAmount = (grossAmount * (product.discount || 0)) / 100;
+                  const taxableAmount = grossAmount - discountAmount;
+                  const gstAmount = (taxableAmount * product.tax_percentage) / 100;
+                  const totalAmount = taxableAmount + gstAmount;
+                  return (
+                    <tr key={index}>
+                      <td>{product.product_name || "Your Description"}</td>
+                      <td>{product.hsn_sac || "N/A"}</td>
+                      <td>{product.quantity || 1}</td>
+                      <td>₹{product.unit_price.toFixed(2) || "0.00"}</td>
+                      <td>₹{discountAmount.toFixed(2)}</td>
+                      <td>₹{taxableAmount.toFixed(2)}</td>
+                      <td>{product.tax_percentage || 0}%</td>
+                      <td>₹{gstAmount.toFixed(2)}</td>
+                      <td>₹{totalAmount.toFixed(2)}</td>
+                    </tr>
+                  );
+                })
               ) : (
                 <tr>
-                  <td colSpan="4">No products available.</td>
+                  <td colSpan="9">No products available.</td>
                 </tr>
               )}
             </tbody>
           </table>
 
-          {/* Subtotal */}
-          <div className="subtotal-section">
-            <div className="subtotal-row">
-              <span>Sub Total</span>
-              <span>${calculations.subtotal.toFixed(2)}</span>
+          {/* Summary Section */}
+          <div className="summary-section">
+            <div className="bank-details-summary">
+              <div className="bank-details-title">Bank Details</div>
+              <div className="bank-details-list">
+                <div>Bank Name: {invoice?.organization?.bank_name || "Olivia Wilson"}</div>
+                <div>Account Name: {invoice?.organization?.acc_name || "N/A"}</div>
+                <div>Bank Account: {invoice?.organization?.acc_num || "0123 4567 8901"}</div>
+                <div>IFSC: {invoice?.organization?.ifsc || "N/A"}</div>
+                <div>Branch: {invoice?.organization?.branch || "N/A"}</div>
+              </div>
+            </div>
+            <div className="totals-summary">
+              <table>
+                <tbody>
+                  <tr>
+                    <td className="label">Sub Total</td>
+                    <td className="value">₹{calculations.subtotal.toFixed(2)}</td>
+                  </tr>
+                  <tr>
+                    <td className="label">Discount</td>
+                    <td className="value">₹{calculations.totalDiscount.toFixed(2)}</td>
+                  </tr>
+                  {isIGST ? (
+                    <tr>
+                      <td className="label">IGST</td>
+                      <td className="value">₹{result.totalIGST.toFixed(2)}</td>
+                    </tr>
+                  ) : (
+                    <>
+                      <tr>
+                        <td className="label">CGST</td>
+                        <td className="value">₹{result.totalCGST.toFixed(2)}</td>
+                      </tr>
+                      <tr>
+                        <td className="label">SGST</td>
+                        <td className="value">₹{result.totalSGST.toFixed(2)}</td>
+                      </tr>
+                    </>
+                  )}
+                  <tr>
+                    <td className="label grand">Grand Total</td>
+                    <td className="value grand">₹{calculations.grandTotal.toFixed(2)}</td>
+                  </tr>
+                  <tr>
+                    <td className="label">Advance Paid</td>
+                    <td className="value">₹{invoice?.advance?.toFixed(2) || "0.00"}</td>
+                  </tr>
+                  <tr>
+                    <td className="label payable">Payable Amount</td>
+                    <td className="value payable">₹{Math.max(calculations.payableAmount, 0).toFixed(2)}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
 
-          {/* Bank Details */}
-          <div className="bank-details-section">
-            <p>Bank Name: {invoice?.organization?.bank_name || "Olivia Wilson"}</p>
-            <p>Bank Account: {invoice?.organization?.acc_num || "0123 4567 8901"}</p>
+          {/* Amount in Words */}
+          <div className="amount-in-words">
+            <strong>Amount in Words:</strong> {getAmountInWords(calculations.grandTotal)}
           </div>
+
+          {/* Terms and Conditions */}
+          <div className="terms-section">
+            <h4>Terms and Conditions:</h4>
+            <ul>
+              <li>Payment is due within 1 week.</li>
+              <li>Goods/Services once sold will not be taken back.</li>
+              <li>Interest will be charged at 18% PA if payment is not made within due date.</li>
+              <li>All disputes are subject to local jurisdiction only.</li>
+              <li>This is a computer generated invoice.</li>
+            </ul>
+          </div>
+
+          {/* Signature */}
+          {invoice?.organization?.signature_image && (
+            <div className="signature-section">
+              <div className="signature-block">
+                <img
+                  src={invoice.organization.signature_image}
+                  alt="Authorized Signature"
+                  className="signature-image"
+                />
+                <div className="signature-line">
+                  Signature
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Footer */}
           <div className="footer-section">
@@ -394,4 +513,4 @@ const ModernProfessionalInvoicePdf = () => {
   );
 };
 
-export default ModernProfessionalInvoicePdf; 
+export default ModernProfessionalInvoicePdf;

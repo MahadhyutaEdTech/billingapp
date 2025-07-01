@@ -421,7 +421,7 @@ const statusCount = async () => {
 
 const amountStatus = async () => {
   const connectionPool = await connectionPoolPromise;
-  const sqlQuery = `SELECT status, SUM(total_amount + tax_amount) AS total FROM invoices GROUP BY status ORDER BY status`;
+  const sqlQuery = `SELECT status, SUM(total_amount) AS total FROM invoices GROUP BY status ORDER BY status`;
   const [result] = await connectionPool.execute(sqlQuery);
   return result;
 };
@@ -431,7 +431,7 @@ const getTotalCustomers = async () => {
   const connectionPool = await connectionPoolPromise;
   const sqlQuery = `
     SELECT COUNT(DISTINCT customer_id) as total_customers 
-    FROM invoices;
+    FROM customers;
   `;
   const [result] = await connectionPool.execute(sqlQuery);
   return result[0]?.total_customers || 0;

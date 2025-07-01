@@ -4,15 +4,16 @@
     background-color: #f0f0f0; /* Keeping a lighter grey background for the page as it matches the overall background behind the invoice */
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
-    padding: 10px;
+    margin-top: 60px ;
+    padding: 5px;
     box-sizing: border-box;
 }
 
 .original-classic-invoice-container {
     width: 210mm; /* A4 width */
-    min-height: 297mm; /* A4 height */
+    /* min-height: 297mm; */  /* REMOVE or COMMENT OUT this line */
     background: white;
     padding: 0; /* No internal padding, border will create the margin */
     box-shadow: none; /* No shadow */
@@ -57,8 +58,8 @@
 }
 
 .original-classic-invoice-logo img {
-    max-width: 70px;
-    max-height: 70px;
+    max-width: 120px;
+    max-height: 120px;
     margin-right: 15px;
     object-fit: contain;
 }
@@ -140,9 +141,9 @@
     margin: 0;
 }
 
-.original-classic-invoice-table-wrapper {
+.original-classic-invoice-table-wrapperrr {
     flex-grow: 1;
-    margin: 0 15mm 10px 15mm; /* Consistent horizontal margin */
+    margin: 0px 15mm 0px 15mm; /* Consistent horizontal margin */
 }
 
 .original-classic-invoice-table {
@@ -172,22 +173,6 @@
     padding: 6px 4px;
 }
 
-/* Adjust specific column widths (refined based on image) */
-.original-classic-invoice-table th:nth-child(1) { width: 4%; } /* S.No. */
-.original-classic-invoice-table th:nth-child(2) { width: 23%; text-align: left; } /* ITEMS */
-.original-classic-invoice-table th:nth-child(3) { width: 8%; } /* HSN */
-.original-classic-invoice-table th:nth-child(4) { width: 8%; } /* QUANTITY */
-.original-classic-invoice-table th:nth-child(5) { width: 9%; } /* MRP */
-.original-classic-invoice-table th:nth-child(6) { width: 9%; } /* RATE/ITEM */
-.original-classic-invoice-table th:nth-child(7) { width: 8%; } /* DISC. */
-.original-classic-invoice-table th:nth-child(8) { width: 6%; } /* TAX (%) */
-.original-classic-invoice-table th:nth-child(9) { width: 9%; } /* TAX AMT */
-.original-classic-invoice-table th:nth-child(10) { width: 16%; } /* AMOUNT */
-
-.original-classic-invoice-table tbody tr td:nth-child(2) {
-    text-align: left; /* Align ITEMS column to left */
-    padding-left: 8px; /* Some padding for items */
-}
 
 .original-classic-invoice-dummy-row td {
     height: 18px; /* Slightly adjusted height for dummy rows */
@@ -359,8 +344,8 @@
 }
 
 .original-classic-invoice-signature-img {
-    max-width: 120px;
-    max-height: 60px;
+    max-width: 240px;
+    max-height: 120px;
     display: block;
     margin-left: auto;
     margin-bottom: 3px;
@@ -395,6 +380,7 @@
     .original-classic-invoice-gradient {
         min-height: auto;
         padding: 0;
+        margin-top: 2px;
         box-shadow: none;
         display: block;
         background-color: white; /* Ensure white background on print */
@@ -402,7 +388,7 @@
 
     .original-classic-invoice-container {
         width: 210mm;
-        min-height: 297mm;
+        /* min-height: 297mm; */  /* REMOVE or COMMENT OUT this line */
         margin: 0;
         padding: 0; /* Remove padding for print to let border define margin */
         box-shadow: none;
@@ -434,5 +420,18 @@
     .original-classic-invoice-terms,
     .original-classic-invoice-signature {
         page-break-inside: avoid;
+    }
+
+    .original-classic-invoice-table th:nth-child(2),
+    .original-classic-invoice-table td:nth-child(2) {
+        width: 28% !important;
+        min-width: 120px !important;
+        max-width: 220px !important;
+        word-break: break-word !important;
+    }
+
+    .original-classic-invoice-signature-img {
+        max-width: 240px !important;
+        max-height: 120px !important;
     }
 } 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../css/modules/customer/CustomerForm.css";
 import axiosInstance from '../../utils/axiosConfig';
 import { API_BASE } from "../../config/config";
+import { useNavigate } from "react-router-dom";
 
 const CustomerForm = ({ onClose }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -17,6 +18,7 @@ const CustomerForm = ({ onClose }) => {
 
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const navigate = useNavigate();
 
   // Dark mode detection
   useEffect(() => {
@@ -101,12 +103,11 @@ const CustomerForm = ({ onClose }) => {
       const response = await axiosInstance.post(`${API_BASE}/customer/createCustomer`, customerData, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // ✅ Uses dynamic token
+          Authorization: `Bearer ${token}`,
           "ngrok-skip-browser-warning": "true",
         },
       });
 
-      //console.log("✅ API Response:", response.data);
       setSuccess("Customer created successfully!");
       setError(null);
 
@@ -120,11 +121,20 @@ const CustomerForm = ({ onClose }) => {
         gst_address: ""
       });
 
-      //console.log("🧹 Form reset after successful creation.");
+      // Show popup and redirect after short delay
+      setTimeout(() => {
+        setSuccess(null);
+        window.alert("Customer added successfully!");
+        navigate("/dashboard/customers");
+        window.location.reload(); // Force page update after navigation
+      }, 1000);
+
     } catch (error) {
       console.error("❌ API Error:", error.response?.data || error.message);
-      setError(error.response?.data?.message || "Failed to create customer.");
+      const errorMsg = error.response?.data?.message || "Failed to create customer.";
+      setError(errorMsg);
       setSuccess(null);
+      window.alert(errorMsg); // Show error in popup as well
     }
   };
 

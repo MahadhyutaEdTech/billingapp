@@ -43,7 +43,8 @@
 }
 
 .modern-invoice-header .logo {
-  max-width: 80px; /* Further adjusted size */
+  max-width: 200px;
+  max-height: 100px; /* Further adjusted size */
   height: auto;
   object-fit: contain;
   margin-bottom: 5px;
@@ -162,13 +163,13 @@
 }
 
 /* Finalized Explicit column widths to prevent overflow, now important */
-.modern-invoice-table th:nth-child(1) { width: 3% !important; }   /* # */
-.modern-invoice-table th:nth-child(2) { width: 25% !important; }  /* Product/Service */
+.modern-invoice-table th:nth-child(1) { width: 8% !important; }   /* # */
+.modern-invoice-table th:nth-child(2) { width: 20% !important; }  /* Product/Service */
 .modern-invoice-table th:nth-child(3) { width: 10% !important; }  /* HSN/SAC */
 .modern-invoice-table th:nth-child(4) { width: 6% !important; }   /* Qty */
 .modern-invoice-table th:nth-child(5) { width: 10% !important; }  /* Unit Price */
-.modern-invoice-table th:nth-child(6) { width: 9% !important; }   /* Discount */
-.modern-invoice-table th:nth-child(7) { width: 10% !important; }  /* Taxable Amt. */
+.modern-invoice-table th:nth-child(6) { width: 10% !important; }   /* Discount */
+.modern-invoice-table th:nth-child(7) { width: 9% !important; }  /* Taxable Amt. */
 .modern-invoice-table th:nth-child(8) { width: 7% !important; }   /* GST Rate */
 .modern-invoice-table th:nth-child(9) { width: 9% !important; }   /* GST Amt. */
 .modern-invoice-table th:nth-child(10) { width: 11% !important; }  /* Total Amt. */
@@ -271,29 +272,37 @@
 
 .modern-invoice-signature {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 20px; /* Adjusted margin */
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 2px;
   text-align: right;
 }
 
 .modern-invoice-signature .signature-line {
   border-top: 1px solid #000;
   padding-top: 5px;
-  width: 120px; /* Adjusted width */
-  font-size: 10px;
-  font-weight: 700 !important; /* Made bolder */
-  color: #000 !important; /* Made darker */
+  width: 140px;
+  font-size: 12px;
+  text-align: center !important;
+  font-weight: 700 !important;
+  color: #000 !important;
+  margin: 0 auto;
+  display: block;
+  /* Position the text directly below the image and center it */
+  transform: translateY(-10px);
 }
 
 .modern-invoice-signature img {
-  max-height: 40px !important; /* Ensure visibility */
-  max-width: 100px !important; /* Ensure visibility */
+  max-height: 150px !important; /* Increased size */
+  max-width: 300px !important;  /* Increased size */
   object-fit: contain;
-  margin-bottom: 3px;
+  margin-bottom: 1px;
 }
 
 .modern-invoice-signature .signature-image {
-  display: block !important; /* Ensure the image is always displayed */
+  display: block !important;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .modern-invoice-footer {
@@ -334,7 +343,7 @@
     box-shadow: none !important;
     border-radius: 0 !important;
     margin: 0 !important;
-    padding: 15mm 20mm !important; /* Ensure padding is maintained for print */
+    padding: 5mm 5mm !important; /* Ensure padding is maintained for print */
     position: absolute !important;
     top: 0 !important;
     left: 0 !important;
@@ -396,4 +405,4 @@
     width: 100% !important;
     table-layout: fixed !important;
   }
-} 
+}

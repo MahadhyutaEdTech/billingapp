@@ -73,7 +73,7 @@ export const fetchGstType = async (orgGst, customerGst, callback) => {
     return;
   }
 
-  //console.log("Sending GST Numbers to API:", { orgGst, customerGst });
+console.log("Sending GST Numbers to API:", { orgGst, customerGst });
 
   try {
     const response = await axiosInstance.post(
@@ -91,7 +91,7 @@ export const fetchGstType = async (orgGst, customerGst, callback) => {
       }
     );
 
-    //console.log("GST API Response:", response.data);
+    console.log("GST API Response:", response.data);
     
     if (response.data && response.data.gstType) {
       callback(response.data.gstType);
