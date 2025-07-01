@@ -42,6 +42,12 @@ const CustomerForm = ({ onClose }) => {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (error) {
+      window.alert(error);
+    }
+  }, [error]);
+
   const validateForm = () => {
     const nameRegex = /^[A-Za-z\s]+$/;
 

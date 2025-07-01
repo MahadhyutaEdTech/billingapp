@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const features = [
   {
@@ -130,9 +130,9 @@ const Homepage = () => {
           <div style={{ fontWeight: 700, fontSize: 20, color: '#2563eb' }}>BillFlow</div>
           <div style={{ color: '#6b7280', fontSize: 15 }}>© {new Date().getFullYear()} NOVAMIND INSIGHTS PRIVATE LIMITED. All rights reserved.</div>
           <div style={{ color: '#6b7280', fontSize: 15 }}>
-            <a href="#" style={{ color: '#2563eb', textDecoration: 'none', marginRight: 16 }}>Privacy Policy</a>
-            <a href="#" style={{ color: '#2563eb', textDecoration: 'none', marginRight: 16 }}>Terms of Service</a>
-            <a href="#" style={{ color: '#2563eb', textDecoration: 'none' }}>Contact</a>
+            <Link to="/privacy-policy" style={{ color: '#2563eb', textDecoration: 'none', marginRight: 16 }}>Privacy Policy</Link>
+            <Link to="/terms-of-service" style={{ color: '#2563eb', textDecoration: 'none', marginRight: 16 }}>Terms of Service</Link>
+            <Link to="/contact" style={{ color: '#2563eb', textDecoration: 'none' }}>Contact</Link>
           </div>
         </div>
       </footer>

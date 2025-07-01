@@ -9,6 +9,9 @@ import AuthForm from './pages/AuthForm';
 import ChangePassword from './components/ChangePassword';
 import ProtectedRoutes from './routes/ProtectedRoutes';
 import Homepage from './pages/homepage/Homepage';
+import PrivacyPolicy from './pages/homepage/PrivacyPolicy';
+import TermsOfService from './pages/homepage/TermsOfService';
+import Contact from './pages/homepage/Contact';
 
 
 const App = () => {
@@ -69,6 +72,15 @@ const App = () => {
             </ProtectedRoutes>
           }
         />
+
+        {/* Privacy Policy Route */}
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+
+        {/* Terms of Service Route */}
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+
+        {/* Contact Route */}
+        <Route path="/contact" element={<Contact />} />
 
         {/* Catch all route */}
         <Route path="*" element={<Navigate to="/" replace />} />
