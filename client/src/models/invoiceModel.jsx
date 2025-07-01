@@ -7,7 +7,7 @@ const getAuthToken = () => localStorage.getItem("authToken");
 // ✅ Fetch all invoices
 export const fetchInvoices = async (page = 1, limit = 10) => {
   const token = getAuthToken();
-  if (!token) return [];
+  if (!token) return { invoices: [], total: 0 };
 
   try {
     const response = await axiosInstance.get(`${API_BASE}/invoice/all`, {
@@ -15,19 +15,13 @@ export const fetchInvoices = async (page = 1, limit = 10) => {
       headers: { Authorization: `Bearer ${token}` ,"ngrok-skip-browser-warning": "true"},
     });
 
-    //console.log("✅ Raw API Response:", response.data); // Debugging log
-
-    if (Array.isArray(response.data)) {
-      return response.data; // Directly return the array if API response is an array
-    } else if (response.data.invoices) {
-      return response.data.invoices; // Handle API response with `invoices` key
+    if (response.data && response.data.invoices && typeof response.data.total === "number") {
+      return response.data;
     } else {
-      console.error("❌ Unexpected API response:", response.data);
-      return [];
+      return { invoices: [], total: 0 };
     }
   } catch (error) {
-    console.error("❌ Fetch Error:", error);
-    return [];
+    return { invoices: [], total: 0 };
   }
 };
 

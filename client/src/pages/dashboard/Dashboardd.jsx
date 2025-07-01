@@ -103,6 +103,10 @@ export default function Dashboard() {
     }
   }, []);
 
+  useEffect(() => {
+    console.log("Dashboard filteredInvoices:", filteredInvoices);
+  }, [filteredInvoices]);
+
   const recentTransactions = useMemo(() => filteredInvoices.slice(0, 5), [filteredInvoices])
 
   const statusColors = {
@@ -296,15 +300,23 @@ export default function Dashboard() {
                     <td>{transaction.invoice_number || "N/A"}</td>
                     <td>{formatCurrency(transaction.total_amount)}</td>
                     <td>
-                      <span 
-                        className="status-badge"
-                        style={{
-                          backgroundColor: `${statusColors[transaction.status]}20`,
-                          color: statusColors[transaction.status]
-                        }}
-                      >
-                        {transaction.status || "Unknown"}
-                      </span>
+                      {(() => {
+                        // Normalize status to Title Case for color and display
+                        const status = transaction.status
+                          ? transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1).toLowerCase()
+                          : "Unknown";
+                        return (
+                          <span
+                            className="status-badge"
+                            style={{
+                              backgroundColor: `${statusColors[status] || "#ccc"}20`,
+                              color: statusColors[status] || "#333"
+                            }}
+                          >
+                            {status}
+                          </span>
+                        );
+                      })()}
                     </td>
                   </tr>
                 ))}

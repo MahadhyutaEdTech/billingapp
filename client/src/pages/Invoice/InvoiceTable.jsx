@@ -36,20 +36,7 @@ export default function InvoiceTable() {
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("All");
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Set items per page, consistent with ProductPage
   const [showInvoiceDetails, setShowInvoiceDetails] = useState(false);
-
-  // Calculate pagination for current view
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentInvoices = filteredInvoices.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPagesLocal = Math.ceil(filteredInvoices.length / itemsPerPage);
-
-  // Handle page change for local pagination
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
 
   // Fetch all invoices when component mounts or filter changes
   useEffect(() => {
@@ -117,13 +104,12 @@ export default function InvoiceTable() {
   const handleFilter = async (status) => {
     setSelectedStatus(status);
     setPage(1);
-    setCurrentPage(1);
 
     if (status === "All") {
       // Fetch all invoices
-      const allInvoices = await fetchInvoices();
-      setInvoices(allInvoices);
-      setFilteredInvoices(allInvoices);
+      const { invoices } = await fetchInvoices();
+      setInvoices(invoices);
+      setFilteredInvoices(invoices);
     } else {
       // Fetch filtered invoices from API
       const filtered = await filterInvoice(status);
@@ -135,7 +121,6 @@ export default function InvoiceTable() {
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
     setPage(1);
-    setCurrentPage(1);
   };
 
   const closeUpdateForm = () => {
@@ -232,8 +217,8 @@ export default function InvoiceTable() {
                 </tr>
               </thead>
               <tbody>
-                {currentInvoices.length > 0 ? (
-                  currentInvoices.map((invoice) => (
+                {filteredInvoices.length > 0 ? (
+                  filteredInvoices.map((invoice) => (
                     <tr
                       key={invoice.invoice_id}
                       onClick={() => viewInvoice(invoice)}
@@ -309,27 +294,27 @@ export default function InvoiceTable() {
             {/* Pagination UI */}
             <div className="pagination">
               <div className="page-info">
-                Showing {filteredInvoices.length > 0 ? indexOfFirstItem + 1 : 0} to {Math.min(indexOfLastItem, filteredInvoices.length)} of {filteredInvoices.length} entries
+                Showing {filteredInvoices.length > 0 ? 1 : 0} to {filteredInvoices.length} of {totalPages * 10} entries
               </div>
               <div className="pagination-controls">
                 <button 
                   className="control-btn"
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
+                  onClick={() => setPage(page - 1)}
+                  disabled={page === 1}
                 >
                   Previous
                 </button>
                 <input
                   type="number"
                   min="1"
-                  max={totalPagesLocal}
-                  value={currentPage}
-                  onChange={(e) => handlePageChange(parseInt(e.target.value))}
+                  max={totalPages}
+                  value={page}
+                  onChange={(e) => setPage(parseInt(e.target.value))}
                 />
                 <button 
                   className="control-btn"
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPagesLocal}
+                  onClick={() => setPage(page + 1)}
+                  disabled={page === totalPages}
                 >
                   Next
                 </button>

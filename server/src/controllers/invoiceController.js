@@ -1,4 +1,6 @@
 import { createInvoice, getInvoice,updateInvoice,deleteInvoice, getAllInvoices ,getfilterInvoices,searchInvoices,countInvoice,statusCount,amountStatus,getTotalCustomers,getAverageInvoiceValue,getHighestSaleProduct} from "../models/invoiceModel.js";
+import connectionPoolPromise from "../config/databaseConfig.js";
+
 const createInvoices = async (req, res) => {
     const { customer_id, org_id,invoice_date, due_date, advance,total_amount,discount,due_amount, tax_amount, status, created_at,gst_no,gst_number,gst_type, shippingAddresses, products } = req.body;
   console.log(req.body);
@@ -32,21 +34,21 @@ const getInvoices = async (req, res) => {
 }
 
 const getAllInvoice=async(req,res)=>{
-    const page = parseInt(req.query.page) || 1; 1
-const limit = parseInt(req.query.limit) || 10; 
-const offset = (page - 1) * limit;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
 
     try {
         const result = await getAllInvoices(limit,offset);
-        res.status(200).json(result);
-
+        // Get total count
+        const connectionPool = await connectionPoolPromise;
+        const [[{ total }]] = await connectionPool.execute('SELECT COUNT(*) as total FROM invoices');
+        res.status(200).json({ invoices: result, total });
     }
     catch (error) {
         console.log(error);
         res.status(500).json({ message: "Server Error", error });
     }
-    
-
 }
 
 const countInvoices=async(req,res)=>{

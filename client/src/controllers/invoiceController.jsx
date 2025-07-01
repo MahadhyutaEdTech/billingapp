@@ -22,24 +22,15 @@ const useInvoices = () => {
       setError(null);
 
       try {
-        const data = await fetchInvoices(page, 10);
-
-        if (!Array.isArray(data)) {
-          console.error("❌ Expected an array, but got:", data);
-          setError("Invalid data format");
-          setInvoices([]);
-          setFilteredInvoices([]);
-          return;
-        }
-
-        setInvoices(data);
-        setFilteredInvoices(data); // Initially, show all invoices
-        setTotalPages(1); // Update as per API response if available
+        const { invoices, total } = await fetchInvoices(page, 10);
+        setInvoices(invoices);
+        setFilteredInvoices(invoices);
+        setTotalPages(Math.ceil(total / 10));
       } catch (err) {
-        console.error("🔥 Error fetching invoices:", err);
         setError("Failed to load invoices");
         setInvoices([]);
         setFilteredInvoices([]);
+        setTotalPages(1);
       } finally {
         setLoading(false);
       }

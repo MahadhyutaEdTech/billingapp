@@ -118,6 +118,16 @@ const OriginalClassicInvoicePdf = () => {
         fetchInvoice();
     }, [invoiceId]);
 
+    useEffect(() => {
+        if (invoice?.invoiceNumber) {
+          const originalTitle = document.title;
+          document.title = `Invoice_${invoice.invoiceNumber}`;
+          return () => {
+            document.title = originalTitle;
+          };
+        }
+      }, [invoice]);
+
     const handleDownload = () => {
         window.print();
     };
@@ -394,14 +404,20 @@ const OriginalClassicInvoicePdf = () => {
                             </div>
                             <div className="original-classic-invoice-terms">
                                 <p>Terms & Conditions</p>
-                                <p>Details of advances as well as adjustment of same against invoices to be adjusted and not shown separately</p>
+                                 <li>Payment is due within 1 week.</li>
+              <li>Goods/Services once sold will not be taken back.</li>
+              <li>Interest will be charged at 18% PA if payment is not made within due date.</li>
+              <li>All disputes are subject to local jurisdiction only.</li>
+              <li>This is a computer generated invoice.</li>
                             </div>
                             <div className="original-classic-invoice-signature">
-                                {invoice.organization?.signature_image && (
-                                     <img src={invoice.organization.signature_image} alt="Signature" className="original-classic-invoice-signature-img" />
-                                )}
-                                <p>Signature</p>
-                                <p>{invoice.organization?.name}</p>
+                                <div className="original-classic-invoice-signature-block">
+                                    {invoice.organization?.signature_image && (
+                                        <img src={invoice.organization.signature_image} alt="Signature" className="original-classic-invoice-signature-img" />
+                                    )}
+                                    <p>Signature</p>
+                                    <p>{invoice.organization?.name}</p>
+                                </div>
                             </div>
                            
                         </div>
