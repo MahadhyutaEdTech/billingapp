@@ -8,7 +8,7 @@ import bcryptjs from 'bcryptjs';
 const registerUser = async(req,res) =>{
 
   const{userName,email,password,authCode} = req.body;
-  const ADMIN_SIGNUP_CODE = process.env.ADMIN_SIGNUP_CODE || 'yourSecretCode';
+  const ADMIN_SIGNUP_CODE = process.env.ADMIN_SIGNUP_CODE || '1234@121890@d';
   if (!authCode || authCode !== ADMIN_SIGNUP_CODE) {
       return res.status(403).json({ message: 'Invalid authentication code.' });
   }
