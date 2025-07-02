@@ -1,0 +1,286 @@
+.create-expense-container {
+  padding: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.create-expense-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #eef2f7;
+}
+
+.create-expense-header h2 {
+  color: #1e293b;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.create-expense-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.create-expense-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.create-expense-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.create-expense-form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.create-expense-form-group label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.create-expense-form-group label::after {
+  content: '';
+}
+
+/* Style for required fields */
+.create-expense-form-group:has(input:required) label::after,
+.create-expense-form-group:has(select:required) label::after {
+  content: ' *';
+  color: #e53e3e;
+  margin-left: 2px;
+}
+
+.create-expense-form-group input,
+.create-expense-form-group select,
+.create-expense-form-group textarea {
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.create-expense-form-group input:focus,
+.create-expense-form-group select:focus,
+.create-expense-form-group textarea:focus {
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+  outline: none;
+}
+
+/* Nature of Fund Section Styles */
+.fund-info {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 1.25rem;
+  border: 1px solid #e2e8f0;
+}
+
+.fund-section-header {
+  margin-bottom: 1rem;
+}
+
+.section-label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+.section-description {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.fund-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.fund-type-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #fff;
+}
+
+.fund-type-option:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e0;
+}
+
+.fund-type-option input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: #3182ce;
+}
+
+.fund-type-label {
+  font-size: 0.9rem;
+  color: #475569;
+  font-weight: 500;
+}
+
+.create-expense-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.create-expense-submit-btn,
+.create-expense-cancel-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.create-expense-submit-btn {
+  background: #3182ce;
+  color: white;
+  border: none;
+}
+
+.create-expense-submit-btn:hover {
+  background: #2c5282;
+}
+
+.create-expense-cancel-btn {
+  background: #fff;
+  color: #4a5568;
+  border: 1px solid #e2e8f0;
+}
+
+.create-expense-cancel-btn:hover {
+  background: #f8fafc;
+}
+
+@media (max-width: 768px) {
+  .fund-types-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .fund-type-option {
+    padding: 0.6rem;
+  }
+  
+  .fund-type-label {
+    font-size: 0.85rem;
+  }
+}
+
+/* Dark mode styles */
+.dark-mode .create-expense-container {
+  background: #1a1a1a;
+  color: #e0e0e0;
+}
+
+.dark-mode .create-expense-header h2 {
+  color: #e0e0e0;
+}
+
+.dark-mode .create-expense-form-group input,
+.dark-mode .create-expense-form-group select,
+.dark-mode .create-expense-form-group textarea {
+  background: #2d2d2d;
+  border-color: #404040;
+  color: #e0e0e0;
+}
+
+.dark-mode .create-expense-cancel-btn {
+  background: #2d2d2d;
+  color: #e0e0e0;
+  border-color: #404040;
+}
+
+.create-expense-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.create-expense-radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.create-expense-radio-group label:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.create-expense-radio-group input[type="radio"] {
+  margin: 0;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #e2e8f0;
+  border-radius: 50%;
+  outline: none;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.create-expense-radio-group input[type="radio"]:checked {
+  border-color: #3182ce;
+}
+
+.create-expense-radio-group input[type="radio"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background-color: #3182ce;
+  border-radius: 50%;
+}
+
+.create-expense-radio-group input[type="radio"]:focus {
+  box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
+  outline: none;
+}
+
+/* Dark mode styles */
+.dark-mode .create-expense-radio-group input[type="radio"] {
+  border-color: #404040;
+}
+
+.dark-mode .create-expense-radio-group input[type="radio"]:checked {
+  border-color: #3182ce;
+}
+
+.dark-mode .create-expense-radio-group label:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}

@@ -1,0 +1,132 @@
+.chooser-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+    background-color: var(--bg-color, #fff);
+    min-height: 100vh;
+  }
+  
+  .chooser-container h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: var(--text-color, #333);
+  }
+  
+  .carousel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 900px;
+    padding: 0 50px;
+  }
+  
+  .carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 30px;
+    padding: 20px 0;
+    scroll-snap-type: x mandatory;
+    min-height: 200px;
+    flex-grow: 1;
+  }
+  
+  .carousel::-webkit-scrollbar {
+    height: 8px;
+  }
+  .carousel::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+  }
+  
+  .template-card {
+    flex: 0 0 250px;
+    scroll-snap-align: start;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  }
+  
+  .template-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+  
+  .template-card.selected {
+    border-color: #007bff;
+    box-shadow: 0 0 8px #007bff;
+  }
+  
+  .template-footer {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .template-footer .tick {
+    color: #007bff;
+    font-size: 18px;
+  }
+  
+  .template-footer .crown {
+    color: gold;
+    font-size: 18px;
+  }
+  
+  .scroll-btn {
+    background: #eee;
+    border: none;
+    font-size: 24px;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    transition: background 0.3s;
+  }
+  .scroll-btn:hover {
+    background: #ddd;
+  }
+  .scroll-btn.left {
+    left: -20px;
+  }
+  .scroll-btn.right {
+    right: -20px;
+  }
+  
+  .cta-btn {
+    margin-top: 30px;
+    padding: 14px 24px;
+    background-color: #f26522;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .cta-btn:hover {
+    background-color: #d35400;
+  }
+  
+  /* Dark mode (optional) */
+  body.dark-mode .chooser-container {
+    background: #121212;
+    color: #eee;
+  }
+  

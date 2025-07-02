@@ -9,6 +9,7 @@ const createOrganizations = async (req, res) => {
         phone,
         website,
         reg_number,
+        pan_number,
         invoice_prefix,
         bank_name,
         acc_name,
@@ -20,8 +21,9 @@ const createOrganizations = async (req, res) => {
       // Parse gst_details from string to JSON
       const gst_details = JSON.parse(req.body.gst_details || '{}');
   
-      // logo_image is in req.file
-      const logo_image = req.file;
+      // Get files from the new structure
+      const logo_image = req.files?.['logo_image']?.[0];
+      const signature_image = req.files?.['signature_image']?.[0];
   
       if (!name || !logo_image) {
         return res.status(400).json({ message: "Missing required fields: name or logo_image" });
@@ -34,9 +36,11 @@ const createOrganizations = async (req, res) => {
         phone,
         website,
         reg_number,
+        pan_number,
         gst_details,
         invoice_prefix,
         logo_image,
+        signature_image,
         bank_name,
         acc_name,
         ifsc,
@@ -46,8 +50,8 @@ const createOrganizations = async (req, res) => {
   
       res.status(201).json({ message: "Organization registered successfully", data: result });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Server Error", error });
+      console.error("Error in createOrganizations:", error);
+      res.status(500).json({ message: "Server Error", error: error.message });
     }
   };
 
@@ -63,18 +67,34 @@ const getOrganizations=async(req,res)=>{
 
     }
 }
-const updateOrganizations= async(req,res)=>{
-   try{
-    const org_id=req.query.org_id;
-    const data=req.body;
+const updateOrganizations = async(req, res) => {
+   try {
+    const org_id = req.query.org_id;
+    
+    // Get files from multer
+    const files = {
+      logo_image: req.files?.['logo_image']?.[0],
+      signature_image: req.files?.['signature_image']?.[0]
+    };
+
+    // Merge files with other data
+    const data = {
+      ...req.body,
+      ...files
+    };
+
     if (!org_id) {
-        return res.status(400).json({ message: "org_id is required" });
+      return res.status(400).json({ message: "org_id is required" });
     }
-    const updatedData=await updateOrganization(org_id,data);
-    res.status(200).json({ message: "Organization Data updated successfully", updatedData });
-   }
-   catch(error){
-    res.status(500).json({ message: "Server Error", error:"Error while updating data"});
+
+    const updatedData = await updateOrganization(org_id, data);
+    res.status(200).json({ 
+      message: "Organization Data updated successfully", 
+      data: updatedData 
+    });
+   } catch(error) {
+    console.error('Update Error:', error);
+    res.status(500).json({ message: "Server Error", error: error.message });
    }
 }
 

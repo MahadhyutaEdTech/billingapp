@@ -1,0 +1,435 @@
+/* AddProject.css */
+
+/* CSS Variables for theming */
+:root {
+  --bg-primary: #f9f9f9;
+  --bg-secondary: #ffffff;
+  --text-primary: #333333;
+  --text-secondary: #555555;
+  --border-color: #dddddd;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --input-bg: #ffffff;
+  --hover-bg: #e8e8e8;
+  --success-bg: #dff2bf;
+  --success-text: #4f8a10;
+  --error-color: #e74c3c;
+  --primary-color: #4a90e2;
+  --primary-hover: #357abd;
+  --button-primary: #4caf50;
+  --button-primary-hover: #3d8b40;
+  --button-secondary: #f5f5f5;
+  --button-secondary-hover: #e8e8e8;
+  --tech-bg: #f0f0f0;
+  --tech-item-bg: #ffffff;
+  --tech-tag-bg: #e9f3ff;
+  --tech-tag-color: #4a90e2;
+  --tech-tag-border: #c2deff;
+}
+
+/* Dark mode class */
+.dark-mode {
+  --bg-primary: #1e1e1e;
+  --bg-secondary: #2c2c2c;
+  --text-primary: #e0e0e0;
+  --text-secondary: #cccccc;
+  --border-color: #404040;
+  --shadow-color: rgba(0, 0, 0, 0.4);
+  --input-bg: #2c2c2c;
+  --hover-bg: #3a3a3a;
+  --success-bg: #2e7d32;
+  --success-text: #ffffff;
+  --error-color: #ff6b6b;
+  --primary-color: #66a3ff;
+  --primary-hover: #4d94ff;
+  --button-primary: #388e3c;
+  --button-primary-hover: #2e7d32;
+  --button-secondary: #2c2c2c;
+  --button-secondary-hover: #3a3a3a;
+  --tech-bg: #2d2d2d;
+  --tech-item-bg: #1f1f1f;
+  --tech-tag-bg: #2c3e50;
+  --tech-tag-color: #3498db;
+  --tech-tag-border: #2980b9;
+}
+
+/* Container Styles */
+.add-project-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 700px;
+  margin: 32px auto 0 auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  padding: 24px 20px 18px 20px;
+  font-family: 'Poppins', sans-serif;
+  min-height: 0;
+}
+
+.add-project-container h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 18px;
+  letter-spacing: 0.5px;
+}
+
+.success-message {
+  background: #e6f9ed;
+  color: #218838;
+  border-radius: 6px;
+  padding: 8px 14px;
+  margin-bottom: 14px;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.error-message {
+  background: #ffeaea;
+  color: #d32f2f;
+  border-radius: 6px;
+  padding: 8px 14px;
+  margin-bottom: 14px;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.project-form {
+  background: #fafbfc;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  padding: 18px 12px 10px 12px;
+  margin: 0;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-group label {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 2px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 7px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  font-size: 0.97rem;
+  color: #222;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #4f46e5;
+  outline: none;
+}
+
+.form-group input::placeholder {
+  color: #b0b0b0;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 60px;
+  font-size: 0.97rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #ececec;
+}
+
+.add-project-container-submit-btn,
+.add-project-container-reset-btn {
+  padding: 7px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  min-width: 120px;
+  font-weight: 500;
+  transition: background 0.2s, border-color 0.2s;
+}
+.add-project-container-submit-btn{
+  background: #4338ca;
+}
+
+.add-project-container-submit-btn:hover {
+  background: #4338ca;
+}
+
+.add-project-container-reset-btn {
+  background: #9ca3af;
+  border-color: #9ca3af;
+}
+
+@media (max-width: 700px) {
+  .add-project-container {
+    max-width: 98vw;
+    padding: 10px 2vw;
+  }
+  .project-form {
+    padding: 10px 2vw;
+  }
+  .form-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* Dark Mode Styles */
+.dark-mode .add-project-container {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+}
+
+.dark-mode .add-project-container h2 {
+  color: #ffffff;
+}
+
+.dark-mode .success-message {
+  background-color: #1e5a2d;
+  border-color: #2d7a3d;
+  color: #4caf50;
+}
+
+.dark-mode .project-form {
+  background-color: #2c2c2c;
+  border-color: #404040;
+}
+
+.dark-mode .form-group label {
+  color: #b0b0b0;
+}
+
+.dark-mode .form-group input,
+.dark-mode .form-group select,
+.dark-mode .form-group textarea {
+  background-color: #3a3a3a;
+  border-color: #555555;
+  color: #e0e0e0;
+}
+
+.dark-mode .form-group input:focus,
+.dark-mode .form-group select:focus,
+.dark-mode .form-group textarea:focus {
+  border-color: #66a3ff;
+  box-shadow: 0 0 0 2px rgba(102, 163, 255, 0.1);
+}
+
+.dark-mode .form-group input::placeholder {
+  color: #888888;
+}
+
+.dark-mode .project-form-actions {
+  border-top-color: #404040;
+}
+
+.dark-mode .btn-submit {
+  background-color: #059669;
+  color: #ffffff;
+}
+
+.dark-mode .btn-submit:hover {
+  background-color: #047857;
+}
+
+.dark-mode .btn-back {
+  background-color: #dc3545;
+  color: #ffffff;
+}
+
+.dark-mode .btn-back:hover {
+  background-color: #c82333;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .add-project-container {
+    padding: 1rem;
+  }
+  
+  .form-row {
+    flex-direction: column;
+  }
+  
+  .form-group {
+    width: 100%;
+  }
+  
+  .add-project-container h2 {
+    font-size: 1.25rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .add-project-container {
+    padding: 0.75rem;
+  }
+  
+  .project-form {
+    padding: 1rem;
+  }
+  
+  .project-form-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .btn-submit,
+  .btn-back {
+    width: 100%;
+  }
+}
+
+/* Technologies section */
+.technologies-container {
+  margin-top: 5px;
+}
+
+.technologies-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: var(--tech-bg);
+  border-radius: 4px;
+  max-height: 180px;
+  overflow-y: auto;
+  transition: background-color 0.3s ease;
+}
+
+.technology-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: var(--tech-item-bg);
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.technology-item input[type="checkbox"] {
+  margin: 0;
+}
+
+.technology-item label {
+  margin: 0;
+  cursor: pointer;
+  font-weight: normal;
+  color: var(--text-primary);
+}
+
+.custom-technology {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.custom-technology input {
+  flex: 1;
+}
+
+.add-tech-btn {
+  padding: 8px 15px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.add-tech-btn:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.selected-technologies {
+  margin-top: 10px;
+}
+
+.selected-technologies h4 {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.selected-tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.selected-tech-tag {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: var(--tech-tag-bg);
+  color: var(--tech-tag-color);
+  padding: 5px 10px;
+  border-radius: 16px;
+  font-size: 13px;
+  border: 1px solid var(--tech-tag-border);
+  transition: all 0.3s ease;
+}
+
+.remove-tech-btn {
+  background: none;
+  border: none;
+  color: var(--tech-tag-color);
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+
+.remove-tech-btn:hover {
+  color: var(--primary-hover);
+}
+
+/* Required field indicator */
+.form-group label[for]:not([for="teamMembers"]):not([for^="tech-"])::after {
+  content: "*";
+  color: var(--error-color);
+  margin-left: 2px;
+}
+
+/* Print styles */
+@media print {
+  .add-project-container {
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .form-actions {
+    display: none;
+  }
+}

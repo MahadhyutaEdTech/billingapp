@@ -1,0 +1,149 @@
+/* General Sidebar Styles */
+.sidebar {
+  position: fixed;
+  top: 60px; /* Start below a potential 60px header */
+  left: 0;
+  height: calc(100% - 60px); /* Fill remaining height */
+  width: 240px;
+  background-color: #0d1642;
+  color: #fff;
+  transition: width 0.3s ease, left 0.3s ease; /* Add left to transition for smooth slide-in */
+  z-index: 1000;
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
+  /* Hide scrollbar but allow scrolling */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Sidebar collapsed (icon-only mode) */
+.sidebar:not(.active) {
+  width: 70px;
+}
+
+/* Toggle Button */
+.sidebar-toggle {
+  position: fixed;
+  top: 0px;
+  left: 15px;
+  margin-top: 5px;
+  z-index: 1100;
+  background-color: #1f2a40;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 8px 8px;
+  border-radius: 4px;
+  transition: all 0.3s ease; /* Smooth transition for toggle button */
+}
+
+/* Navigation Styles */
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0 0; /* Reduce top margin for navigation items */
+}
+
+.sidebar nav ul li {
+  margin: 0;
+  padding: 2px;
+  transition: background-color 0.2s ease;
+  cursor: pointer !important;
+}
+
+/* Link Styles */
+.sidebar nav ul li a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #fff;
+  width: 100%;
+  font-size: 14px; /* Slightly smaller font for compactness */
+  gap: 10px; /* Slightly smaller gap */
+  padding: 12px 20px;
+  transition: all 0.2s ease;
+  cursor: pointer !important;
+}
+
+.sidebar nav ul li a:hover,
+.sidebar nav ul li a.active {
+  background-color: #2e3a55;
+  cursor: pointer;
+}
+
+/* Icon Styling */
+.sidebar nav ul li a svg {
+  font-size: 16px; /* Slightly smaller icon */
+  min-width: 20px;
+}
+
+/* Label Span */
+.sidebar nav ul li a span {
+  white-space: nowrap;
+}
+
+/* Active Link */
+.sidebar nav ul li a.active {
+  background-color: #2e3a55;
+  border-left: 4px solid #4f46e5;
+}
+
+/* Hide text in collapsed mode */
+.sidebar:not(.active) nav ul li {
+  padding: 0;
+}
+
+.sidebar:not(.active) nav ul li a {
+  justify-content: center;
+  padding: 12px 0;
+  gap: 0;
+}
+
+.sidebar:not(.active) nav ul li a span {
+  display: none;
+}
+
+.sidebar:not(.active) nav ul li a svg {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    height: 100%; /* Allow it to cover entire height on mobile */
+    width: 200px; /* Width for mobile sidebar */
+    top: 0; /* Starts from the very top, covers header if any */
+    left: -200px;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.4); /* Stronger shadow for mobile overlay */
+  }
+
+  .sidebar.active {
+    left: 0;
+  }
+
+  .sidebar-toggle {
+    top: 10px; /* Keep toggle position for mobile */
+    left: 10px;
+    z-index: 1200; /* Ensure toggle is above sidebar when active */
+  }
+}
+
+/* Responsive for even smaller screens, e.g., phones */
+@media screen and (max-width: 480px) {
+  .sidebar {
+    width: 180px; /* Slightly narrower for very small screens */
+    left: -180px;
+  }
+
+  .sidebar-toggle {
+    font-size: 1.2rem; /* Slightly smaller toggle button */
+    padding: 6px 8px;
+  }
+}

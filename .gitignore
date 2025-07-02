@@ -1,0 +1,36 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+**/.env
+**/.env.*
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Optional IDE config files
+.vscode/
+.idea/
+
+# Coverage reports
+coverage/
+
+# Build output (if any)
+dist/
+build/
+
+# Debug folders
+.nyc_output/
+
+# Temporary files
+*.tmp
+*.swp

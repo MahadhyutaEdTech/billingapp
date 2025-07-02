@@ -15,6 +15,8 @@ import reportsRouter from "./src/routes/reportRoutes.js";
 import expensesRouter from "./src/routes/expenseRoutes.js";
 import employeeRouter from "./src/routes/employeeRoutes.js";
 import projectRouter from "./src/routes/projectRoutes.js";
+import purchaseRoutes from "./src/routes/purchaseRoutes.js"; // Importing purchase routes
+import quotationRouter from "./src/routes/quotationRoutes.js"; // Importing quotation routes
 
 const app = express();
 app.use(cors());
@@ -25,6 +27,10 @@ dotenv.config();
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on Port :${PORT}`);
+});
+
+app.get('/', (req, res) => {
+  res.send('Server is up and running!');
 });
 app.use("/auth",authRouter);
 app.use("/customer",customerRouter);
@@ -39,5 +45,7 @@ app.use('/api',reportsRouter);
 app.use('/exp',expensesRouter);
 app.use('/emp',employeeRouter);
 app.use('/proj',projectRouter);
+app.use('/purchase', purchaseRoutes);
+app.use('/quotation', quotationRouter); // Adding quotation routes
 
 

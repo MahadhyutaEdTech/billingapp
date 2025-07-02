@@ -1,0 +1,447 @@
+/* General Styles */
+.original-classic-invoice-gradient {
+    font-family: 'Times New Roman', serif;
+    background-color: #f0f0f0; /* Keeping a lighter grey background for the page as it matches the overall background behind the invoice */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    margin-top: 60px ;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.original-classic-invoice-container {
+    width: 210mm; /* A4 width */
+    /* min-height: 297mm; */  /* REMOVE or COMMENT OUT this line */
+    background: white;
+    padding: 0; /* No internal padding, border will create the margin */
+    box-shadow: none; /* No shadow */
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #333; /* Darker, more prominent outer border as seen in image */
+    box-sizing: border-box;
+    zoom: 0.8; /* Adjusted zoom for overall fit, fine-tune as needed */
+    margin: 10px auto; /* Center with some margin from top/bottom */
+}
+
+.original-classic-invoice-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 15mm; /* Adjusted padding to align with container border */
+    border-bottom: 2px solid #333; /* Darker border */
+    margin-bottom: 0;
+    background-color: #E0EFF6; /* Light blue background for this section, matching image */
+}
+
+.original-classic-invoice-header-text {
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #333;
+}
+
+.original-classic-invoice-header-text-right {
+    font-size: 12px;
+    font-weight: normal;
+    color: #555;
+}
+
+.original-classic-invoice-company-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    padding: 10px 15mm; /* Consistent horizontal padding */
+    border-bottom: 1px solid #ccc; /* Lighter separator */
+}
+
+.original-classic-invoice-logo img {
+    max-width: 120px;
+    max-height: 120px;
+    margin-right: 15px;
+    object-fit: contain;
+}
+
+.original-classic-invoice-company-info {
+    flex-grow: 1;
+    font-size: 11px;
+    line-height: 1.3;
+    color: #333;
+}
+
+.original-classic-invoice-company-info h2 {
+    font-size: 15px;
+    margin-bottom: 3px;
+    color: #000;
+}
+
+.original-classic-invoice-company-info p {
+    margin: 0;
+}
+
+.original-classic-invoice-invoice-details table {
+    width: 180px; /* Fixed width for invoice details table */
+    border-collapse: collapse;
+    font-size: 11px;
+}
+
+.original-classic-invoice-invoice-details td {
+    border: 1px solid #000;
+    padding: 3px 6px;
+    white-space: nowrap;
+    vertical-align: top;
+}
+
+.original-classic-invoice-invoice-details td:first-child {
+    font-weight: bold;
+    background-color: #e0e0e0; /* Light grey background, matches image */
+    color: #333;
+}
+
+.original-classic-invoice-bill-ship-to {
+    display: flex;
+    border: 1px solid #000;
+    margin: 0 15mm 10px 15mm; /* Apply margin from container edges */
+}
+
+.original-classic-invoice-bill-to,
+.original-classic-invoice-ship-to {
+    flex: 1;
+    padding: 8px;
+    font-size: 11px;
+    line-height: 1.3;
+    color: #333;
+}
+
+.original-classic-invoice-bill-to {
+    border-right: 1px solid #000;
+}
+
+.original-classic-invoice-bill-ship-to h3 {
+    font-size: 12px;
+    margin-top: 0;
+    margin-bottom: 5px;
+    background-color: #E0EFF6; /* Light blue background for Bill/Ship To headers, matching image */
+    padding: 4px;
+    border-bottom: 1px solid #000;
+    color: #000;
+}
+
+.original-classic-invoice-bill-ship-to h4 {
+    font-size: 12px;
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: #000;
+}
+
+.original-classic-invoice-bill-to p,
+.original-classic-invoice-ship-to p {
+    margin: 0;
+}
+
+.original-classic-invoice-table-wrapperrr {
+    flex-grow: 1;
+    margin: 0px 15mm 0px 15mm; /* Consistent horizontal margin */
+}
+
+.original-classic-invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.original-classic-invoice-table th,
+.original-classic-invoice-table td {
+    border: 1px solid #000;
+    padding: 4px;
+    font-size: 10px; /* Slightly smaller font for table content */
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    color: #333;
+}
+
+.original-classic-invoice-table thead th {
+    background-color: #E0EFF6; /* Light blue background for product table headers, matching image */
+    font-weight: bold;
+    color: #000;
+}
+
+.original-classic-invoice-table thead tr:first-child th {
+    padding: 6px 4px;
+}
+
+
+.original-classic-invoice-dummy-row td {
+    height: 18px; /* Slightly adjusted height for dummy rows */
+    border-color: #ddd; /* Lighter border for dummy rows */
+}
+
+.original-classic-invoice-summary-label {
+    text-align: right !important;
+    font-weight: bold;
+    background-color: #f0f0f0; /* Light grey background */
+    color: #000;
+}
+
+.original-classic-invoice-summary-value {
+    text-align: right !important;
+    font-weight: bold;
+    color: #000;
+}
+
+.original-classic-invoice-total-label,
+.original-classic-invoice-received-label,
+.original-classic-invoice-balance-label {
+    text-align: right !important;
+    font-weight: bold;
+    background-color: #E7E7E7; /* Light grey background for totals, matching image */
+    color: #000;
+}
+
+.original-classic-invoice-total-value,
+.original-classic-invoice-received-value,
+.original-classic-invoice-balance-value {
+    text-align: right !important;
+    font-weight: bold;
+    background-color: #E7E7E7; /* Light grey background for totals, matching image */
+    color: #000;
+}
+
+.original-classic-invoice-gst-summary {
+    margin: 0 15mm 15px 15mm; /* Consistent horizontal margin */
+}
+
+.original-classic-invoice-gst-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.original-classic-invoice-gst-table th,
+.original-classic-invoice-gst-table td {
+    border: 1px solid #000;
+    padding: 4px;
+    font-size: 10px;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    color: #333;
+}
+
+.original-classic-invoice-gst-table thead th {
+    background-color: #E0EFF6; /* Light blue background for GST table headers, matching image */
+    font-weight: bold;
+    color: #000;
+}
+
+/* Adjust GST table column widths */
+.original-classic-invoice-gst-table th:nth-child(1) { width: 14%; } /* HSN/SAC */
+.original-classic-invoice-gst-table th:nth-child(2) { width: 18%; } /* Taxable Value */
+.original-classic-invoice-gst-table th:nth-child(3) { width: 12%; } /* CGST Rate */
+.original-classic-invoice-gst-table th:nth-child(4) { width: 14%; } /* CGST Amount */
+.original-classic-invoice-gst-table th:nth-child(5) { width: 12%; } /* SGST Rate */
+.original-classic-invoice-gst-table th:nth-child(6) { width: 14%; } /* SGST Amount */
+.original-classic-invoice-gst-table th:nth-child(7) { width: 16%; } /* Total Tax Amount */
+
+.original-classic-invoice-amount-in-words {
+    border: 1px solid #000;
+    padding: 8px 15mm;
+    font-size: 11px;
+    margin: 0 15mm 15px 15mm; /* Consistent horizontal margin */
+    background-color: #f8f8f8;
+}
+
+.original-classic-invoice-amount-in-words p {
+    margin: 0;
+    font-weight: bold;
+    color: #000;
+}
+
+.original-classic-invoice-amount-in-words b {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #000;
+}
+
+.original-classic-invoice-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 10px;
+    margin-top: auto; /* Push to the bottom */
+    padding: 0 15mm 10mm 15mm; /* Consistent horizontal padding and bottom margin */
+}
+
+.original-classic-invoice-notes-bank {
+    display: flex;
+    width: 60%;
+    border: 1px solid #000;
+    margin-right: 10px; /* Small gap between notes/bank and terms */
+}
+
+.original-classic-invoice-notes,
+.original-classic-invoice-bank-details {
+    flex: 1;
+    padding: 8px;
+    line-height: 1.3;
+    color: #333;
+}
+
+.original-classic-invoice-notes {
+    border-right: 1px solid #000;
+}
+
+.original-classic-invoice-notes p:first-child,
+.original-classic-invoice-bank-details p:first-child {
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: #000;
+}
+
+.original-classic-invoice-bank-details table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.original-classic-invoice-bank-details td {
+    padding: 1px 0;
+    vertical-align: top;
+}
+
+.original-classic-invoice-bank-details td:first-child {
+    font-weight: bold;
+    width: 40%;
+    color: #333;
+}
+
+.original-classic-invoice-terms {
+    width: calc(40% - 10px); /* Adjust width to account for margin-right in notes-bank */
+    border: 1px solid #000;
+    padding: 8px;
+    line-height: 1.3;
+    color: #333;
+}
+
+.original-classic-invoice-terms p:first-child {
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: #000;
+}
+
+.original-classic-invoice-signature {
+    width: 100%;
+    text-align: right;
+    margin-top: 15px;
+    border-top: 1px solid #000; /* Lighter border above signature */
+    padding-top: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.original-classic-invoice-signature-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.original-classic-invoice-signature-img {
+    max-width: 240px;
+    max-height: 120px;
+    display: block;
+    margin-left: auto;
+    margin-bottom: 3px;
+    object-fit: contain;
+}
+
+.original-classic-invoice-signature p {
+    margin: 0;
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+}
+
+.original-classic-invoice-page-number {
+    width: 100%;
+    text-align: right;
+    margin-top: 5px;
+}
+
+.original-classic-invoice-page-number p {
+    margin: 0;
+    font-size: 9px;
+    color: #555;
+}
+
+/* Print specific styles */
+@media print {
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .original-classic-invoice-gradient {
+        min-height: auto;
+        padding: 0;
+        margin-top: 2px;
+        box-shadow: none;
+        display: block;
+        background-color: white; /* Ensure white background on print */
+    }
+
+    .original-classic-invoice-container {
+        width: 200mm;
+        /* min-height: 297mm; */  /* REMOVE or COMMENT OUT this line */
+        margin: 0;
+        padding: 0; /* Remove padding for print to let border define margin */
+        box-shadow: none;
+        border: 2px solid #333; /* Keep outer border on print */
+        zoom: 1; /* Reset zoom for printing */
+        page-break-after: always; /* Ensure each invoice prints on a new page */
+        overflow: hidden; /* Prevent content overflow on print */
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    .original-classic-invoice-table th,
+    .original-classic-invoice-table td,
+    .original-classic-invoice-gst-table th,
+    .original-classic-invoice-gst-table td {
+        background-color: #fff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Ensure content within sub-sections doesn't break across pages where possible */
+    .original-classic-invoice-bill-ship-to,
+    .original-classic-invoice-table-wrapper,
+    .original-classic-invoice-gst-summary,
+    .original-classic-invoice-amount-in-words,
+    .original-classic-invoice-notes-bank,
+    .original-classic-invoice-terms,
+    .original-classic-invoice-signature {
+        page-break-inside: avoid;
+    }
+
+    .original-classic-invoice-table th:nth-child(2),
+    .original-classic-invoice-table td:nth-child(2) {
+        width: 28% !important;
+        min-width: 120px !important;
+        max-width: 220px !important;
+        word-break: break-word !important;
+    }
+
+    .original-classic-invoice-signature-img {
+        max-width: 240px !important;
+        max-height: 120px !important;
+    }
+} 

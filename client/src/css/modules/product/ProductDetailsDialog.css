@@ -1,0 +1,192 @@
+.product-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.product-dialog-container {
+  background: #fff;
+  width: 75%;
+  max-width: 700px;
+  border-radius: 8px;
+  font-family: 'Arial', sans-serif;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.product-dialog-container.compact {
+  padding: 6px 10px;
+  width: 65%;
+}
+
+.product-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.product-dialog-header h3 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.product-dialog-body {
+  padding: 8px 10px;
+}
+
+.product-grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.product-grid-container.compact {
+  gap: 6px;
+}
+
+.product-detail-box {
+  background: #f5f5f5;
+  border-radius: 4px;
+  padding: 6px 8px;
+  flex: 1 1 calc(33.3% - 10px);
+  min-width: 180px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.05);
+}
+
+.product-detail-box.compact h4 {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.product-detail-box.compact {
+  padding: 6px;
+}
+
+.product-detail-box.full-width {
+  flex: 1 1 100%;
+}
+
+.product-label {
+  font-size: 12px;
+  margin-bottom: 2px;
+  color: #333;
+  line-height: 1.3;
+}
+
+.product-value {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.product-credit {
+  color: #059669;
+}
+
+.product-debit {
+  color: #dc2626;
+}
+
+.product-dialog-footer {
+  padding: 6px 12px;
+  text-align: right;
+  border-top: 1px solid #eee;
+}
+
+.primary-button {
+  padding: 4px 10px;
+  font-size: 13px;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.primary-button:hover {
+  background: #125ca1;
+}
+
+/* Dark Mode Styles */
+.dark-mode .dialog-overlay {
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.dark-mode .dialog-container {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .product-dialog-header {
+    border-color: #2c2c2c;
+    background: #242424;
+}
+
+.dark-mode .product-dialog-title {
+    color: #66a3ff;
+}
+
+.dark-mode .close-button {
+    color: #e0e0e0;
+    background: #333;
+}
+
+.dark-mode .close-button:hover {
+    background: #ff4757;
+    color: white;
+}
+
+.dark-mode .primary-button {
+    background: #059669;
+}
+
+.dark-mode .primary-button:hover {
+    background: #047857;
+}
+
+.dark-mode .product-dialog-body {
+    color: #e0e0e0;
+}
+
+.dark-mode .product-detail-box {
+    background: #2b2b2b;
+    border: 1px solid #3a3a3a;
+    box-shadow: 0 0 2px rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode .product-label {
+    color: #a0aec0;
+}
+
+.dark-mode .product-value {
+    color: #e0e0e0;
+}
+
+.dark-mode .product-credit {
+    color: #059669;
+}
+
+.dark-mode .product-debit {
+    color: #dc2626;
+}
+
+.dark-mode .product-dialog-footer {
+    border-top: 1px solid #2c2c2c;
+} 

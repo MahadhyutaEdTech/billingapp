@@ -1,0 +1,72 @@
+/* Only define .invoice-template-actions here to avoid conflicts! */
+.invoice-template-actions {
+    position: fixed;
+    top: 60px; /* Position below header bar */
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 2001; /* Increased to always be above content and header bar */
+    /* Added for clarity */
+}
+
+.invoice-template-actions button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.invoice-template-actions .change-template-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.invoice-template-actions .change-template-btn:hover {
+    background-color: #0056b3;
+}
+
+.invoice-template-actions .download-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.invoice-template-actions .download-btn:hover {
+    background-color: #218838;
+}
+
+.invoice-template-actions .back-btn {
+    background-color: #6c757d;
+    color: white;
+}
+
+.invoice-template-actions .back-btn:hover {
+    background-color: #5a6268;
+}
+
+/* Adjust the main container to account for both header and action bar */
+.invoice-template-container {
+    padding-top: 10px; /* 60px for header + 50px for action bar */
+}
+
+/* Dark mode styles */
+.dark-mode .invoice-template-actions {
+    background-color: #1f2a37;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+@media print {
+    .invoice-template-actions {
+        display: none;
+    }
+    
+    .invoice-template-container {
+        padding-top: 0;
+    }
+} 

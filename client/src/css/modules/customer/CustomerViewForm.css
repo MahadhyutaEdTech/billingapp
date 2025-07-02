@@ -1,0 +1,278 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.view-container {
+  background: #fff;
+  width: 75%;
+  max-width: 700px;
+  border-radius: 8px;
+  font-family: 'Arial', sans-serif;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.view-container.compact {
+  padding: 6px 10px;
+  width: 65%;
+}
+
+.view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.view-title {
+  font-size: 16px;
+  margin: 0;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  color: #666;
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  position: relative;
+}
+
+.print-button {
+  padding: 4px 10px;
+  font-size: 13px;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.print-button:hover {
+  background: #125ca1;
+}
+
+.close-btn {
+  padding: 4px 10px;
+  font-size: 13px;
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  background: #b91c1c;
+}
+
+.view-content {
+  padding: 8px 10px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.view-section {
+  margin-bottom: 12px;
+  padding: 6px 8px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.05);
+}
+
+.view-section h3 {
+  font-size: 14px;
+  margin: 0 0 8px 0;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 4px;
+}
+
+.view-details-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.detail-item {
+  background: #f5f5f5;
+  border-radius: 4px;
+  padding: 6px 8px;
+  flex: 1 1 calc(33.3% - 10px);
+  min-width: 180px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.05);
+}
+
+.detail-item strong {
+  font-size: 12px;
+  margin-bottom: 2px;
+  color: #333;
+  line-height: 1.3;
+  display: block;
+}
+
+.detail-item span {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #000;
+}
+
+.full-width {
+  flex: 1 1 100%;
+}
+
+/* Dark Mode Styles */
+.dark-mode .modal-overlay {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.dark-mode .view-container {
+  background: #1e1e1e;
+  color: #e0e0e0;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .view-header {
+  border-color: #2c2c2c;
+  background: #242424;
+}
+
+.dark-mode .view-title {
+  color: #66a3ff;
+}
+
+.dark-mode .close-button {
+  color: #e0e0e0;
+  background: #333;
+}
+
+.dark-mode .close-button:hover {
+  background: #ff4757;
+  color: white;
+}
+
+.dark-mode .print-button {
+  background: #059669;
+}
+
+.dark-mode .print-button:hover {
+  background: #047857;
+}
+
+.dark-mode .close-btn {
+  background: #dc2626;
+}
+
+.dark-mode .close-btn:hover {
+  background: #b91c1c;
+}
+
+.dark-mode .view-section {
+  background: #2b2b2b;
+  border: 1px solid #3a3a3a;
+}
+
+.dark-mode .view-section h3 {
+  color: #66a3ff;
+  border-color: #3a3a3a;
+}
+
+.dark-mode .detail-item {
+  background: #333333;
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode .detail-item strong {
+  color: #a0aec0;
+}
+
+.dark-mode .detail-item span {
+  color: #e0e0e0;
+}
+
+/* Print Styles */
+@media print {
+  .modal-overlay {
+    position: relative;
+    background: white;
+    box-shadow: none;
+    display: block;
+    height: auto;
+    width: auto;
+  }
+
+  .view-container {
+    box-shadow: none;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  .view-header,
+  .button-group,
+  .print-button,
+  .close-btn {
+    display: none;
+  }
+
+  .view-content {
+    max-height: none;
+    overflow-y: visible;
+    padding: 0;
+  }
+
+  .view-section {
+    background: none;
+    box-shadow: none;
+    border: none;
+    margin-bottom: 10px;
+    padding: 0;
+  }
+
+  .view-section h3 {
+    color: #000;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+  }
+
+  .view-details-grid {
+    display: block;
+    gap: 0;
+  }
+
+  .detail-item {
+    background: none;
+    box-shadow: none;
+    border: none;
+    padding: 2px 0;
+    flex: none;
+    min-width: auto;
+  }
+
+  .detail-item strong,
+  .detail-item span {
+    color: #000;
+    font-size: 12px;
+  }
+}

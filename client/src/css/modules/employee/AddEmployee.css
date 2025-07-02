@@ -1,0 +1,380 @@
+/* AddEmployee.css */
+
+/* CSS Variables for theming */
+:root {
+  --bg-primary: #f9f9f9;
+  --bg-secondary: #ffffff;
+  --text-primary: #333333;
+  --text-secondary: #555555;
+  --border-color: #dddddd;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --input-bg: #ffffff;
+  --hover-bg: #e8e8e8;
+  --success-bg: #dff2bf;
+  --success-text: #4f8a10;
+  --error-color: #e74c3c;
+  --primary-color: #4a90e2;
+  --primary-hover: #357abd;
+  --button-primary: #4caf50;
+  --button-primary-hover: #3d8b40;
+  --button-secondary: #f5f5f5;
+  --button-secondary-hover: #e8e8e8;
+}
+
+/* Dark mode class */
+.dark-mode {
+  --bg-primary: #1e1e1e;
+  --bg-secondary: #2c2c2c;
+  --text-primary: #e0e0e0;
+  --text-secondary: #cccccc;
+  --border-color: #404040;
+  --shadow-color: rgba(0, 0, 0, 0.4);
+  --input-bg: #2c2c2c;
+  --hover-bg: #3a3a3a;
+  --success-bg: #2e7d32;
+  --success-text: #ffffff;
+  --error-color: #ff6b6b;
+  --primary-color: #66a3ff;
+  --primary-hover: #4d94ff;
+  --button-primary: #388e3c;
+  --button-primary-hover: #2e7d32;
+  --button-secondary: #2c2c2c;
+  --button-secondary-hover: #3a3a3a;
+}
+
+/* Container Styles */
+.add-employee-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.add-employee-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.add-employee-header h2 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  font-size: 1.8rem;
+}
+
+.add-employee-header p {
+  color: #666;
+  font-size: 1rem;
+}
+
+.employee-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.form-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form-section {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+.form-group .field-note {
+  display: block;
+  margin-top: 0.25rem;
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.required::after {
+  content: '*';
+  color: #dc3545;
+  margin-left: 4px;
+}
+
+.valid-input {
+  border-color: #28a745 !important;
+}
+
+.error-container {
+  text-align: center;
+  padding: 2rem;
+}
+
+.error-message {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.error-message h3 {
+  color: #dc3545;
+  margin-bottom: 1rem;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+@media (max-width: 768px) {
+  .add-employee-container {
+    padding: 1rem;
+  }
+
+  .employee-form {
+    padding: 1.5rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ================= DARK MODE STYLES ================= */
+
+/* Container Styles */
+.dark-mode .add-employee-container {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4) ;
+}
+
+/* Heading */
+.dark-mode .add-employee-container h2 {
+  color: #ffffff;
+}
+
+/* Label Styles */
+.dark-mode .form-group label {
+  color: #b0b0b0;
+}
+
+/* Input, Select, Textarea */
+.dark-mode .form-group input,
+.dark-mode .form-group select,
+.dark-mode .form-group textarea {
+  background-color: #3a3a3a;
+  border-color: #555555;
+  color: #e0e0e0;
+}
+
+/* Focus Styles */
+.dark-mode .form-group input:focus,
+.dark-mode .form-group select:focus,
+.dark-mode .form-group textarea:focus {
+  border-color: #66a3ff;
+  box-shadow: 0 0 0 2px rgba(102, 163, 255, 0.1);
+}
+
+/* Success Message */
+.dark-mode .success-message {
+  background-color: #2e7d32;
+  color: #ffffff;
+}
+.dark-mode .success-message::before {
+  content: "✓ ";
+  font-weight: bold;
+}
+
+@media screen and (max-width: 1024px) {
+  .add-employee-container {
+    max-width: 95%;
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .add-employee-container {
+    padding: 1rem;
+  }
+
+  .add-employee-container h2 {
+    font-size: 1.25rem;
+  }
+
+  .employee-form {
+    gap: 15px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 0;
+  }
+
+  .form-group label {
+    font-size: 13px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 8px;
+    font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .add-employee-container {
+    padding: 0.75rem;
+  }
+
+  .success-message {
+    padding: 10px;
+    font-size: 13px;
+  }
+}
+
+/* Dark Mode Styles */
+.dark-mode .add-employee-container {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+}
+
+.dark-mode .add-employee-header h2 {
+  color: #ffffff;
+}
+
+.dark-mode .add-employee-header .subtitle {
+  color: #b0b0b0;
+}
+
+.dark-mode .form-section {
+  background-color: #2c2c2c;
+  border-color: #404040;
+}
+
+.dark-mode .form-section h3 {
+  color: #ffffff;
+  border-bottom-color: #404040;
+}
+
+.dark-mode .form-group input::placeholder {
+  color: #888888;
+}
+
+.dark-mode .date-input-wrapper {
+  background-color: #3a3a3a;
+  border-color: #555555;
+}
+
+.dark-mode .date-icon {
+  color: #b0b0b0;
+}
+
+.dark-mode .employee-form-actions {
+  border-top-color: #404040;
+}
+
+.dark-mode .employee-submit-btn {
+  background-color: #059669;
+  color: #ffffff;
+}
+
+.dark-mode .employee-submit-btn:hover {
+  background-color: #047857;
+}
+
+.dark-mode .employee-cancel-btn {
+  background-color: #dc3545;
+  color: #ffffff;
+}
+
+.dark-mode .employee-cancel-btn:hover {
+  background-color: #c82333;
+}
+
+.dark-mode .error-message {
+  background-color: #2a0000;
+  border-color: #3d0000;
+  color: #ff6666;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .add-employee-container {
+    padding: 1rem;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .add-employee-header h2 {
+    font-size: 1.25rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .add-employee-container {
+    padding: 0.75rem;
+  }
+  
+  .form-section {
+    padding: 1rem;
+  }
+  
+  .employee-form-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .employee-submit-btn,
+  .employee-cancel-btn {
+    width: 100%;
+  }
+}
